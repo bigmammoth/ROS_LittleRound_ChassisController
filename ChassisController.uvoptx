@@ -180,7 +180,7 @@
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>speed</ItemText>
+          <ItemText>speed,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <ScvdPack>

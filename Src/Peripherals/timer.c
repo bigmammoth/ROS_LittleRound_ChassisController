@@ -11,7 +11,8 @@ extern TIM_HandleTypeDef htim7;     // For motor's pid control period
 
 /* --------------------- Static variables --------------------------------- */
 static Timer_PeriodCallback_t PerioidCallback;
-static Timer_EncoderOverflowCallbak_t EncoderCallback;
+static Timer_EncoderOverflowCallback_t EncoderCallback;
+static Timer_InputCaptureCallback_t InputCaptureCallback;
 static TIM_HandleTypeDef encoderDictionary[TOTAL_ENCODER_NUMBER];
 
 /**
@@ -24,8 +25,9 @@ void Timer_TimersForMotorInit(void)
     encoderDictionary[1] = htim4;
     for(int i = 0; i < TOTAL_ENCODER_NUMBER; i++)
     {
-        __HAL_TIM_CLEAR_FLAG(&encoderDictionary[i], TIM_FLAG_UPDATE);
         HAL_TIM_Base_Start_IT(&encoderDictionary[i]);
+        HAL_TIM_IC_Start_IT(&encoderDictionary[i], TIM_CHANNEL_1);
+        HAL_TIM_IC_Start_IT(&encoderDictionary[i], TIM_CHANNEL_2);
     }
     HAL_TIM_Base_Start_IT(&htim7);
 	// HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);   // For motor0 PWM channel 1
@@ -65,6 +67,45 @@ void Timer_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     }
 }
 
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
+{
+    uint32_t motor, channel, capture, edge, pairLevel;
+    if(htim->Instance == TIM3) 
+    {
+        motor = 0;
+        if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)
+        {
+            capture = htim->Instance->CCR1;
+            edge = LL_GPIO_IsInputPinSet(MOTOR0_IC1_GPIO_Port, MOTOR0_IC1_Pin);
+            pairLevel = LL_GPIO_IsInputPinSet(MOTOR0_IC2_GPIO_Port, MOTOR0_IC2_Pin);
+        }
+        else
+        {
+            capture = htim->Instance->CCR2;
+            edge = LL_GPIO_IsInputPinSet(MOTOR0_IC2_GPIO_Port, MOTOR0_IC2_Pin);
+            pairLevel = LL_GPIO_IsInputPinSet(MOTOR0_IC1_GPIO_Port, MOTOR0_IC1_Pin);
+        }
+    }
+    else if(htim->Instance == TIM4)
+    {
+        motor = 1;
+        if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)
+        {
+            capture = htim->Instance->CCR1;
+            edge = LL_GPIO_IsInputPinSet(MOTOR1_IC1_GPIO_Port, MOTOR1_IC1_Pin);
+            pairLevel = LL_GPIO_IsInputPinSet(MOTOR1_IC2_GPIO_Port, MOTOR1_IC2_Pin);
+        }
+        else
+        {
+            capture = htim->Instance->CCR2;
+            edge = LL_GPIO_IsInputPinSet(MOTOR1_IC2_GPIO_Port, MOTOR1_IC2_Pin);
+            pairLevel = LL_GPIO_IsInputPinSet(MOTOR1_IC1_GPIO_Port, MOTOR1_IC1_Pin);
+        }
+    }
+    channel = htim->Channel - 1;
+    InputCaptureCallback(motor, channel, capture, edge, pairLevel);
+}
+
 uint32_t Timer_ReadEncoder(uint32_t encoderID)
 {
     return __HAL_TIM_GET_COUNTER(&encoderDictionary[encoderID]);
@@ -75,7 +116,12 @@ void Timer_RegisterPeriodCallback(Timer_PeriodCallback_t callback)
     if(PerioidCallback == NULL) PerioidCallback = callback;
 }
 
-void Timer_RegisterEncoderOverflowCallback(Timer_EncoderOverflowCallbak_t callback)
+void Timer_RegisterEncoderOverflowCallback(Timer_EncoderOverflowCallback_t callback)
 {
     if (EncoderCallback == NULL) EncoderCallback = callback;
+}
+
+void Timer_RegisterInputCaptureCallback(Timer_InputCaptureCallback_t callback)
+{
+    if(InputCaptureCallback == NULL) InputCaptureCallback = callback;
 }

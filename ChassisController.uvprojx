@@ -648,6 +648,36 @@
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </component>
+      <component Cclass="Device" Cgroup="STM32Cube LL" Csub="Common" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 LL Common">
+        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
+        <targetInfos>
+          <targetInfo name="ChassisController"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Device" Cgroup="STM32Cube LL" Csub="GPIO" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 LL">
+        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
+        <targetInfos>
+          <targetInfo name="ChassisController"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Device" Cgroup="STM32Cube LL" Csub="PWR" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 LL">
+        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
+        <targetInfos>
+          <targetInfo name="ChassisController"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Device" Cgroup="STM32Cube LL" Csub="RCC" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 LL">
+        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
+        <targetInfos>
+          <targetInfo name="ChassisController"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Device" Cgroup="STM32Cube LL" Csub="UTILS" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4">
+        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
+        <targetInfos>
+          <targetInfo name="ChassisController"/>
+        </targetInfos>
+      </component>
       <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="2.6.3" condition="STM32F4 CMSIS">
         <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
         <targetInfos>

@@ -291,15 +291,15 @@ void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef* htim_pwm)
 }
 
 /**
-* @brief TIM_Encoder MSP Initialization
+* @brief TIM_IC MSP Initialization
 * This function configures the hardware resources used in this example
-* @param htim_encoder: TIM_Encoder handle pointer
+* @param htim_ic: TIM_IC handle pointer
 * @retval None
 */
-void HAL_TIM_Encoder_MspInit(TIM_HandleTypeDef* htim_encoder)
+void HAL_TIM_IC_MspInit(TIM_HandleTypeDef* htim_ic)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  if(htim_encoder->Instance==TIM3)
+  if(htim_ic->Instance==TIM3)
   {
   /* USER CODE BEGIN TIM3_MspInit 0 */
 
@@ -326,7 +326,7 @@ void HAL_TIM_Encoder_MspInit(TIM_HandleTypeDef* htim_encoder)
 
   /* USER CODE END TIM3_MspInit 1 */
   }
-  else if(htim_encoder->Instance==TIM4)
+  else if(htim_ic->Instance==TIM4)
   {
   /* USER CODE BEGIN TIM4_MspInit 0 */
 
@@ -342,7 +342,7 @@ void HAL_TIM_Encoder_MspInit(TIM_HandleTypeDef* htim_encoder)
     GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF2_TIM4;
     HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
@@ -463,14 +463,14 @@ void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef* htim_pwm)
 }
 
 /**
-* @brief TIM_Encoder MSP De-Initialization
+* @brief TIM_IC MSP De-Initialization
 * This function freeze the hardware resources used in this example
-* @param htim_encoder: TIM_Encoder handle pointer
+* @param htim_ic: TIM_IC handle pointer
 * @retval None
 */
-void HAL_TIM_Encoder_MspDeInit(TIM_HandleTypeDef* htim_encoder)
+void HAL_TIM_IC_MspDeInit(TIM_HandleTypeDef* htim_ic)
 {
-  if(htim_encoder->Instance==TIM3)
+  if(htim_ic->Instance==TIM3)
   {
   /* USER CODE BEGIN TIM3_MspDeInit 0 */
 
@@ -490,7 +490,7 @@ void HAL_TIM_Encoder_MspDeInit(TIM_HandleTypeDef* htim_encoder)
 
   /* USER CODE END TIM3_MspDeInit 1 */
   }
-  else if(htim_encoder->Instance==TIM4)
+  else if(htim_ic->Instance==TIM4)
   {
   /* USER CODE BEGIN TIM4_MspDeInit 0 */
 

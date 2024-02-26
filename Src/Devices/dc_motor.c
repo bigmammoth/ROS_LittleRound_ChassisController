@@ -17,6 +17,7 @@
 /* --------------- Static functions ------------------- */
 static void PeriodCallback(void);
 static void EncoderCallback(uint32_t channelNo, int32_t direction);
+static void InputCaptureCallback(uint32_t motorID, uint32_t channelID, uint32_t captureCounter, uint32_t edge, uint32_t pairLevel);
 
 /* ---------------- Static variables ------------------ */
 static int32_t encoderOverflows[TOTAL_MOTOR_NUMBER];
@@ -28,6 +29,7 @@ void DCMotor_Init(void)
 {
     Timer_RegisterEncoderOverflowCallback(EncoderCallback);
     Timer_RegisterPeriodCallback(PeriodCallback);
+    Timer_RegisterInputCaptureCallback(InputCaptureCallback);
     Timer_TimersForMotorInit();
     for (int i = 0; i < TOTAL_MOTOR_NUMBER; i++) PID_Init(&pid[i], KP, KI, KD);
 }
@@ -41,13 +43,13 @@ static void PeriodCallback(void)
 {
     for(int i = 0; i < TOTAL_MOTOR_NUMBER; i++)
     {
-        int64_t lastEncoderValue = encoderValue[i];
-        // Read and caculate current encoder value.
-        encoderValue[i] = (int64_t)(encoderOverflows[i] * 0xFFFF) + Timer_ReadEncoder(i);
-        // Caculate speed
-        speed[i] = (int32_t)(encoderValue[i] - lastEncoderValue);
-        // Motor PID control
-        float output = PID_Calc(&pid[i], (float)speed[i]);
+        // int64_t lastEncoderValue = encoderValue[i];
+        // // Read and caculate current encoder value.
+        // encoderValue[i] = (int64_t)(encoderOverflows[i] * 0xFFFF) + Timer_ReadEncoder(i);
+        // // Caculate speed
+        // speed[i] = (int32_t)(encoderValue[i] - lastEncoderValue);
+        // // Motor PID control
+        // float output = PID_Calc(&pid[i], (float)speed[i]);
     }
 }
 
@@ -61,4 +63,9 @@ static void PeriodCallback(void)
 static void EncoderCallback(uint32_t channelNo, int32_t direction)
 {
     encoderOverflows[channelNo] += direction;
+}
+
+static void InputCaptureCallback(uint32_t motorID, uint32_t channelID, uint32_t captureCounter, uint32_t edge, uint32_t pairLevel)
+{
+    ++encoderValue[motorID];
 }
