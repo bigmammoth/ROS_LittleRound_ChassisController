@@ -1,0 +1,11 @@
+JLinkLog.txt
+*.d
+*.o
+*.Young King
+*.ini
+*.dep
+*.axf
+*.map
+*.dbgconf
+*.build_log.*
+*.lnp

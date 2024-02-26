@@ -1,0 +1,7 @@
+load STM32F407VETx 
+project name STCubeGenerated 
+project toolchain "MDK-ARM V5" 
+project path "E:\ROS_Little_Round\ChassisController\RTE\Device\STM32F407VETx\" 
+set tpl_path "D:\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.17.1\MDK\CubeMX" 
+set dest_path "STM32F407VETx" 
+SetCopyLibrary  "copy as reference"
