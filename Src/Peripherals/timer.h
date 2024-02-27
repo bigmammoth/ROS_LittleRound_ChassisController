@@ -12,3 +12,4 @@ void Timer_RegisterInputCaptureCallback(Timer_InputCaptureCallback_t);
 void Timer_TimersForMotorInit(void);
 void Timer_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
 uint32_t Timer_ReadEncoder(uint32_t encoderID);
+void Timer_SetPWM(uint32_t motorID, int32_t pwmValue);

@@ -1,6 +1,13 @@
 #include "timer.h"
 
 #define TOTAL_ENCODER_NUMBER    2
+#define TOTAL_MOTOR_NUMBER  TOTAL_ENCODER_NUMBER
+
+typedef struct pwm_channel {
+    TIM_HandleTypeDef pwmTimer;
+    uint32_t pwmChannel0;
+    uint32_t pwmChannel1;
+} PWM_Channel_t;
 
 /*----------------------------- External variables -------------------------*/
 extern TIM_HandleTypeDef htim2;     // For motor0's PWM
@@ -14,6 +21,7 @@ static Timer_PeriodCallback_t PerioidCallback;
 static Timer_EncoderOverflowCallback_t EncoderCallback;
 static Timer_InputCaptureCallback_t InputCaptureCallback;
 static TIM_HandleTypeDef encoderDictionary[TOTAL_ENCODER_NUMBER];
+static PWM_Channel_t pwmChannel[TOTAL_MOTOR_NUMBER];
 
 /**
  * @brief Initialize timers for motor.
@@ -23,17 +31,24 @@ void Timer_TimersForMotorInit(void)
 {
     encoderDictionary[0] = htim3;
     encoderDictionary[1] = htim4;
+    pwmChannel[0].pwmTimer = htim2;
+    pwmChannel[0].pwmChannel0 = TIM_CHANNEL_1;
+    pwmChannel[0].pwmChannel1 = TIM_CHANNEL_4;
+    pwmChannel[1].pwmTimer = htim9;
+    pwmChannel[1].pwmChannel0 = TIM_CHANNEL_1;
+    pwmChannel[1].pwmChannel1 = TIM_CHANNEL_2;
     for(int i = 0; i < TOTAL_ENCODER_NUMBER; i++)
     {
         HAL_TIM_Base_Start_IT(&encoderDictionary[i]);
         HAL_TIM_IC_Start_IT(&encoderDictionary[i], TIM_CHANNEL_1);
         HAL_TIM_IC_Start_IT(&encoderDictionary[i], TIM_CHANNEL_2);
     }
+    for(int i = 0; i < TOTAL_MOTOR_NUMBER; i++)
+    {
+        HAL_TIM_PWM_Start(&pwmChannel[i].pwmTimer, pwmChannel[i].pwmChannel0);
+        HAL_TIM_PWM_Start(&pwmChannel[i].pwmTimer, pwmChannel[i].pwmChannel1);
+    }
     HAL_TIM_Base_Start_IT(&htim7);
-	// HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);   // For motor0 PWM channel 1
-	// HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);   // For motor0 PWM channel 2
-	// HAL_TIM_PWM_Start(&htim9, TIM_CHANNEL_1);   // For motor1 PWM channel 1
-	// HAL_TIM_PWM_Start(&htim9, TIM_CHANNEL_2);   // For motor1 PWM channel 2
 }
 
 /**
@@ -118,4 +133,19 @@ void Timer_RegisterEncoderOverflowCallback(Timer_EncoderOverflowCallback_t callb
 void Timer_RegisterInputCaptureCallback(Timer_InputCaptureCallback_t callback)
 {
     if(InputCaptureCallback == NULL) InputCaptureCallback = callback;
+}
+
+void Timer_SetPWM(uint32_t motorID, int32_t pwmValue)
+{
+    if (pwmValue >= 0)
+    {
+        __HAL_TIM_SetCompare(&pwmChannel[motorID].pwmTimer, pwmChannel[motorID].pwmChannel0, pwmValue);
+        __HAL_TIM_SetCompare(&pwmChannel[motorID].pwmTimer, pwmChannel[motorID].pwmChannel1, 0);
+    }
+    else
+    {
+        pwmValue = -pwmValue;
+        __HAL_TIM_SetCompare(&pwmChannel[motorID].pwmTimer, pwmChannel[motorID].pwmChannel0, 0);
+        __HAL_TIM_SetCompare(&pwmChannel[motorID].pwmTimer, pwmChannel[motorID].pwmChannel1, pwmValue);
+    }
 }

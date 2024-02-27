@@ -10,13 +10,15 @@
 // The sum of the edge counts of the A and B phases of the encoder for every turn of the reducer.
 #define EDGE_PER_ROUND	(390*4)
 // PID parameters
-#define KP  0.5f
-#define KI  0.0001f
-#define KD  0.2f
+#define KP  8000.0f
+#define KI  400.0f
+#define KD  1000.0f
 // Encoder timer tick frequency
 #define ENCODE_TIMER_FREQUENCY  4200000.0f
 // Measureable minimal angular speed
 #define MIN_MEASURE_ANGULAR_SPEED 0.01f
+// Filter factor
+#define FILTER_FACTOR   0.07f
 
 /* --------------- Static functions ------------------- */
 static void PeriodCallback(void);
@@ -30,6 +32,7 @@ static float measuredAngularSpeed[TOTAL_MOTOR_NUMBER];
 static int32_t lastCaputerCounter[TOTAL_MOTOR_NUMBER];
 static int32_t encoderCaptureChange[TOTAL_MOTOR_NUMBER];
 static int32_t direction[TOTAL_MOTOR_NUMBER];
+static int32_t pwmOut[TOTAL_MOTOR_NUMBER];
 
 void DCMotor_Init(void)
 {
@@ -45,8 +48,20 @@ int64_t DCMotor_ReadEncoder(uint32_t motorId)
     return encoderValue[motorId];
 }
 
+void DCMotor_SetAngularSpeed(uint32_t motorId, float angularSpeed)
+{
+    PID_SetObject(&pid[motorId], angularSpeed);
+}
+
 static void PeriodCallback(void)
 {
+    for (int i = 0; i < TOTAL_MOTOR_NUMBER; ++i)
+    {
+        pwmOut[i] = PID_Calc(&pid[i], measuredAngularSpeed[i]);
+        if (pwmOut[i] > 65536) pwmOut[i] = 65536;
+        else if(pwmOut[i] < -65536) pwmOut[i] = -65536;
+        Timer_SetPWM(i, pwmOut[i]);
+    }
 }
 
 /**
@@ -59,8 +74,8 @@ static void PeriodCallback(void)
 static void EncoderCaptureOverflowCallback(uint32_t motorID)
 {
     encoderCaptureChange[motorID] += 65536 - lastCaputerCounter[motorID];
-    measuredAngularSpeed[motorID] = measuredAngularSpeed[motorID] * 0.5 \
-        + 0.5 * 1.0f / EDGE_PER_ROUND * 2.0f * PI * ENCODE_TIMER_FREQUENCY / (float)encoderCaptureChange[motorID] * direction[motorID];
+    measuredAngularSpeed[motorID] = measuredAngularSpeed[motorID] * (1 - FILTER_FACTOR) \
+        + FILTER_FACTOR * 1.0f / EDGE_PER_ROUND * 2.0f * PI * ENCODE_TIMER_FREQUENCY / (float)encoderCaptureChange[motorID] * direction[motorID];
     lastCaputerCounter[motorID] = 0;
     if(measuredAngularSpeed[motorID] < MIN_MEASURE_ANGULAR_SPEED && measuredAngularSpeed[motorID] > -MIN_MEASURE_ANGULAR_SPEED)
     {
@@ -96,8 +111,8 @@ static void InputCaptureCallback(int32_t motorID, int32_t channelID, int32_t cap
     encoderValue[motorID] += direction[motorID];
 
     encoderCaptureChange[motorID] += captureCounter - lastCaputerCounter[motorID];
-    measuredAngularSpeed[motorID] = measuredAngularSpeed[motorID] * 0.5 \
-        + 0.5 * 1.0f / EDGE_PER_ROUND * 2.0f * PI * ENCODE_TIMER_FREQUENCY / (float)encoderCaptureChange[motorID] * direction[motorID];
+    measuredAngularSpeed[motorID] = measuredAngularSpeed[motorID] * (1 - FILTER_FACTOR) \
+        + FILTER_FACTOR * 1.0f / EDGE_PER_ROUND * 2.0f * PI * ENCODE_TIMER_FREQUENCY / (float)encoderCaptureChange[motorID] * direction[motorID];
     lastCaputerCounter[motorID] = captureCounter;
     encoderCaptureChange[motorID] = 0;    
 }

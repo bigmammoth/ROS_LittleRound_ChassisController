@@ -170,7 +170,39 @@
           <WinNumber>1</WinNumber>
           <ItemText>lastCaputerCounter</ItemText>
         </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>measuredAngularSpeed</ItemText>
+        </Ww>
+        <Ww>
+          <count>5</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>pid</ItemText>
+        </Ww>
       </WatchWindow1>
+      <WatchWindow2>
+        <Ww>
+          <count>0</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>KP</ItemText>
+        </Ww>
+        <Ww>
+          <count>1</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>KI</ItemText>
+        </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>KD</ItemText>
+        </Ww>
+        <Ww>
+          <count>3</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>FILTER_FACTOR</ItemText>
+        </Ww>
+      </WatchWindow2>
       <ScvdPack>
         <Filename>D:\Keil_v5\ARM\Packs\ARM\CMSIS-RTX\5.8.0\RTX5.scvd</Filename>
         <Type>ARM.CMSIS-RTX.5.8.0</Type>
@@ -225,28 +257,16 @@
       <pMultCmdsp></pMultCmdsp>
       <SystemViewers>
         <Entry>
-          <Name>System Viewer\Ethernet_DMA</Name>
-          <WinId>35904</WinId>
-        </Entry>
-        <Entry>
-          <Name>System Viewer\Ethernet_MAC</Name>
-          <WinId>35903</WinId>
-        </Entry>
-        <Entry>
-          <Name>System Viewer\Ethernet_MMC</Name>
-          <WinId>35902</WinId>
-        </Entry>
-        <Entry>
-          <Name>System Viewer\Ethernet_PTP</Name>
+          <Name>System Viewer\TIM2</Name>
           <WinId>35905</WinId>
         </Entry>
         <Entry>
-          <Name>System Viewer\TIM3</Name>
-          <WinId>35901</WinId>
+          <Name>System Viewer\TIM7</Name>
+          <WinId>35903</WinId>
         </Entry>
         <Entry>
-          <Name>System Viewer\TIM4</Name>
-          <WinId>35900</WinId>
+          <Name>System Viewer\TIM9</Name>
+          <WinId>35904</WinId>
         </Entry>
       </SystemViewers>
       <DebugDescription>
