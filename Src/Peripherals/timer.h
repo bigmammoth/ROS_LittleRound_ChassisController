@@ -3,8 +3,8 @@
 #include "main.h"
 
 typedef void (*Timer_PeriodCallback_t)(void);
-typedef void (*Timer_EncoderOverflowCallback_t)(uint32_t, int32_t);
-typedef void (*Timer_InputCaptureCallback_t)(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
+typedef void (*Timer_EncoderOverflowCallback_t)(uint32_t);
+typedef void (*Timer_InputCaptureCallback_t)(int32_t, int32_t, int32_t, int32_t, int32_t);
 
 void Timer_RegisterPeriodCallback(Timer_PeriodCallback_t);
 void Timer_RegisterEncoderOverflowCallback(Timer_EncoderOverflowCallback_t);

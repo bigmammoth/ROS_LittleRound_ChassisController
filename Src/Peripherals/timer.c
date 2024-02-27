@@ -47,17 +47,11 @@ void Timer_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     {}
     else if(htim->Instance == TIM3) // For motor0's encoder
     {
-        // Get direction from CR1_DIR bit
-        int32_t direction = 1;
-		if(htim->Instance->CR1 & TIM_CR1_DIR) direction = -1;
-        if(EncoderCallback != NULL) EncoderCallback(0, direction);
+        if(EncoderCallback != NULL) EncoderCallback(0);
     }
     else if(htim->Instance == TIM4) // For motor1's encoder
     {
-        // Get direction from CR1_DIR bit
-        int32_t direction = 1;
-		if(htim->Instance->CR1 & TIM_CR1_DIR) direction = -1;
-        if(EncoderCallback != NULL)  EncoderCallback(1, direction);
+        if(EncoderCallback != NULL)  EncoderCallback(1);
     }
     else if(htim->Instance == TIM9)
     {}
