@@ -11,19 +11,19 @@
 // The sum of the edge counts of the A and B phases of the encoder for every turn of the reducer.
 #define EDGE_PER_ROUND	(390*4)
 // PID parameters
-#define KP  4000.0f
-#define KI  100.0f
+#define KP  6000.0f
+#define KI  200.0f
 #define KD  500.0f
 // Kalman parameter
 #define KALMAN_ESTIMATE_VARIANCE    8
-#define KALMAN_MEASURE_VARIANCE     0.4
-#define KALMAN_PROCESS_VARIANCE     0.001
+#define KALMAN_MEASURE_VARIANCE     1
+#define KALMAN_PROCESS_VARIANCE     0.005
 // Encoder timer tick frequency
 #define ENCODE_TIMER_FREQUENCY  4200000.0f
+// Encoder timer period
+#define ENCODER_TIMER_PERIOD    42000
 // Measureable minimal angular speed
 #define MIN_MEASURE_ANGULAR_SPEED 0.01f
-// Filter factor
-#define FILTER_FACTOR   0.07f
 
 /* --------------- Static functions ------------------- */
 static void PeriodCallback(void);
@@ -41,17 +41,20 @@ static int32_t direction[TOTAL_MOTOR_NUMBER];
 static int32_t pwmOut[TOTAL_MOTOR_NUMBER];
 static int32_t pwmOutMean[TOTAL_MOTOR_NUMBER];
 
+static int32_t encoderCaptureChangeQueue[TOTAL_MOTOR_NUMBER][100];
+static int32_t encoderCaptureChangeQueueIndex[TOTAL_MOTOR_NUMBER];
+
 void DCMotor_Init(void)
 {
-    Timer_RegisterEncoderOverflowCallback(EncoderCaptureOverflowCallback);
-    Timer_RegisterPeriodCallback(PeriodCallback);
-    Timer_RegisterInputCaptureCallback(InputCaptureCallback);
-    Timer_TimersForMotorInit();
     for (int i = 0; i < TOTAL_MOTOR_NUMBER; i++)
     {
         PID_Init(&pid[i], KP, KI, KD);
         KalmanFilter_Init(&filter[i], KALMAN_ESTIMATE_VARIANCE, KALMAN_MEASURE_VARIANCE, KALMAN_PROCESS_VARIANCE);
     }
+    Timer_RegisterEncoderOverflowCallback(EncoderCaptureOverflowCallback);
+    Timer_RegisterPeriodCallback(PeriodCallback);
+    Timer_RegisterInputCaptureCallback(InputCaptureCallback);
+    Timer_TimersForMotorInit();
 }
 
 int64_t DCMotor_ReadEncoder(uint32_t motorId)
@@ -85,16 +88,12 @@ static void PeriodCallback(void)
  */
 static void EncoderCaptureOverflowCallback(uint32_t motorID)
 {
-    encoderCaptureChange[motorID] += 65536 - lastCaputerCounter[motorID];
-    // measuredAngularSpeed[motorID] = measuredAngularSpeed[motorID] * (1 - FILTER_FACTOR) \
-    //     + FILTER_FACTOR * 1.0f / EDGE_PER_ROUND * 2.0f * PI * ENCODE_TIMER_FREQUENCY / (float)encoderCaptureChange[motorID] * direction[motorID];
-    float angularSpeed = 1.0f / EDGE_PER_ROUND * 2.0f * PI * ENCODE_TIMER_FREQUENCY / (float)encoderCaptureChange[motorID] * direction[motorID];
-    measuredAngularSpeed[motorID] = KalmanFilter_Calc(&filter[motorID], angularSpeed);
+    encoderCaptureChange[motorID] += ENCODER_TIMER_PERIOD - lastCaputerCounter[motorID];
     lastCaputerCounter[motorID] = 0;
-    if(measuredAngularSpeed[motorID] < MIN_MEASURE_ANGULAR_SPEED && measuredAngularSpeed[motorID] > -MIN_MEASURE_ANGULAR_SPEED)
+    if(encoderCaptureChange[motorID] > 10*ENCODER_TIMER_PERIOD)
     {
         measuredAngularSpeed[motorID] = 0;
-        encoderCaptureChange[motorID] -= 65536;
+        encoderCaptureChange[motorID] -= ENCODER_TIMER_PERIOD;
     }
 }
 
@@ -124,10 +123,18 @@ static void InputCaptureCallback(int32_t motorID, int32_t channelID, int32_t cap
     direction[motorID] = channelID * edge * pairLevel;
     encoderValue[motorID] += direction[motorID];
 
+    if (!encoderCaptureChange[motorID] && captureCounter < lastCaputerCounter[motorID])
+    {
+        lastCaputerCounter[motorID] = captureCounter;
+        encoderCaptureChange[motorID] = 0;
+        return;
+    }
+
     encoderCaptureChange[motorID] += captureCounter - lastCaputerCounter[motorID];
-    // measuredAngularSpeed[motorID] = measuredAngularSpeed[motorID] * (1 - FILTER_FACTOR) \
-    //     + FILTER_FACTOR * 1.0f / EDGE_PER_ROUND * 2.0f * PI * ENCODE_TIMER_FREQUENCY / (float)encoderCaptureChange[motorID] * direction[motorID];
-    float angularSpeed = 1.0f / EDGE_PER_ROUND * 2.0f * PI * ENCODE_TIMER_FREQUENCY / (float)encoderCaptureChange[motorID] * direction[motorID];
+    // encoderCaptureChangeQueue[motorID][encoderCaptureChangeQueueIndex[motorID]++] = encoderCaptureChange[motorID];
+    // if(encoderCaptureChangeQueueIndex[motorID] >= 100) encoderCaptureChangeQueueIndex[motorID] = 0;
+    float angularSpeed = 
+        1.0f / EDGE_PER_ROUND * 2.0f * PI * ENCODE_TIMER_FREQUENCY / (float)encoderCaptureChange[motorID] * direction[motorID];
     measuredAngularSpeed[motorID] = KalmanFilter_Calc(&filter[motorID], angularSpeed);
     lastCaputerCounter[motorID] = captureCounter; 
     encoderCaptureChange[motorID] = 0;    

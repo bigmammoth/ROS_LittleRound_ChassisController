@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "main.h": "c",
-        "timer.h": "c"
+        "timer.h": "c",
+        "kalman_filter.h": "c"
     }
 }

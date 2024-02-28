@@ -14,6 +14,4 @@
 void MotionControl_Init(void)
 {
     DCMotor_Init();
-    DCMotor_SetAngularSpeed(0, 2*PI);
-    DCMotor_SetAngularSpeed(1, 2*PI);
 }
