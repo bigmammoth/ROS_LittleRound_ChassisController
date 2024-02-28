@@ -1,5 +1,7 @@
 #include "pid.h"
 
+#define MAX_SUM_ERROR   1000
+
 void PID_Init(PID_t* pid, float kP, float kI, float kD)
 {
     pid->kP = kP;
@@ -22,6 +24,7 @@ float PID_Calc(PID_t* pid, float measurement)
     float error = pid->object - measurement;
     float differentialError = error - pid->lastError;
     pid->sumError += error;
+    if(pid->sumError > MAX_SUM_ERROR) pid->sumError = MAX_SUM_ERROR;
     pid->lastError = error;
     return (pid->kP*error + pid->kI*pid->sumError + pid->kD*differentialError);
 }

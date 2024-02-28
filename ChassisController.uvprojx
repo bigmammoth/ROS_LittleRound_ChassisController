@@ -429,6 +429,11 @@
               <FileType>1</FileType>
               <FilePath>.\Src\Algorithm\pid.c</FilePath>
             </File>
+            <File>
+              <FileName>kalman_filter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\Algorithm\kalman_filter.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
