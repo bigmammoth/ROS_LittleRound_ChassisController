@@ -59,6 +59,8 @@
 #define RTE_DEVICE_HAL_SPI
 /* Keil::Device:STM32Cube HAL:TIM:1.8.1 */
 #define RTE_DEVICE_HAL_TIM
+/* Keil::Device:STM32Cube HAL:UART:1.8.1 */
+#define RTE_DEVICE_HAL_UART
 /* Keil::Device:STM32Cube LL:Common:1.8.1 */
 #define RTE_DEVICE_LL_COMMON
 /* Keil::Device:STM32Cube LL:GPIO:1.8.1 */

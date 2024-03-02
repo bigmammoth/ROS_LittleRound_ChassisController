@@ -9,9 +9,6 @@ typedef struct kalman
     float measureVariance;
     float lastEstimateValue;
     float processErrorVariance;
-    float measure4MSE;
-    // uint32_t abnormalMeasureCounter;
-    // uint32_t normalCounter;
 } KalmanFilter_t;
 
 void KalmanFilter_Init(KalmanFilter_t* , float estimateVariance, float measureVariance, float processErrorVariance);

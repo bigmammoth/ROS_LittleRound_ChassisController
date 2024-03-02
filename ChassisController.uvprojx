@@ -385,14 +385,14 @@
           <GroupName>Source</GroupName>
           <Files>
             <File>
-              <FileName>app_main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Src\app_main.c</FilePath>
-            </File>
-            <File>
               <FileName>motion_control.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\motion_control.c</FilePath>
+            </File>
+            <File>
+              <FileName>ros_interface.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\ros_interface.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -454,6 +454,11 @@
               <FileType>1</FileType>
               <FilePath>.\Src\Devices\w25qxx.c</FilePath>
             </File>
+            <File>
+              <FileName>rc_receiver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\Devices\rc_receiver.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -473,6 +478,21 @@
               <FileName>timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\Peripherals\timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\Peripherals\usart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Protocol</GroupName>
+          <Files>
+            <File>
+              <FileName>s_bus.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\Protocol\s_bus.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -648,6 +668,12 @@
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="TIM" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 HAL DMA">
+        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
+        <targetInfos>
+          <targetInfo name="ChassisController"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="UART" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 HAL DMA">
         <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
