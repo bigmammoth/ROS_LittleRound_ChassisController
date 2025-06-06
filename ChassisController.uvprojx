@@ -10,13 +10,13 @@
       <TargetName>ChassisController</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
+      <pCCUsed>6230000::V6.23::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32F407VETx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32F4xx_DFP.2.17.1</PackID>
+          <PackID>Keil.STM32F4xx_DFP.3.0.0</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x10000000,0x00010000) IROM(0x08000000,0x00080000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -176,7 +176,7 @@
             <GenPPlst>0</GenPPlst>
             <AdsCpuType>"Cortex-M4"</AdsCpuType>
             <RvctDeviceName></RvctDeviceName>
-            <mOS>0</mOS>
+            <mOS>1</mOS>
             <uocRom>0</uocRom>
             <uocRam>0</uocRam>
             <hadIROM>1</hadIROM>
@@ -329,8 +329,8 @@
             <uC99>1</uC99>
             <uGnu>1</uGnu>
             <useXO>0</useXO>
-            <v6Lang>3</v6Lang>
-            <v6LangP>2</v6LangP>
+            <v6Lang>5</v6Lang>
+            <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
             <v6Lto>0</v6Lto>
@@ -353,7 +353,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>3</ClangAsOpt>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -393,26 +393,6 @@
               <FileName>ros_interface.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\ros_interface.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>:STM32CubeMX:Common Sources</GroupName>
-          <Files>
-            <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\RTE\Device\STM32F407VETx\STCubeGenerated\Src\main.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_it.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\RTE\Device\STM32F407VETx\STCubeGenerated\Inc\stm32f4xx_it.h</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\RTE\Device\STM32F407VETx\STCubeGenerated\Src\stm32f4xx_it.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -497,6 +477,156 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>:CubeMX:CubeMX</GroupName>
+          <Files>
+            <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Src\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Src\stm32f4xx_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_msp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Src\stm32f4xx_hal_msp.c</FilePath>
+            </File>
+            <File>
+              <FileName>startup_stm32f407xx.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\MDK-ARM\startup_stm32f407xx.s</FilePath>
+            </File>
+            <File>
+              <FileName>system_stm32f4xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Src\system_stm32f4xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_timebase_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Src\stm32f4xx_hal_timebase_tim.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>:CubeMX:STM32 HAL Driver</GroupName>
+          <Files>
+            <File>
+              <FileName>stm32f4xx_hal_rcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_rcc_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_flash_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_flash_ramfunc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash_ramfunc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_dma_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dma_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dma.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_pwr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pwr.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_pwr_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pwr_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_cortex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_cortex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_exti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_exti.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_tim_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_eth.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_eth.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_ll_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_ll_rcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_rcc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_ll_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_ll_exti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_exti.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_spi.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::CMSIS</GroupName>
         </Group>
         <Group>
@@ -514,7 +644,7 @@
 
   <RTE>
     <gpdscs>
-      <gpdsc name="RTE/Device/STM32F407VETx/FrameworkCubeMX.gpdsc">
+      <gpdsc generator="CubeMX" name="STM32CubeMX/ChassisController/ChassisController.cgen.yml">
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
@@ -545,64 +675,28 @@
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </api>
-      <api Capiversion="1.1.0" Cclass="Device" Cgroup="STM32Cube Framework" exclusive="1">
-        <package name="STM32G0xx_DFP" schemaVersion="1.7.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.4.0"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
-      </api>
     </apis>
     <components>
-      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="6.0.0" condition="ARMv6_7_8-M Device">
-        <package name="CMSIS" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="6.0.0"/>
+      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="6.1.0" condition="ARMv6_7_8-M Device">
+        <package name="CMSIS" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="ARM" version="6.1.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </component>
       <component Capiversion="1.0.1" Cclass="CMSIS" Cgroup="OS Tick" Csub="SysTick" Cvendor="ARM" Cversion="1.0.5" condition="OS Tick SysTick">
-        <package name="CMSIS" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="6.0.0"/>
+        <package name="CMSIS" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="ARM" version="6.1.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </component>
-      <component Capiversion="2.3.0" Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cvendor="ARM" Cversion="5.8.0" condition="RTX5">
-        <package name="CMSIS-RTX" schemaVersion="1.7.27" url="https://www.keil.com/pack/" vendor="ARM" version="5.8.0"/>
+      <component Capiversion="2.3.0" Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cvendor="ARM" Cversion="5.9.0" condition="RTX5">
+        <package name="CMSIS-RTX" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </component>
-      <component Cbundle="MDK-Plus" Cclass="Network" Cgroup="CORE" Cvariant="IPv4 Release" Cvendor="Keil" Cversion="7.19.0" condition="CMSIS Core with RTOS">
-        <package name="MDK-Middleware" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="Keil" version="7.17.0"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
-      </component>
-      <component Cbundle="MDK-Plus" Cclass="Network" Cgroup="Interface" Csub="ETH" Cvendor="Keil" Cversion="7.19.0" condition="Network Driver ETH" maxInstances="2">
-        <package name="MDK-Middleware" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="Keil" version="7.17.0"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
-      </component>
-      <component Cbundle="MDK-Plus" Cclass="Network" Cgroup="Service" Csub="Web Server Compact" Cvariant="HTTP" Cvendor="Keil" Cversion="7.19.0" condition="Network Web Server Compact">
-        <package name="MDK-Middleware" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="Keil" version="7.17.0"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
-      </component>
-      <component Cbundle="MDK-Plus" Cclass="Network" Cgroup="Socket" Csub="TCP" Cvendor="Keil" Cversion="7.19.0" condition="Network Interface">
-        <package name="MDK-Middleware" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="Keil" version="7.17.0"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
-      </component>
-      <component Cbundle="MDK-Plus" Cclass="Network" Cgroup="Socket" Csub="UDP" Cvendor="Keil" Cversion="7.19.0" condition="Network Interface">
-        <package name="MDK-Middleware" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="Keil" version="7.17.0"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
-      </component>
-      <component Capiversion="2.1" Cclass="CMSIS Driver" Cgroup="Ethernet MAC" Cvendor="Keil" Cversion="2.10" condition="STM32F4 CMSIS_Driver ETH_MAC">
-        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
+      <component Capiversion="2.2.0" Cclass="CMSIS Driver" Cgroup="Ethernet MAC" Cvendor="Keil" Cversion="3.1.0" condition="CMSIS Driver requirements">
+        <package name="CMSIS-Driver_STM32" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="1.2.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
@@ -613,104 +707,32 @@
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </component>
-      <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="Common" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 HAL Common">
-        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
+      <component Cclass="Device" Cgroup="CubeMX" Cvendor="Keil" Cversion="1.0.0" condition="STM32F4 CMSIS" generator="CubeMX">
+        <package name="STM32F4xx_DFP" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="3.0.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </component>
-      <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="Cortex" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 HAL">
-        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
+      <component Cbundle="MDK" Cclass="Network" Cgroup="CORE" Cvendor="Keil" Cversion="8.0.0" condition="CMSIS Core with RTOS">
+        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.0.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </component>
-      <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="DMA" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 HAL">
-        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
+      <component Cbundle="MDK" Cclass="Network" Cgroup="Interface" Csub="ETH" Cvendor="Keil" Cversion="8.0.0" condition="Network Driver ETH" maxInstances="2">
+        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.0.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </component>
-      <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="ETH" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4x7_9 HAL">
-        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
+      <component Cbundle="MDK" Cclass="Network" Cgroup="Socket" Csub="TCP" Cvendor="Keil" Cversion="8.0.0" condition="Network Interface">
+        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.0.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </component>
-      <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="GPIO" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 HAL">
-        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="PWR" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 HAL">
-        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="RCC" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 HAL GPIO">
-        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="SD" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4x1_40_41_412_42_43_44_46_47x_4x3 HAL DMA">
-        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="SPI" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 HAL DMA">
-        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="TIM" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 HAL DMA">
-        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="UART" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 HAL DMA">
-        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Device" Cgroup="STM32Cube LL" Csub="Common" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 LL Common">
-        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Device" Cgroup="STM32Cube LL" Csub="GPIO" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 LL">
-        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Device" Cgroup="STM32Cube LL" Csub="PWR" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 LL">
-        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Device" Cgroup="STM32Cube LL" Csub="RCC" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4 LL">
-        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Device" Cgroup="STM32Cube LL" Csub="UTILS" Cvendor="Keil" Cversion="1.8.1" condition="STM32F4">
-        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="2.6.3" condition="STM32F4 CMSIS">
-        <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
+      <component Cbundle="MDK" Cclass="Network" Cgroup="Socket" Csub="UDP" Cvendor="Keil" Cversion="8.0.0" condition="Network Interface">
+        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.0.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
@@ -725,16 +747,16 @@
       </file>
       <file attr="config" category="source" name="Config\RTX_Config.c" version="5.2.0">
         <instance index="0">RTE\CMSIS\RTX_Config.c</instance>
-        <component Capiversion="2.3.0" Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cvendor="ARM" Cversion="5.8.0" condition="RTX5"/>
-        <package name="CMSIS-RTX" schemaVersion="1.7.27" url="https://www.keil.com/pack/" vendor="ARM" version="5.8.0"/>
+        <component Capiversion="2.3.0" Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cvendor="ARM" Cversion="5.9.0" condition="RTX5"/>
+        <package name="CMSIS-RTX" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </file>
       <file attr="config" category="header" name="Config\RTX_Config.h" version="5.6.0">
         <instance index="0">RTE\CMSIS\RTX_Config.h</instance>
-        <component Capiversion="2.3.0" Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cvendor="ARM" Cversion="5.8.0" condition="RTX5"/>
-        <package name="CMSIS-RTX" schemaVersion="1.7.27" url="https://www.keil.com/pack/" vendor="ARM" version="5.8.0"/>
+        <component Capiversion="2.3.0" Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cvendor="ARM" Cversion="5.9.0" condition="RTX5"/>
+        <package name="CMSIS-RTX" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
@@ -746,63 +768,63 @@
         <targetInfos/>
       </file>
       <file attr="config" category="source" condition="STM32F407xx_ARMCC" name="Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f407xx.s" version="2.6.8">
-        <instance index="0">RTE\Device\STM32F407VETx\startup_stm32f407xx.s</instance>
+        <instance index="0" removed="1">RTE\Device\STM32F407VETx\startup_stm32f407xx.s</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="2.6.3" condition="STM32F4 CMSIS"/>
         <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
+        <targetInfos/>
       </file>
       <file attr="config" category="source" name="Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\system_stm32f4xx.c" version="2.6.8">
-        <instance index="0">RTE\Device\STM32F407VETx\system_stm32f4xx.c</instance>
+        <instance index="0" removed="1">RTE\Device\STM32F407VETx\system_stm32f4xx.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="2.6.3" condition="STM32F4 CMSIS"/>
         <package name="STM32F4xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.17.1"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
+        <targetInfos/>
       </file>
       <file attr="config" category="source" name="Network\Config\Net_Config.c" version="7.2.0">
-        <instance index="0">RTE\Network\Net_Config.c</instance>
+        <instance index="0" removed="1">RTE\Network\Net_Config.c</instance>
         <component Cbundle="MDK-Plus" Cclass="Network" Cgroup="CORE" Cvariant="IPv4 Release" Cvendor="Keil" Cversion="7.19.0" condition="CMSIS Core with RTOS" isDefaultVariant="1"/>
         <package name="MDK-Middleware" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="Keil" version="7.17.0"/>
+        <targetInfos/>
+      </file>
+      <file attr="config" category="header" name="Components\Network\Config\Net_Config.h" version="8.0.0">
+        <instance index="0">RTE\Network\Net_Config.h</instance>
+        <component Cbundle="MDK" Cclass="Network" Cgroup="CORE" Cvendor="Keil" Cversion="8.0.0" condition="CMSIS Core with RTOS"/>
+        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.0.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="Network\Config\Net_Config_ETH.h" version="7.4.0">
+      <file attr="config" category="header" name="Components\Network\Config\Net_Config_ETH.h" version="7.5.0">
         <instance index="0">RTE\Network\Net_Config_ETH_0.h</instance>
-        <component Cbundle="MDK-Plus" Cclass="Network" Cgroup="Interface" Csub="ETH" Cvendor="Keil" Cversion="7.19.0" condition="Network Driver ETH" maxInstances="2"/>
-        <package name="MDK-Middleware" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="Keil" version="7.17.0"/>
+        <component Cbundle="MDK" Cclass="Network" Cgroup="Interface" Csub="ETH" Cvendor="Keil" Cversion="8.0.0" condition="Network Driver ETH" maxInstances="2"/>
+        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.0.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </file>
       <file attr="config" category="header" name="Network\Config\Net_Config_ETH.h" version="7.4.0">
         <instance index="1" removed="1">RTE\Network\Net_Config_ETH_1.h</instance>
-        <component Cbundle="MDK-Plus" Cclass="Network" Cgroup="Interface" Csub="ETH" Cvendor="Keil" Cversion="7.18.0" condition="Network Driver ETH" maxInstances="2"/>
-        <package name="MDK-Middleware" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="7.16.0"/>
+        <component Cbundle="MDK-Pro" Cclass="Network" Cgroup="Interface" Csub="ETH" Cvendor="Keil" Cversion="7.17.0" condition="Network Driver ETH" maxInstances="2"/>
+        <package name="MDK-Middleware" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="7.15.0"/>
         <targetInfos/>
       </file>
-      <file attr="config" category="header" name="Network\Config\Net_Config_HTTP_Server.h" version="7.2.0">
-        <instance index="0">RTE\Network\Net_Config_HTTP_Server.h</instance>
-        <component Cbundle="MDK-Plus" Cclass="Network" Cgroup="Service" Csub="Web Server Compact" Cvariant="HTTP" Cvendor="Keil" Cversion="7.19.0" condition="Network Web Server Compact" isDefaultVariant="1"/>
-        <package name="MDK-Middleware" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="Keil" version="7.17.0"/>
-        <targetInfos>
-          <targetInfo name="ChassisController"/>
-        </targetInfos>
+      <file attr="config" category="header" name="Components\Network\Config\Net_Config_HTTP_Server.h" version="7.2.1">
+        <instance index="0" removed="1">RTE\Network\Net_Config_HTTP_Server.h</instance>
+        <component Cbundle="MDK" Cclass="Network" Cgroup="Service" Csub="Web Server Compact" Cvariant="HTTP" Cvendor="Keil" Cversion="8.0.0" condition="Network Web Server Compact" isDefaultVariant="1"/>
+        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.0.0"/>
+        <targetInfos/>
       </file>
-      <file attr="config" category="header" name="Network\Config\Net_Config_TCP.h" version="7.1.1">
+      <file attr="config" category="header" name="Components\Network\Config\Net_Config_TCP.h" version="7.1.2">
         <instance index="0">RTE\Network\Net_Config_TCP.h</instance>
-        <component Cbundle="MDK-Plus" Cclass="Network" Cgroup="Socket" Csub="TCP" Cvendor="Keil" Cversion="7.19.0" condition="Network Interface"/>
-        <package name="MDK-Middleware" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="Keil" version="7.17.0"/>
+        <component Cbundle="MDK" Cclass="Network" Cgroup="Socket" Csub="TCP" Cvendor="Keil" Cversion="8.0.0" condition="Network Interface"/>
+        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.0.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="Network\Config\Net_Config_UDP.h" version="5.1.0">
+      <file attr="config" category="header" name="Components\Network\Config\Net_Config_UDP.h" version="5.1.1">
         <instance index="0">RTE\Network\Net_Config_UDP.h</instance>
-        <component Cbundle="MDK-Plus" Cclass="Network" Cgroup="Socket" Csub="UDP" Cvendor="Keil" Cversion="7.19.0" condition="Network Interface"/>
-        <package name="MDK-Middleware" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="Keil" version="7.17.0"/>
+        <component Cbundle="MDK" Cclass="Network" Cgroup="Socket" Csub="UDP" Cvendor="Keil" Cversion="8.0.0" condition="Network Interface"/>
+        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.0.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
@@ -812,6 +834,14 @@
         <component Cbundle="MDK-Plus" Cclass="Network" Cgroup="CORE" Cvariant="IPv4 Debug" Cvendor="Keil" Cversion="7.18.0" condition="CMSIS Core with RTOS and Event Recorder"/>
         <package name="MDK-Middleware" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="7.16.0"/>
         <targetInfos/>
+      </file>
+      <file attr="config" category="header" name="Components\Network\Config\Net_Debug.h" version="8.0.0">
+        <instance index="0">RTE\Network\Net_Debug.h</instance>
+        <component Cbundle="MDK" Cclass="Network" Cgroup="CORE" Cvendor="Keil" Cversion="8.0.0" condition="CMSIS Core with RTOS"/>
+        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.0.0"/>
+        <targetInfos>
+          <targetInfo name="ChassisController"/>
+        </targetInfos>
       </file>
     </files>
   </RTE>

@@ -1,0 +1,5 @@
+load STM32F407VETx
+project name STM32CubeMX
+project toolchain "MDK-ARM V5"
+project path "F:\ROS_Little_Round\ChassisController\STM32CubeMX\ChassisController"
+SetCopyLibrary "copy only"

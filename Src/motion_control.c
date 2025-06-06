@@ -70,18 +70,22 @@ static void InitSystem(void)
     osDelay(500);
     DCMotor_Init();
     RC_Receiver_Init();
-    ROS_Interface_Init();
-	// Initialize network interface
-	netStatus status = netInitialize();
+		ROS_Interface_Init();
+		// Initialize network interface
+		netStatus status = netInitialize();
 }
 
 static void ReadReceiver(void* arg)
 {
     ReceiverValues_t receiverValue = Receiver_Read();
-    // Turn receiver value to angular velocity and velocity.
-    float omega = -(float)receiverValue.steering / MAX_RECEIVER_CHANNEL_SHIFT * MAX_ANGULAR_VELOCITY;
-    float velocity = (float)receiverValue.throttle / (2 * MAX_RECEIVER_CHANNEL_SHIFT) * MAX_VELOCITY;
-    // Send to motion control process.
-    MotionMessage_t msg = {velocity, omega};
-    osMessageQueuePut(messageQueue, &msg, 0, 0);
+    float omega, velocity;
+    if (!receiverValue.failSafe && !receiverValue.frameLost)
+    {
+        // Turn receiver value to angular velocity and velocity.
+        omega = -(float)receiverValue.steering / MAX_RECEIVER_CHANNEL_SHIFT * MAX_ANGULAR_VELOCITY;
+        velocity = (float)receiverValue.throttle / (2 * MAX_RECEIVER_CHANNEL_SHIFT) * MAX_VELOCITY;
+        // Send to motion control process.
+        MotionMessage_t msg = {velocity, omega};
+        osMessageQueuePut(messageQueue, &msg, 0, 0);
+    }
 }

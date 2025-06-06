@@ -1,18 +1,19 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network:Interface
- * Copyright (c) 2004-2021 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    Net_Config_ETH_0.h
  * Purpose: Network Configuration for ETH Interface
- * Rev.:    V7.4.0
+ * Rev.:    V7.5.0
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
+//------ With VS Code: Open Preview for Configuration Wizard -------------------
 
 // <h>Ethernet Network Interface 0
 #define ETH0_ENABLE             1
 
-//   <o>Connect to hardware via Driver_ETH# <0-255>
+//   <y>Connect to hardware via Driver_ETH#
 //   <i>Select driver control block for MAC and PHY interface
 #define ETH0_DRIVER             0
 
@@ -21,7 +22,7 @@
 //   <i>Value FF-FF-FF-FF-FF-FF is not allowed,
 //   <i>LSB of first byte must be 0 (an ethernet Multicast bit).
 //   <i>Default: "1E-30-6C-A2-45-5E"
-#define ETH0_MAC_ADDR           "1E-30-6C-A2-45-55"
+#define ETH0_MAC_ADDR           "1E-30-6C-A2-45-5E"
 
 //   <e>VLAN
 //   <i>Enable or disable Virtual LAN
@@ -40,7 +41,7 @@
 //     <s.15>IP Address
 //     <i>Static IPv4 Address in text representation
 //     <i>Default: "192.168.0.100"
-#define ETH0_IP4_ADDR           "192.168.101.3"
+#define ETH0_IP4_ADDR           "192.168.0.100"
 
 //     <s.15>Subnet mask
 //     <i>Local Subnet mask in text representation
@@ -50,7 +51,7 @@
 //     <s.15>Default Gateway
 //     <i>IP Address of Default Gateway in text representation
 //     <i>Default: "192.168.0.254"
-#define ETH0_IP4_GATEWAY        "192.168.101.1"
+#define ETH0_IP4_GATEWAY        "192.168.0.254"
 
 //     <s.15>Primary DNS Server
 //     <i>IP Address of Primary DNS Server in text representation
@@ -107,7 +108,7 @@
 
 //     <e>IGMP Group Management
 //     <i>Enable or disable Internet Group Management Protocol
-#define ETH0_IGMP_ENABLE        0
+#define ETH0_IGMP_ENABLE        1
 
 //       <o>Membership Table size <2-50>
 //       <i>Number of Groups this host can join
@@ -124,7 +125,7 @@
 //     <i>When this option is enabled, local IP address, Net Mask
 //     <i>and Default Gateway are obtained automatically from
 //     <i>the DHCP Server on local LAN.
-#define ETH0_DHCP_ENABLE        0
+#define ETH0_DHCP_ENABLE        1
 
 //       <s.40>Vendor Class Identifier
 //       <i>This value is optional. If specified, it is added
@@ -151,7 +152,7 @@
 
 //   <e>IPv6
 //   <i>Enable IPv6 Protocol for Network Interface
-#define ETH0_IP6_ENABLE         1
+#define ETH0_IP6_ENABLE         0
 
 //     <s.40>IPv6 Address
 //     <i>Static IPv6 Address in text representation
@@ -216,10 +217,20 @@
 #define ETH0_NDP_RESEND_TOUT    2
 //     </h>
 
+//     <e>Multicast Listener Discovery
+//     <i>Enable or disable Multicast Listener Discovery Protocol
+#define ETH0_MLD_ENABLE         0
+
+//       <o>Membership Table size <2-50>
+//       <i>Number of Groups this node can join
+//       <i>Default: 5
+#define ETH0_MLD_TAB_SIZE       5
+//     </e>
+
 //     <e>Dynamic Host Configuration
 //     <i>When this option is enabled, local IPv6 address is
 //     <i>automatically configured.
-#define ETH0_DHCP6_ENABLE       0
+#define ETH0_DHCP6_ENABLE       1
 
 //       <o>DHCPv6 Client Mode  <0=>Stateless Mode <1=>Statefull Mode
 //       <i>Stateless DHCPv6 Client uses router advertisements
@@ -254,12 +265,10 @@
 //   <i>These settings are used to optimize usage of OS resources.
 //     <o>Interface Thread Stack Size <512-65535:4>
 //     <i>Default: 512 bytes
-#define ETH0_THREAD_STACK_SIZE  1024
+#define ETH0_THREAD_STACK_SIZE  2048
 
 //        Interface Thread Priority
 #define ETH0_THREAD_PRIORITY    osPriorityAboveNormal
 
 //   </h>
 // </h>
-
-//------------- <<< end of configuration section >>> ---------------------------

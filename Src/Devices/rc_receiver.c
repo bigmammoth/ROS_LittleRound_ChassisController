@@ -39,6 +39,8 @@ static void RC_Receiver_Process(void* arg)
         {
             receiverValue.steering = (int16_t)receiverChannel.channelValue[0] - MID_RECEIVER_CHANNEL_VALUE;
             receiverValue.throttle = MID_RECEIVER_CHANNEL_VALUE - (int16_t)receiverChannel.channelValue[2] + MAX_RECEIVER_CHANNEL_SHIFT;
+            receiverValue.failSafe = receiverChannel.flagBit_Failsafe;
+            receiverValue.frameLost = receiverChannel.flagBit_FrameLost;
         }
     }
 }

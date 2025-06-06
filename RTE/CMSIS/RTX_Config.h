@@ -44,7 +44,7 @@
 //   <i> Defines the combined global dynamic memory size.
 //   <i> Default: 32768
 #ifndef OS_DYNAMIC_MEM_SIZE
-#define OS_DYNAMIC_MEM_SIZE         90000
+#define OS_DYNAMIC_MEM_SIZE         86000
 #endif
  
 //   <o>Kernel Tick Frequency [Hz] <1-1000000>
@@ -179,7 +179,7 @@
 //   <i> Defines stack size for threads with zero stack size specified.
 //   <i> Default: 3072
 #ifndef OS_STACK_SIZE
-#define OS_STACK_SIZE               512
+#define OS_STACK_SIZE               1024
 #endif
  
 //   <o>Idle Thread Stack size [bytes] <72-1073741824:8>
@@ -222,7 +222,7 @@
 //   <i> Initializes thread stack with watermark pattern for analyzing stack usage.
 //   <i> Enabling this option increases significantly the execution time of thread creation.
 #ifndef OS_STACK_WATERMARK
-#define OS_STACK_WATERMARK          1
+#define OS_STACK_WATERMARK          0
 #endif
  
 //   <o>Default Processor mode for Thread execution

@@ -1,0 +1,193 @@
+build-gen:
+  board: 
+  compiler: AC6
+  device: STM32F407VETx
+  generated-by: uVision version 5.42.0.0
+  processor:
+    core: Cortex-M4
+    dsp: off
+    endian: little
+    fpu: sp
+  add-path:
+    - D:/ROS_Little_Round/ChassisController/Src
+    - D:/ROS_Little_Round/ChassisController/Src/Peripherals
+    - D:/ROS_Little_Round/ChassisController/Src/Devices
+  components:
+    - component: ARM::CMSIS:CORE@6.1.0
+      from-pack: ARM::CMSIS@6.1.0
+    - component: ARM::CMSIS:OS Tick:SysTick@1.0.5
+      from-pack: ARM::CMSIS@6.1.0
+      files:
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS/6.1.0/CMSIS/RTOS2/Source/os_systick.c
+          category: sourceC
+    - component: ARM::CMSIS:RTOS2:Keil RTX5&Source@5.9.0
+      from-pack: ARM::CMSIS-RTX@5.9.0
+      files:
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-RTX/5.9.0/Source/GCC/irq_armv7m.S
+          category: sourceAsm
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-RTX/5.9.0/Source/rtx_delay.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-RTX/5.9.0/Source/rtx_evflags.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-RTX/5.9.0/Source/rtx_evr.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-RTX/5.9.0/Source/rtx_kernel.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-RTX/5.9.0/Source/rtx_lib.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-RTX/5.9.0/Source/rtx_memory.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-RTX/5.9.0/Source/rtx_mempool.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-RTX/5.9.0/Source/rtx_msgqueue.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-RTX/5.9.0/Source/rtx_mutex.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-RTX/5.9.0/Source/rtx_semaphore.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-RTX/5.9.0/Source/rtx_system.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-RTX/5.9.0/Source/rtx_thread.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-RTX/5.9.0/Source/rtx_timer.c
+          category: sourceC
+        - file: D:/ROS_Little_Round/ChassisController/RTE/CMSIS/RTX_Config.c
+          category: sourceC
+        - file: D:/ROS_Little_Round/ChassisController/RTE/CMSIS/RTX_Config.h
+          category: header
+    - component: Keil::CMSIS Driver:Ethernet MAC@3.1.0
+      from-pack: ARM::CMSIS-Driver_STM32@1.2.0
+      files:
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-Driver_STM32/1.2.0/Drivers/ETH_MAC_STM32.c
+          category: sourceC
+    - component: Keil::CMSIS Driver:Ethernet PHY:DP83848C@6.2.0
+      from-pack: ARM::CMSIS-Driver@2.10.0
+      files:
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-Driver/2.10.0/Ethernet_PHY/DP83848C/PHY_DP83848C.c
+          category: sourceC
+    - component: Keil::Device:CubeMX@1.0.0
+      from-pack: Keil::STM32F4xx_DFP@3.0.0
+    - component: Keil::Network&MDK:CORE@8.0.0
+      from-pack: Keil::MDK-Middleware@8.0.0
+      files:
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_addr.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_arp.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_base64.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_common.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_config.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_debug.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_dhcp6_client.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_dhcp_client.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_icmp.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_icmp6.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_igmp.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_ip4.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_ip4_frag.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_ip6.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_ip6_frag.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_loopback.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_md5.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_mem.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_mld.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_nbns_client.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_ndp.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_ping_core.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_sys.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_version.c
+          category: sourceC
+        - file: D:/ROS_Little_Round/ChassisController/RTE/Network/Net_Config.h
+          category: header
+        - file: D:/ROS_Little_Round/ChassisController/RTE/Network/Net_Debug.h
+          category: header
+    - component: Keil::Network&MDK:Interface:ETH@8.0.0
+      from-pack: Keil::MDK-Middleware@8.0.0
+      files:
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_eth.c
+          category: sourceC
+        - file: D:/ROS_Little_Round/ChassisController/RTE/Network/Net_Config_ETH_0.h
+          category: header
+    - component: Keil::Network&MDK:Socket:TCP@8.0.0
+      from-pack: Keil::MDK-Middleware@8.0.0
+      files:
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_tcp.c
+          category: sourceC
+        - file: D:/ROS_Little_Round/ChassisController/RTE/Network/Net_Config_TCP.h
+          category: header
+    - component: Keil::Network&MDK:Socket:UDP@8.0.0
+      from-pack: Keil::MDK-Middleware@8.0.0
+      files:
+        - file: D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.0.0/Components/Network/Source/net_udp.c
+          category: sourceC
+        - file: D:/ROS_Little_Round/ChassisController/RTE/Network/Net_Config_UDP.h
+          category: header
+  apis:
+    - api: CMSIS Driver:Ethernet MAC(API)@2.2.0
+      from-pack: ARM::CMSIS@6.1.0
+    - api: CMSIS Driver:Ethernet PHY(API)@2.2.0
+      from-pack: ARM::CMSIS@6.1.0
+    - api: CMSIS:OS Tick(API)@1.0.1
+      from-pack: ARM::CMSIS@6.1.0
+    - api: CMSIS:RTOS2(API)@2.3.0
+      from-pack: ARM::CMSIS@6.1.0
+  groups:
+    - group: Source
+      files:
+        - file: D:/ROS_Little_Round/ChassisController/Src/motion_control.c
+          category: sourceC
+        - file: D:/ROS_Little_Round/ChassisController/Src/ros_interface.c
+          category: sourceC
+    - group: Algorithm
+      files:
+        - file: D:/ROS_Little_Round/ChassisController/Src/Algorithm/crc32.c
+          category: sourceC
+        - file: D:/ROS_Little_Round/ChassisController/Src/Algorithm/pid.c
+          category: sourceC
+        - file: D:/ROS_Little_Round/ChassisController/Src/Algorithm/kalman_filter.c
+          category: sourceC
+    - group: Drivers
+      files:
+        - file: D:/ROS_Little_Round/ChassisController/Src/Devices/battery.c
+          category: sourceC
+        - file: D:/ROS_Little_Round/ChassisController/Src/Devices/dc_motor.c
+          category: sourceC
+        - file: D:/ROS_Little_Round/ChassisController/Src/Devices/w25qxx.c
+          category: sourceC
+        - file: D:/ROS_Little_Round/ChassisController/Src/Devices/rc_receiver.c
+          category: sourceC
+    - group: Peripherals
+      files:
+        - file: D:/ROS_Little_Round/ChassisController/Src/Peripherals/flash.c
+          category: sourceC
+        - file: D:/ROS_Little_Round/ChassisController/Src/Peripherals/spi.c
+          category: sourceC
+        - file: D:/ROS_Little_Round/ChassisController/Src/Peripherals/timer.c
+          category: sourceC
+        - file: D:/ROS_Little_Round/ChassisController/Src/Peripherals/usart.c
+          category: sourceC
+    - group: Protocol
+      files:
+        - file: D:/ROS_Little_Round/ChassisController/Src/Protocol/s_bus.c
+          category: sourceC

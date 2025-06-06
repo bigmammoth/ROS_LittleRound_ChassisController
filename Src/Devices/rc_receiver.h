@@ -6,6 +6,8 @@
 typedef struct receiver_values {
     int16_t steering;
     int16_t throttle;
+    uint16_t failSafe;
+    uint16_t frameLost;
 } ReceiverValues_t;
 
 void RC_Receiver_Init(void);

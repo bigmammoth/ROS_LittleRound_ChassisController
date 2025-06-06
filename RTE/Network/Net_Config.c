@@ -15,7 +15,7 @@
 //   <i>This is the name under which embedded host can be
 //   <i>accessed on a local area network.
 //   <i>Default: "my_host"
-#define NET_HOST_NAME           "ROS_LittleRound"
+#define NET_HOST_NAME           "my_host"
 
 //   <o>Memory Pool Size <1536-262144:4>
 //   <i>This is the size of a memory pool in bytes. Buffers for
@@ -33,7 +33,7 @@
 //   <i>These settings are used to optimize usage of OS resources.
 //     <o>Core Thread Stack Size <512-65535:4>
 //     <i>Default: 1024 bytes
-#define NET_THREAD_STACK_SIZE   2048
+#define NET_THREAD_STACK_SIZE   1024
 
 //        Core Thread Priority
 #define NET_THREAD_PRIORITY     osPriorityNormal
