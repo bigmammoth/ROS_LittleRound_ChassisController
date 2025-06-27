@@ -39,6 +39,7 @@ static void RC_Receiver_Process(void* arg)
         {
             receiverValue.steering = (int16_t)receiverChannel.channelValue[0] - MID_RECEIVER_CHANNEL_VALUE;
             receiverValue.throttle = MID_RECEIVER_CHANNEL_VALUE - (int16_t)receiverChannel.channelValue[2] + MAX_RECEIVER_CHANNEL_SHIFT;
+            receiverValue.manualMode = (receiverChannel.channelValue[5] > MID_RECEIVER_CHANNEL_VALUE) ? 1 : 0; // Assuming channel 6 is used for manual/automatic mode
             receiverValue.failSafe = receiverChannel.flagBit_Failsafe;
             receiverValue.frameLost = receiverChannel.flagBit_FrameLost;
         }

@@ -143,3 +143,23 @@ static void InputCaptureCallback(int32_t motorID, int32_t channelID, int32_t cap
     lastCaputerCounter[motorID] = captureCounter; 
     encoderCaptureChange[motorID] = 0;    
 }
+
+/**
+ * @brief Get the angular speed of the motor
+ * @param motorId The ID of the motor
+ * @return The angular speed in rad/s
+ */
+float DCMotor_GetAngularSpeed(uint32_t motorId)
+{
+    return measuredAngularSpeed[motorId];
+}
+
+/**
+ * @brief Get the encoder value of the motor
+ * @param motorId The ID of the motor
+ * @return The encoder value in rounds
+ */
+double DCMotor_GetEncoderValue(uint32_t motorId)
+{
+    return (double)encoderValue[motorId] / (double)EDGE_PER_ROUND; // Convert encoder counts to rounds
+}

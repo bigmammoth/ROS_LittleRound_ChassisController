@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\Src;.\Src\Peripherals;.\Src\Devices</IncludePath>
+              <IncludePath>.\Src;.\Src\Peripherals;.\Src\Devices;.\Src\MiddleWare</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -623,6 +623,16 @@
               <FileName>stm32f4xx_hal_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\STM32CubeMX\ChassisController\STM32CubeMX\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_spi.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>MiddleWare</GroupName>
+          <Files>
+            <File>
+              <FileName>udp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\MiddleWare\udp.c</FilePath>
             </File>
           </Files>
         </Group>

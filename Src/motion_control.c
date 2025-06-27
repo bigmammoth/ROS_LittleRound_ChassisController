@@ -4,34 +4,35 @@
 #include "dc_motor.h"
 #include "rc_receiver.h"
 #include "ros_interface.h"
+#include "hardware_config.h"
 
-typedef struct motionMessage {
+typedef struct motionMessage
+{
     float velocity;
     float omega;
 } MotionMessage_t;
 
 /* ------------------ Definitions --------------------*/
-// PI
-#define PI 3.14159265358979323846
-#define MESSAGE_QUEUE_SIZE              16
-#define MOTION_CONTROL_TIME_INTERVAL    50          // 50ms
-#define MAX_ANGULAR_VELOCITY            (1*PI)      // rad/s
-#define MAX_VELOCITY                    1.0         // m/s
-#define WHEELS_DISTANCE                 0.16        // 180mm
-#define WHEEL_DIAMETER                  0.064       // 64mm
-#define WHEEL_RADIUS                    (WHEEL_DIAMETER / 2)
-#define WHEEL_SIDE_LEN                  (WHEEL_DIAMETER * 2 * PI)
+#define MESSAGE_QUEUE_SIZE 16
+#define MOTION_CONTROL_TIME_INTERVAL 50 // 50ms
 
 /* --------------- Static variables ---------------- */
 static osThreadId_t threadId;
 static osMessageQueueId_t messageQueue;
 static osTimerId_t periodicTimer;
+static bool isManualMode = true; // Flag to indicate if the robot is in manual mode
 
 /* --------------- Static functions ---------------- */
-static void MotionControl_Process(void*);
+static void MotionControl_Process(void *);
 static void InitSystem(void);
-static void ReadReceiver(void*);
+static void ReadReceiver(void *);
 
+/**
+ * @brief Initialize the Motion Control System
+ * This function initializes the motion control system by creating a message queue,
+ * starting a thread for processing motion control, and setting up a periodic timer
+ * to read receiver values.
+ */
 void MotionControl_Init(void)
 {
     messageQueue = osMessageQueueNew(MESSAGE_QUEUE_SIZE, sizeof(MotionMessage_t), NULL);
@@ -39,43 +40,71 @@ void MotionControl_Init(void)
     periodicTimer = osTimerNew(ReadReceiver, osTimerPeriodic, NULL, NULL);
 }
 
-static void MotionControl_Process(void* arg)
+/**
+ * @brief Motion Control Process
+ * This function is the main process for motion control. It initializes the system,
+ * starts a periodic timer to read receiver values, and processes messages from the
+ * message queue to control the robot's motion.
+ * @param arg pointer to argument (not used)
+ */
+static void MotionControl_Process(void *arg)
 {
     InitSystem();
     MotionMessage_t msg;
     osTimerStart(periodicTimer, MOTION_CONTROL_TIME_INTERVAL);
-	while (true)
-	{
+    while (true)
+    {
         osStatus_t status = osMessageQueueGet(messageQueue, &msg, NULL, osWaitForever);
-        if(status != osOK) continue;
+        if (status != osOK)
+            continue;
         float rightV = msg.velocity + msg.omega * (WHEELS_DISTANCE / 2);
         float leftV = msg.velocity - msg.omega * (WHEELS_DISTANCE / 2);
-        if(rightV > MAX_VELOCITY) rightV = MAX_VELOCITY;
-        else if(rightV < -MAX_VELOCITY) rightV = -MAX_VELOCITY;
-        if(leftV > MAX_VELOCITY) leftV = MAX_VELOCITY;
-        else if(leftV < -MAX_VELOCITY) leftV = -MAX_VELOCITY;
+        if (rightV > MAX_VELOCITY)
+            rightV = MAX_VELOCITY;
+        else if (rightV < -MAX_VELOCITY)
+            rightV = -MAX_VELOCITY;
+        if (leftV > MAX_VELOCITY)
+            leftV = MAX_VELOCITY;
+        else if (leftV < -MAX_VELOCITY)
+            leftV = -MAX_VELOCITY;
         DCMotor_SetAngularSpeed(0, leftV / WHEEL_RADIUS);
         DCMotor_SetAngularSpeed(1, rightV / WHEEL_RADIUS);
-	}
+    }
 }
 
+/**
+ * @brief Move the robot with specified velocity and angular velocity
+ * This function sends a message to the motion control process to move the robot.
+ * @param velocity linear velocity in m/s
+ * @param omega angular velocity in rad/s
+ */
 void MotionControl_Move(float velocity, float omega)
 {
     MotionMessage_t msg = {velocity, omega};
     osMessageQueuePut(messageQueue, &msg, 0, 0);
 }
 
+/**
+ * @brief Initialize the system components
+ * This function initializes the DC motor, RC receiver, ROS interface, and network interface.
+ */
 static void InitSystem(void)
 {
     osDelay(500);
     DCMotor_Init();
     RC_Receiver_Init();
-		ROS_Interface_Init();
-		// Initialize network interface
-		netStatus status = netInitialize();
+    ROS_Interface_Init();
+    // Initialize network interface
+    netStatus status = netInitialize();
 }
 
-static void ReadReceiver(void* arg)
+/**
+ * @brief Read receiver values and send them to the motion control process
+ * This function reads the receiver values and converts them into velocity and angular velocity.
+ * It then sends these values to the motion control process via a message queue.
+ * @param arg pointer to argument (not used)
+ */
+static void ReadReceiver(void *arg)
 {
     ReceiverValues_t receiverValue = Receiver_Read();
     float omega, velocity;
@@ -84,8 +113,47 @@ static void ReadReceiver(void* arg)
         // Turn receiver value to angular velocity and velocity.
         omega = -(float)receiverValue.steering / MAX_RECEIVER_CHANNEL_SHIFT * MAX_ANGULAR_VELOCITY;
         velocity = (float)receiverValue.throttle / (2 * MAX_RECEIVER_CHANNEL_SHIFT) * MAX_VELOCITY;
+        // Update manual mode status
+        isManualMode = (receiverValue.manualMode != 0);
         // Send to motion control process.
         MotionMessage_t msg = {velocity, omega};
         osMessageQueuePut(messageQueue, &msg, 0, 0);
     }
+}
+
+/**
+ * @brief Get the speed of a wheel
+ * This function retrieves the angular speed of a motor and converts it to linear speed.
+ * @param motorID The ID of the motor
+ * @return The linear speed in m/s
+ */
+float MotionControl_GetWheelSpeed(uint32_t motorID)
+{
+    return DCMotor_GetAngularSpeed(motorID) * WHEEL_RADIUS; // Convert angular speed to linear speed
+}
+
+/**
+ * @brief Get the position of a wheel
+ * This function retrieves the encoder value for a motor and converts it to wheel position.
+ * @param motorID The ID of the motor
+ * @return The wheel position in meters
+ */
+double MotionControl_GetWheelPosition(uint32_t motorID)
+{
+    return DCMotor_GetEncoderValue(motorID) * WHEEL_PERIMETER; // Get the encoder value for the motor
+}
+
+/**
+ * @brief Check if the robot is in manual mode
+ * This function checks the current manual mode status of the robot.
+ * @return true if in manual mode, false otherwise
+ */
+bool MotionControl_IsManualMode(void)
+{
+    return isManualMode; // Return the current manual mode status
+}
+
+uint32_t MotionControl_GetMotorRunningStatus(uint32_t motorID)
+{
+    return 0;
 }
