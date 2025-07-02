@@ -1,3 +1,14 @@
+/**
+ * @file crc32.c
+ * @brief CRC32 calculation implementation
+ * @author Young.R com.wang@hotmail.com
+ * @version 0.1
+ * @date 2022-07-02
+ * This module provides functions to initialize a lookup table for fast CRC-32
+ * computation and to calculate CRC-32 checksums over arbitrary data buffers.
+ * It uses the standard polynomial 0x04C11DB7, initial value 0xFFFFFFFF.
+ */
+
 #include "crc32.h"
 
 /* ------------------ CRC Table ----------------------- */

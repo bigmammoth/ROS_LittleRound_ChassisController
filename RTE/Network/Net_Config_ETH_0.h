@@ -22,7 +22,7 @@
 //   <i>Value FF-FF-FF-FF-FF-FF is not allowed,
 //   <i>LSB of first byte must be 0 (an ethernet Multicast bit).
 //   <i>Default: "1E-30-6C-A2-45-5E"
-#define ETH0_MAC_ADDR           "1E-30-6C-A2-45-5E"
+#define ETH0_MAC_ADDR           "1E-30-6C-A2-45-01"
 
 //   <e>VLAN
 //   <i>Enable or disable Virtual LAN
@@ -41,7 +41,7 @@
 //     <s.15>IP Address
 //     <i>Static IPv4 Address in text representation
 //     <i>Default: "192.168.0.100"
-#define ETH0_IP4_ADDR           "192.168.0.100"
+#define ETH0_IP4_ADDR           "192.168.55.100"
 
 //     <s.15>Subnet mask
 //     <i>Local Subnet mask in text representation
@@ -51,7 +51,7 @@
 //     <s.15>Default Gateway
 //     <i>IP Address of Default Gateway in text representation
 //     <i>Default: "192.168.0.254"
-#define ETH0_IP4_GATEWAY        "192.168.0.254"
+#define ETH0_IP4_GATEWAY        "192.168.55.1"
 
 //     <s.15>Primary DNS Server
 //     <i>IP Address of Primary DNS Server in text representation
@@ -125,7 +125,7 @@
 //     <i>When this option is enabled, local IP address, Net Mask
 //     <i>and Default Gateway are obtained automatically from
 //     <i>the DHCP Server on local LAN.
-#define ETH0_DHCP_ENABLE        1
+#define ETH0_DHCP_ENABLE        0
 
 //       <s.40>Vendor Class Identifier
 //       <i>This value is optional. If specified, it is added

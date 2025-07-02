@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\Src;.\Src\Peripherals;.\Src\Devices;.\Src\MiddleWare</IncludePath>
+              <IncludePath>.\Src;.\Src\Peripherals;.\Src\Devices;.\Src\MiddleWare;.\Src\Algorithm</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

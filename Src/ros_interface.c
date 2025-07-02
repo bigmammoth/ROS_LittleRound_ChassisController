@@ -6,9 +6,6 @@
 #include "hardware_config.h"
 
 /* -------------- Definitions ----------------------- */
-#define EVENT_FLAG_REPLY_SYSTEM_STATUS 0x00000001
-#define EVENT_FLAG_REPLY_MOTOR_INFO 0x00000002
-
 #define ROS_INTERFACE_Q_LEN 16
 #define ROS_INTERFACE_MSG_SIZE (sizeof(UdpSetRobotMotion_t) > sizeof(UdpMotorInfo_t) ? sizeof(UdpSetRobotMotion_t) : sizeof(UdpMotorInfo_t))
 
@@ -26,9 +23,9 @@ static void UDP_Callback(const uint8_t *data, uint32_t size);
 static osMessageQueueId_t appRosInterfaceMsgQueueId;
 static osThreadId_t threadID;
 static osThreadAttr_t threadAttr = {
-    .attr_bits = osThreadDetached,
     .priority = osPriorityNormal,
-    .stack_size = 1024};
+    .stack_size = 1024
+};
 static osTimerId_t periodicTimerReportMotorInofo; // Timer for reporting motor information
 static osTimerId_t periodicTimerReportSystemStatus; // Timer for reporting system status
 static uint32_t upperMachineTimeOut; // Upper machine timeout, used to check if the upper machine is alive

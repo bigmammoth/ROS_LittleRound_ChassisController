@@ -129,6 +129,8 @@ static void ReadReceiver(void *arg)
  */
 float MotionControl_GetWheelSpeed(uint32_t motorID)
 {
+    if (motorID >= TOTAL_MOTOR_NUMBER)
+        return 0.0f; // Invalid motor ID, return 0.0f
     return DCMotor_GetAngularSpeed(motorID) * WHEEL_RADIUS; // Convert angular speed to linear speed
 }
 
@@ -140,6 +142,8 @@ float MotionControl_GetWheelSpeed(uint32_t motorID)
  */
 double MotionControl_GetWheelPosition(uint32_t motorID)
 {
+    if (motorID >= TOTAL_MOTOR_NUMBER)
+        return 0.0; // Invalid motor ID, return 0.0
     return DCMotor_GetEncoderValue(motorID) * WHEEL_PERIMETER; // Get the encoder value for the motor
 }
 

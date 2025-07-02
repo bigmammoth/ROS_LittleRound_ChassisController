@@ -18,10 +18,15 @@ extern TIM_HandleTypeDef htim7;     // For motor's pid control period
 
 /* --------------------- Static variables --------------------------------- */
 static Timer_PeriodCallback_t PerioidCallback;
-static Timer_EncoderOverflowCallback_t EncoderCallback;
+static Timer_EncoderOverflowCallback_t EncoderOverflowCallback[TOTAL_ENCODER_NUMBER];
 static Timer_InputCaptureCallback_t InputCaptureCallback;
 static TIM_HandleTypeDef encoderDictionary[TOTAL_ENCODER_NUMBER];
 static PWM_Channel_t pwmChannel[TOTAL_MOTOR_NUMBER];
+
+/* --------------------- Static Functions --------------------------------- */
+static void Timer7_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
+static void Timer3_PeriodElapsedCallback(TIM_HandleTypeDef *htim); 
+static void Timer4_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
 
 /**
  * @brief Initialize timers for motor.
@@ -37,12 +42,14 @@ void Timer_TimersForMotorInit(void)
     pwmChannel[1].pwmTimer = htim9;
     pwmChannel[1].pwmChannel0 = TIM_CHANNEL_1;
     pwmChannel[1].pwmChannel1 = TIM_CHANNEL_2;
+
+    HAL_TIM_RegisterCallback(&htim7, HAL_TIM_PERIOD_ELAPSED_CB_ID, Timer7_PeriodElapsedCallback);
+    HAL_TIM_RegisterCallback(&htim3, HAL_TIM_PERIOD_ELAPSED_CB_ID, Timer3_PeriodElapsedCallback);
+    HAL_TIM_RegisterCallback(&htim4, HAL_TIM_PERIOD_ELAPSED_CB_ID, Timer4_PeriodElapsedCallback);
+
     for(int i = 0; i < TOTAL_ENCODER_NUMBER; i++)
-    {
         HAL_TIM_Base_Start_IT(&encoderDictionary[i]);
-        HAL_TIM_IC_Start_IT(&encoderDictionary[i], TIM_CHANNEL_1);
-        HAL_TIM_IC_Start_IT(&encoderDictionary[i], TIM_CHANNEL_2);
-    }
+
     for(int i = 0; i < TOTAL_MOTOR_NUMBER; i++)
     {
         HAL_TIM_PWM_Start(&pwmChannel[i].pwmTimer, pwmChannel[i].pwmChannel0);
@@ -52,67 +59,36 @@ void Timer_TimersForMotorInit(void)
 }
 
 /**
- * @brief Timer callback function
+ * @brief Timer7 Period Elapsed Callback
  * 
- * @param htim 
+ * It is be used to handle encoder overflow.
  */
-void Timer_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+void Timer7_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-    if(htim->Instance == TIM2)
-    {}
-    else if(htim->Instance == TIM3) // For motor0's encoder
-    {
-        if(EncoderCallback != NULL) EncoderCallback(0);
-    }
-    else if(htim->Instance == TIM4) // For motor1's encoder
-    {
-        if(EncoderCallback != NULL)  EncoderCallback(1);
-    }
-    else if(htim->Instance == TIM9)
-    {}
-    else if(htim->Instance == TIM7) // Used for motor control cycle, interrupts every 1ms
-    {
-        if(PerioidCallback != NULL)  PerioidCallback();
-    }
+    // This function is called every 1ms by TIM7
+    if(PerioidCallback != NULL) PerioidCallback();
 }
 
-void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
+/**
+ * @brief Timer3 overflow Callback
+ * 
+ * It is be used to handle encoder overflow.
+ */
+void Timer3_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-    uint32_t motor, channel, capture, edge, pairLevel;
-    if(htim->Instance == TIM3) 
-    {
-        motor = 0;
-        if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)
-        {
-            capture = htim->Instance->CCR1;
-            edge = LL_GPIO_IsInputPinSet(MOTOR0_IC1_GPIO_Port, MOTOR0_IC1_Pin);
-            pairLevel = LL_GPIO_IsInputPinSet(MOTOR0_IC2_GPIO_Port, MOTOR0_IC2_Pin);
-        }
-        else
-        {
-            capture = htim->Instance->CCR2;
-            edge = LL_GPIO_IsInputPinSet(MOTOR0_IC2_GPIO_Port, MOTOR0_IC2_Pin);
-            pairLevel = LL_GPIO_IsInputPinSet(MOTOR0_IC1_GPIO_Port, MOTOR0_IC1_Pin);
-        }
-    }
-    else if(htim->Instance == TIM4)
-    {
-        motor = 1;
-        if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)
-        {
-            capture = htim->Instance->CCR1;
-            edge = LL_GPIO_IsInputPinSet(MOTOR1_IC1_GPIO_Port, MOTOR1_IC1_Pin);
-            pairLevel = LL_GPIO_IsInputPinSet(MOTOR1_IC2_GPIO_Port, MOTOR1_IC2_Pin);
-        }
-        else
-        {
-            capture = htim->Instance->CCR2;
-            edge = LL_GPIO_IsInputPinSet(MOTOR1_IC2_GPIO_Port, MOTOR1_IC2_Pin);
-            pairLevel = LL_GPIO_IsInputPinSet(MOTOR1_IC1_GPIO_Port, MOTOR1_IC1_Pin);
-        }
-    }
-    channel = htim->Channel - 1;
-    InputCaptureCallback(motor, channel, capture, edge, pairLevel);
+    // This function is called every 1ms by TIM3
+    if(EncoderOverflowCallback[0] != NULL) EncoderOverflowCallback[0]();
+}
+
+/**
+ * @brief Timer4 overflow callback
+ * 
+ * It is used to handle encoder overflow.
+ */
+void Timer4_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+    // This function is called every 1ms by TIM4
+    if(EncoderOverflowCallback[1] != NULL) EncoderOverflowCallback[1]();
 }
 
 uint32_t Timer_ReadEncoder(uint32_t encoderID)
@@ -125,26 +101,29 @@ void Timer_RegisterPeriodCallback(Timer_PeriodCallback_t callback)
     if(PerioidCallback == NULL) PerioidCallback = callback;
 }
 
-void Timer_RegisterEncoderOverflowCallback(Timer_EncoderOverflowCallback_t callback)
+void Timer_RegisterEncoderOverflowCallback(uint32_t encoderID, Timer_EncoderOverflowCallback_t callback)
 {
-    if (EncoderCallback == NULL) EncoderCallback = callback;
+    if (encoderID >= TOTAL_ENCODER_NUMBER)
+        return; // Invalid encoder ID
+    if (EncoderOverflowCallback[encoderID] == NULL) EncoderOverflowCallback[encoderID] = callback;
 }
 
-void Timer_RegisterInputCaptureCallback(Timer_InputCaptureCallback_t callback)
+void Timer_PWM_SetDuty(uint32_t motorID, float duty)
 {
-    if(InputCaptureCallback == NULL) InputCaptureCallback = callback;
-}
-
-void Timer_SetPWM(uint32_t motorID, int32_t pwmValue)
-{
-    if (pwmValue >= 0)
+    if (motorID >= TOTAL_MOTOR_NUMBER)
+        return; // Invalid motor ID
+    if (duty < -1.0f) duty = -1.0f; // Limit the duty cycle to -1.0f to 1.0f
+    else if (duty > 1.0f) duty = 1.0f; // Limit the duty cycle to -1.0f to 1.0f
+    uint16_t pwmValue;
+    if (duty >= 0)
     {
+        pwmValue = duty * __HAL_TIM_GET_AUTORELOAD(&pwmChannel[motorID].pwmTimer);
         __HAL_TIM_SetCompare(&pwmChannel[motorID].pwmTimer, pwmChannel[motorID].pwmChannel0, pwmValue);
         __HAL_TIM_SetCompare(&pwmChannel[motorID].pwmTimer, pwmChannel[motorID].pwmChannel1, 0);
     }
     else
     {
-        pwmValue = -pwmValue;
+        pwmValue = -duty * __HAL_TIM_GET_AUTORELOAD(&pwmChannel[motorID].pwmTimer);
         __HAL_TIM_SetCompare(&pwmChannel[motorID].pwmTimer, pwmChannel[motorID].pwmChannel0, 0);
         __HAL_TIM_SetCompare(&pwmChannel[motorID].pwmTimer, pwmChannel[motorID].pwmChannel1, pwmValue);
     }

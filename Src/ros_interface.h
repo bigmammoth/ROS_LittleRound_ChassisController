@@ -45,6 +45,4 @@ typedef struct
 } UdpSystemStatus_t;
 
 /* ---------------- Functions ---------------------------*/
-void PutUdpMessageToRosInterface(const uint8_t *msg, uint32_t size);
-void ReportUdpMotorInfo(void);
 void ROS_Interface_Init(void);

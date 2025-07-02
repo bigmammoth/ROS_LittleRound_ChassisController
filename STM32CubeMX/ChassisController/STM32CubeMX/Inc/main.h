@@ -70,14 +70,6 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define SPI2_CSS_Pin LL_GPIO_PIN_3
 #define SPI2_CSS_GPIO_Port GPIOE
-#define MOTOR1_IC1_Pin LL_GPIO_PIN_12
-#define MOTOR1_IC1_GPIO_Port GPIOD
-#define MOTOR1_IC2_Pin LL_GPIO_PIN_13
-#define MOTOR1_IC2_GPIO_Port GPIOD
-#define MOTOR0_IC1_Pin LL_GPIO_PIN_6
-#define MOTOR0_IC1_GPIO_Port GPIOC
-#define MOTOR0_IC2_Pin LL_GPIO_PIN_7
-#define MOTOR0_IC2_GPIO_Port GPIOC
 
 /* USER CODE BEGIN Private defines */
 
