@@ -120,7 +120,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name>D</Name>
+          <Name>|</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -170,6 +170,11 @@
           <WinNumber>1</WinNumber>
           <ItemText>pid</ItemText>
         </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>filter</ItemText>
+        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>
@@ -190,7 +195,7 @@
         <Ww>
           <count>3</count>
           <WinNumber>2</WinNumber>
-          <ItemText>receiverChannel</ItemText>
+          <ItemText>receiverChannel,0x0A</ItemText>
         </Ww>
       </WatchWindow2>
       <ScvdPack>
@@ -867,7 +872,7 @@
 
   <Group>
     <GroupName>::Network</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>1</RteFlg>

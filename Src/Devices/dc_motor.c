@@ -8,7 +8,7 @@
 // PI
 #define PI 3.14159265358979323846
 // The sum of the edge counts of the A and B phases of the encoder for every turn of the reducer.
-#define EDGE_PER_ROUND	(390*4)
+#define EDGE_PER_ROUND	(13*30*4) // 13 pulses per turn, 30:1 reducer, 4 edges per pulse
 // PID parameters
 #define KP  0.1f
 #define KI  0.01f
@@ -24,7 +24,7 @@
 // PID control frequency
 #define PID_CONTROL_FREQUENCY   50      // 50Hz
 // PID control period in seconds
-#define PID_CONTROL_PERIOD_S    0.02f   // 20ms
+#define PID_CONTROL_PERIOD_S    (1.0f / (float)PID_CONTROL_FREQUENCY)   // 20ms
 
 /* --------------- Static functions ------------------- */
 static void PeriodCallback(void);

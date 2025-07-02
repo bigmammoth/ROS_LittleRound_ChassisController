@@ -1,14 +1,13 @@
 #pragma once
 
-#define MAX_RECEIVER_CHANNEL_SHIFT  671
-#define MID_RECEIVER_CHANNEL_VALUE  1024
+#include <stdbool.h>
 
 typedef struct receiver_values {
-    int16_t steering;
-    int16_t throttle;
-    uint16_t manualMode; // 0 - manual mode, 1 - automatic mode
-    uint16_t failSafe;
-    uint16_t frameLost;
+    float steering; //  -1 to 1
+    float throttle; //  0 to 1
+    bool autoMode; // 0 - manual mode, 1 - automatic mode
+    bool failSafe;
+    bool frameLost;
 } ReceiverValues_t;
 
 void RC_Receiver_Init(void);

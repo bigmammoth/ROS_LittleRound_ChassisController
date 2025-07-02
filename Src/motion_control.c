@@ -20,7 +20,7 @@ typedef struct motionMessage
 static osThreadId_t threadId;
 static osMessageQueueId_t messageQueue;
 static osTimerId_t periodicTimer;
-static bool isManualMode = true; // Flag to indicate if the robot is in manual mode
+static bool isAutoPilotMode = true; // Flag to indicate if the robot is in manual mode
 
 /* --------------- Static functions ---------------- */
 static void MotionControl_Process(void *);
@@ -111,13 +111,16 @@ static void ReadReceiver(void *arg)
     if (!receiverValue.failSafe && !receiverValue.frameLost)
     {
         // Turn receiver value to angular velocity and velocity.
-        omega = -(float)receiverValue.steering / MAX_RECEIVER_CHANNEL_SHIFT * MAX_ANGULAR_VELOCITY;
-        velocity = (float)receiverValue.throttle / (2 * MAX_RECEIVER_CHANNEL_SHIFT) * MAX_VELOCITY;
+        omega = -receiverValue.steering * MAX_ANGULAR_VELOCITY;
+        velocity = receiverValue.throttle * MAX_VELOCITY;
         // Update manual mode status
-        isManualMode = (receiverValue.manualMode != 0);
-        // Send to motion control process.
-        MotionMessage_t msg = {velocity, omega};
-        osMessageQueuePut(messageQueue, &msg, 0, 0);
+        isAutoPilotMode = receiverValue.autoMode;
+        if (!isAutoPilotMode)
+        {
+            // Send to motion control process.
+            MotionMessage_t msg = {velocity, omega};
+            osMessageQueuePut(messageQueue, &msg, 0, 0);
+        }
     }
 }
 
@@ -152,9 +155,9 @@ double MotionControl_GetWheelPosition(uint32_t motorID)
  * This function checks the current manual mode status of the robot.
  * @return true if in manual mode, false otherwise
  */
-bool MotionControl_IsManualMode(void)
+bool MotionControl_IsAutoPilotMode(void)
 {
-    return isManualMode; // Return the current manual mode status
+    return isAutoPilotMode; // Return the current manual mode status
 }
 
 uint32_t MotionControl_GetMotorRunningStatus(uint32_t motorID)

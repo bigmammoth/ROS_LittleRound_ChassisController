@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\ChassisController.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\ChassisController.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6230001: Last Updated: Wed Jul  2 16:06:25 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6230001: Last Updated: Wed Jul  2 19:09:15 2025
 <BR><P>
 <H3>Maximum Stack Usage =        860 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -2142,7 +2142,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[f7]"></a>MotionControl_IsManualMode</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, motion_control.o(.text.MotionControl_IsManualMode))
+<P><STRONG><a name="[f7]"></a>MotionControl_IsAutoPilotMode</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, motion_control.o(.text.MotionControl_IsAutoPilotMode))
 <BR><BR>[Called By]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AnalysisIncomingUdpData
 <LI><a href="#[19e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReportSystemStatus
 </UL>
@@ -4599,7 +4599,7 @@ Local Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> motion_control.o(.text.MotionControl_Init)
 </UL>
-<P><STRONG><a name="[66]"></a>ReadReceiver</STRONG> (Thumb, 176 bytes, Stack size 40 bytes, motion_control.o(.text.ReadReceiver))
+<P><STRONG><a name="[66]"></a>ReadReceiver</STRONG> (Thumb, 144 bytes, Stack size 40 bytes, motion_control.o(.text.ReadReceiver))
 <BR><BR>[Stack]<UL><LI>Max Depth = 228<LI>Call Chain = ReadReceiver &rArr; osMessageQueuePut &rArr; isrRtxMessageQueuePut &rArr; osRtxPostProcess &rArr; isr_queue_put &rArr; atomic_inc16_lt
 </UL>
 <BR>[Calls]<UL><LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessageQueuePut
@@ -4655,7 +4655,7 @@ Local Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelGetTickCount
 <LI><a href="#[1a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UDP_SendData
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MotionControl_IsManualMode
+<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MotionControl_IsAutoPilotMode
 </UL>
 <BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ROS_Interface_Process
 </UL>
@@ -4669,7 +4669,7 @@ Local Symbols
 <P><STRONG><a name="[f6]"></a>AnalysisIncomingUdpData</STRONG> (Thumb, 100 bytes, Stack size 24 bytes, ros_interface.o(.text.AnalysisIncomingUdpData))
 <BR><BR>[Stack]<UL><LI>Max Depth = 236<LI>Call Chain = AnalysisIncomingUdpData &rArr; MotionControl_Move &rArr; osMessageQueuePut &rArr; isrRtxMessageQueuePut &rArr; osRtxPostProcess &rArr; isr_queue_put &rArr; atomic_inc16_lt
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MotionControl_IsManualMode
+<BR>[Calls]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MotionControl_IsAutoPilotMode
 <LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MotionControl_Move
 </UL>
 <BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ROS_Interface_Process
@@ -4703,7 +4703,7 @@ Local Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> dc_motor.o(.text.DCMotor_Init)
 </UL>
-<P><STRONG><a name="[67]"></a>RC_Receiver_Process</STRONG> (Thumb, 132 bytes, Stack size 88 bytes, rc_receiver.o(.text.RC_Receiver_Process))
+<P><STRONG><a name="[67]"></a>RC_Receiver_Process</STRONG> (Thumb, 180 bytes, Stack size 88 bytes, rc_receiver.o(.text.RC_Receiver_Process))
 <BR><BR>[Stack]<UL><LI>Max Depth = 276<LI>Call Chain = RC_Receiver_Process &rArr; osMessageQueueGet &rArr; isrRtxMessageQueueGet &rArr; osRtxPostProcess &rArr; isr_queue_put &rArr; atomic_inc16_lt
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;S_BUS_Parse

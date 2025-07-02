@@ -41,7 +41,7 @@ typedef struct
     float current;       // Total currency
     float capacity;      // Battery remain capacity in percentage
     uint16_t inCharge;   // If in charge or not
-    uint16_t manualMode; // If the robot controlled manually.
+    uint16_t autoMode; // If the robot controlled manually.
 } UdpSystemStatus_t;
 
 /* ---------------- Functions ---------------------------*/

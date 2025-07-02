@@ -13,4 +13,4 @@ typedef struct s_bus_channel {
     uint16_t flagBit_CH17;
 } S_Bus_Channel_t;
 
-uint32_t S_BUS_Parse(uint8_t*, S_Bus_Channel_t*);
+uint32_t S_BUS_Parse(const uint8_t*, S_Bus_Channel_t*);

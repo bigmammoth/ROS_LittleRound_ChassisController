@@ -5,6 +5,8 @@
         "kalman_filter.h": "c",
         "usart.h": "c",
         "rc_receiver.h": "c",
-        "ros_interface.h": "c"
+        "ros_interface.h": "c",
+        "motion_control.h": "c",
+        "hardware_config.h": "c"
     }
 }

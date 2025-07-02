@@ -143,7 +143,7 @@ void AnalysisIncomingUdpData(uint8_t *pUdpMsg)
 
     case UDP_MSG_TYPE_SET_ROBOT_MOTION:
     {
-        if (MotionControl_IsManualMode()) break; // If the robot is in manual mode, ignore the command
+        if (MotionControl_IsAutoPilotMode()) break; // If the robot is in manual mode, ignore the command
         UdpSetRobotMotion_t *pSetRobotMotion = (UdpSetRobotMotion_t *)pUdpMsg;
         // Process the robot motion command
         MotionControl_Move(pSetRobotMotion->speed, pSetRobotMotion->omega);
@@ -194,7 +194,7 @@ void ReportSystemStatus(void)
     systemStatus.current = 0;
     systemStatus.capacity = 0;
     systemStatus.inCharge = false;
-    systemStatus.manualMode = MotionControl_IsManualMode();
+    systemStatus.autoMode = MotionControl_IsAutoPilotMode();
 
     // Send system status to the ROS interface
     if (isUpperMachineAlive && udpSocket >= 0) UDP_SendData(udpSocket, (uint8_t *)&systemStatus, sizeof(systemStatus)); 
