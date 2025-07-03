@@ -1,3 +1,17 @@
+/** 
+ * @brief Motion Control Module
+ *  This module is responsible for controlling the motion of the robot
+ *  It handles the communication with the DC motors, processes messages from the
+ *  RC receiver, and interfaces with the ROS system.
+ *  It uses a message queue to receive motion commands and a periodic timer to read
+ *  receiver values.
+ * @file motion_control.c
+ * @date 2023-10-01
+ * @author Young.R com.wang@hotmail.com
+ * @version 1.0
+ * @note This module is implemented using CMSIS-OS2.
+ */
+
 #include "rl_net.h" // Keil.MDK-Plus::Network:CORE
 #include "main.h"
 #include "motion_control.h"
@@ -14,7 +28,7 @@ typedef struct motionMessage
 
 /* ------------------ Definitions --------------------*/
 #define MESSAGE_QUEUE_SIZE 16
-#define MOTION_CONTROL_TIME_INTERVAL 50 // 50ms
+#define MOTION_CONTROL_TIME_INTERVAL 20 // 20ms
 
 /* --------------- Static variables ---------------- */
 static osThreadId_t threadId;
@@ -91,11 +105,13 @@ void MotionControl_Move(float velocity, float omega)
 static void InitSystem(void)
 {
     osDelay(500);
+
+    // Initialize network interface
+    netStatus status = netInitialize();
+
     DCMotor_Init();
     RC_Receiver_Init();
     ROS_Interface_Init();
-    // Initialize network interface
-    netStatus status = netInitialize();
 }
 
 /**

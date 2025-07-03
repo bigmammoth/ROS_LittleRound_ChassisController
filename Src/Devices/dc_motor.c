@@ -41,6 +41,11 @@ static float measuredAngularSpeed[TOTAL_MOTOR_NUMBER];
 // Motor's encoder overflow counter
 static int32_t encoderOverflowCounter[TOTAL_MOTOR_NUMBER];
 
+/**
+ * @brief Initialize the DC Motor control system
+ * This function initializes the PID controllers and Kalman filters for each motor,
+ * registers the encoder overflow callbacks, and initializes the timers for motor control.
+ */
 void DCMotor_Init(void)
 {
     for (int i = 0; i < TOTAL_MOTOR_NUMBER; i++)
@@ -54,16 +59,30 @@ void DCMotor_Init(void)
     Timer_TimersForMotorInit();
 }
 
+/**
+ * @brief Read the encoder value of the motor
+ * @param motorId The ID of the motor
+ * @return The encoder value in counts
+ */
 int64_t DCMotor_ReadEncoder(uint32_t motorId)
 {
     return encoderPosition[motorId];
 }
 
+/**
+ * @brief Set the angular speed of the motor
+ * @param motorId The ID of the motor
+ * @param angularSpeed The desired angular speed in rad/s
+ */
 void DCMotor_SetAngularSpeed(uint32_t motorId, float angularSpeed)
 {
     PID_SetObject(&pid[motorId], angularSpeed);
 }
 
+/**
+ * @brief Periodic callback function
+ * This function is called periodically to update the motor control.
+ */
 static void PeriodCallback(void)
 {
     for (int i = 0; i < TOTAL_MOTOR_NUMBER; ++i)

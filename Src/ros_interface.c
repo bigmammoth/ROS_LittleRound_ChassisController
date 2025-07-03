@@ -82,7 +82,6 @@ void ROS_Interface_Process(void *arg)
         else if (status != osOK)
             continue;
 
-        // If a message is received, process it
         // Analyze the incoming UDP message
         AnalysisIncomingUdpData(msg);
     }
