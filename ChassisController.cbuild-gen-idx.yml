@@ -4,10 +4,10 @@ build-gen-idx:
     - board: 
       device: STM32F407VETx
       id: CubeMX
-      output: D:/ROS_Little_Round/ChassisController/STM32CubeMX/ChassisController/
+      output: E:/ROS_Little_Round/ChassisController/STM32CubeMX/ChassisController/
       project-type: single-core
       cbuild-gens:
-        - cbuild-gen: D:/ROS_Little_Round/ChassisController/ChassisController.ChassisController.cbuild-gen.yml
+        - cbuild-gen: E:/ROS_Little_Round/ChassisController/ChassisController.ChassisController.cbuild-gen.yml
           configuration: .ChassisController
-          name: D:/ROS_Little_Round/ChassisController/STM32CubeMX/ChassisController/ChassisController.cgen.yml
+          name: E:/ROS_Little_Round/ChassisController/STM32CubeMX/ChassisController/ChassisController.cgen.yml
           project: ChassisController
