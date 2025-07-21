@@ -17,3 +17,7 @@
 
 // Network configuration
 #define UDP_ROS_LISTEN_PORT 12000   // Port for ROS interface
+
+// Receiver configuration
+//#define RECEIVER_TYPE_WFLY
+#define RECEIVER_TYPE_HT8A

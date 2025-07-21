@@ -439,6 +439,16 @@
               <FileType>1</FileType>
               <FilePath>.\Src\Devices\rc_receiver.c</FilePath>
             </File>
+            <File>
+              <FileName>rc_receiver_ht8a.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\Devices\rc_receiver_ht8a.c</FilePath>
+            </File>
+            <File>
+              <FileName>rc_receiver_wfly.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\Devices\rc_receiver_wfly.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -687,8 +697,8 @@
       </api>
     </apis>
     <components>
-      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="6.1.0" condition="ARMv6_7_8-M Device">
-        <package name="CMSIS" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="ARM" version="6.1.0"/>
+      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="6.1.1" condition="ARMv6_7_8-M Device">
+        <package name="CMSIS" schemaVersion="1.7.40" url="https://www.keil.com/pack/" vendor="ARM" version="6.2.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
@@ -723,26 +733,26 @@
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </component>
-      <component Cbundle="MDK" Cclass="Network" Cgroup="CORE" Cvendor="Keil" Cversion="8.0.0" condition="CMSIS Core with RTOS">
-        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.0.0"/>
+      <component Cbundle="MDK" Cclass="Network" Cgroup="CORE" Cvendor="Keil" Cversion="8.1.0" condition="CMSIS Core with RTOS">
+        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.1.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </component>
-      <component Cbundle="MDK" Cclass="Network" Cgroup="Interface" Csub="ETH" Cvendor="Keil" Cversion="8.0.0" condition="Network Driver ETH" maxInstances="2">
-        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.0.0"/>
+      <component Cbundle="MDK" Cclass="Network" Cgroup="Interface" Csub="ETH" Cvendor="Keil" Cversion="8.1.0" condition="Network Driver ETH" maxInstances="2">
+        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.1.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </component>
-      <component Cbundle="MDK" Cclass="Network" Cgroup="Socket" Csub="TCP" Cvendor="Keil" Cversion="8.0.0" condition="Network Interface">
-        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.0.0"/>
+      <component Cbundle="MDK" Cclass="Network" Cgroup="Socket" Csub="TCP" Cvendor="Keil" Cversion="8.1.0" condition="Network Interface">
+        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.1.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </component>
-      <component Cbundle="MDK" Cclass="Network" Cgroup="Socket" Csub="UDP" Cvendor="Keil" Cversion="8.0.0" condition="Network Interface">
-        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.0.0"/>
+      <component Cbundle="MDK" Cclass="Network" Cgroup="Socket" Csub="UDP" Cvendor="Keil" Cversion="8.1.0" condition="Network Interface">
+        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.1.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
@@ -797,16 +807,16 @@
       </file>
       <file attr="config" category="header" name="Components\Network\Config\Net_Config.h" version="8.0.0">
         <instance index="0">RTE\Network\Net_Config.h</instance>
-        <component Cbundle="MDK" Cclass="Network" Cgroup="CORE" Cvendor="Keil" Cversion="8.0.0" condition="CMSIS Core with RTOS"/>
-        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.0.0"/>
+        <component Cbundle="MDK" Cclass="Network" Cgroup="CORE" Cvendor="Keil" Cversion="8.1.0" condition="CMSIS Core with RTOS"/>
+        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.1.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </file>
       <file attr="config" category="header" name="Components\Network\Config\Net_Config_ETH.h" version="7.5.0">
         <instance index="0">RTE\Network\Net_Config_ETH_0.h</instance>
-        <component Cbundle="MDK" Cclass="Network" Cgroup="Interface" Csub="ETH" Cvendor="Keil" Cversion="8.0.0" condition="Network Driver ETH" maxInstances="2"/>
-        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.0.0"/>
+        <component Cbundle="MDK" Cclass="Network" Cgroup="Interface" Csub="ETH" Cvendor="Keil" Cversion="8.1.0" condition="Network Driver ETH" maxInstances="2"/>
+        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.1.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
@@ -825,16 +835,16 @@
       </file>
       <file attr="config" category="header" name="Components\Network\Config\Net_Config_TCP.h" version="7.1.2">
         <instance index="0">RTE\Network\Net_Config_TCP.h</instance>
-        <component Cbundle="MDK" Cclass="Network" Cgroup="Socket" Csub="TCP" Cvendor="Keil" Cversion="8.0.0" condition="Network Interface"/>
-        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.0.0"/>
+        <component Cbundle="MDK" Cclass="Network" Cgroup="Socket" Csub="TCP" Cvendor="Keil" Cversion="8.1.0" condition="Network Interface"/>
+        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.1.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </file>
       <file attr="config" category="header" name="Components\Network\Config\Net_Config_UDP.h" version="5.1.1">
         <instance index="0">RTE\Network\Net_Config_UDP.h</instance>
-        <component Cbundle="MDK" Cclass="Network" Cgroup="Socket" Csub="UDP" Cvendor="Keil" Cversion="8.0.0" condition="Network Interface"/>
-        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.0.0"/>
+        <component Cbundle="MDK" Cclass="Network" Cgroup="Socket" Csub="UDP" Cvendor="Keil" Cversion="8.1.0" condition="Network Interface"/>
+        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.1.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>
@@ -847,8 +857,8 @@
       </file>
       <file attr="config" category="header" name="Components\Network\Config\Net_Debug.h" version="8.0.0">
         <instance index="0">RTE\Network\Net_Debug.h</instance>
-        <component Cbundle="MDK" Cclass="Network" Cgroup="CORE" Cvendor="Keil" Cversion="8.0.0" condition="CMSIS Core with RTOS"/>
-        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.0.0"/>
+        <component Cbundle="MDK" Cclass="Network" Cgroup="CORE" Cvendor="Keil" Cversion="8.1.0" condition="CMSIS Core with RTOS"/>
+        <package name="MDK-Middleware" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="Keil" version="8.1.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>

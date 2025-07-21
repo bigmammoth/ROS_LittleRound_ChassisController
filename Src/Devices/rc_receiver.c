@@ -4,9 +4,6 @@
 #include "./Protocol/s_bus.h"
 #include "./Peripherals/usart.h"
 
-#define MAX_RECEIVER_CHANNEL_SHIFT  671
-#define MID_RECEIVER_CHANNEL_VALUE  1024
-
 #define RECEIVER_NO_SIGNAL_TIMEOUT  100
 #define MESSSAGE_QUEUE_SIZE 8
 
@@ -41,11 +38,11 @@ static void RC_Receiver_Process(void* arg)
         }
         if(S_BUS_Parse(msg, &receiverChannel))
         {
-            receiverValue.steering = (float)((int16_t)receiverChannel.channelValue[0] - MID_RECEIVER_CHANNEL_VALUE) / (float)MAX_RECEIVER_CHANNEL_SHIFT; // Convert to -1 to 1 range
-            receiverValue.throttle = (float)((MID_RECEIVER_CHANNEL_VALUE + MAX_RECEIVER_CHANNEL_SHIFT) - (int16_t)receiverChannel.channelValue[2]) / (2 * (float)MAX_RECEIVER_CHANNEL_SHIFT); // Convert to 0 to 1 range
-            receiverValue.autoMode = (receiverChannel.channelValue[4] > MID_RECEIVER_CHANNEL_VALUE) ? true : false; // Assuming channel 5 is used for manual/automatic mode
-            receiverValue.failSafe = receiverChannel.flagBit_Failsafe;
-            receiverValue.frameLost = receiverChannel.flagBit_FrameLost;
+            #ifdef RECEIVER_TYPE_WFLY
+            Get_WFLY_Receiver_Values(&receiverValue, &receiverChannel);
+            #elif defined(RECEIVER_TYPE_HT8A)
+            Get_HT8A_Receiver_Values(&receiverValue, &receiverChannel);
+            #endif
         }
     }
 }

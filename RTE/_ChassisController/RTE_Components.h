@@ -20,14 +20,14 @@
 /* Keil::Device:CubeMX@1.0.0 */
 #define RTE_DEVICE_CUBE_MX
 #define CMSIS_device_header "stm32f4xx.h"
-/* Keil::Network&MDK:CORE@8.0.0 */
+/* Keil::Network&MDK:CORE@8.1.0 */
 #define RTE_Network_Core                /* Network Core */
-/* Keil::Network&MDK:Interface:ETH@8.0.0 */
+/* Keil::Network&MDK:Interface:ETH@8.1.0 */
 #define RTE_Network_Interface_ETH_0     /* Network Interface ETH 0 */
 
-/* Keil::Network&MDK:Socket:TCP@8.0.0 */
+/* Keil::Network&MDK:Socket:TCP@8.1.0 */
 #define RTE_Network_Socket_TCP          /* Network Socket TCP */
-/* Keil::Network&MDK:Socket:UDP@8.0.0 */
+/* Keil::Network&MDK:Socket:UDP@8.1.0 */
 #define RTE_Network_Socket_UDP          /* Network Socket UDP */
 
 

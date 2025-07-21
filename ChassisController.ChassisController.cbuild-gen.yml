@@ -179,6 +179,10 @@ build-gen:
           category: sourceC
         - file: E:/ROS_Little_Round/ChassisController/Src/Devices/rc_receiver.c
           category: sourceC
+        - file: E:/ROS_Little_Round/ChassisController/Src/Devices/rc_receiver_ht8a.c
+          category: sourceC
+        - file: E:/ROS_Little_Round/ChassisController/Src/Devices/rc_receiver_wfly.c
+          category: sourceC
     - group: Peripherals
       files:
         - file: E:/ROS_Little_Round/ChassisController/Src/Peripherals/flash.c
