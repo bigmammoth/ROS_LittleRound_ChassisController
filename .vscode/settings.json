@@ -7,6 +7,8 @@
         "rc_receiver.h": "c",
         "ros_interface.h": "c",
         "motion_control.h": "c",
-        "hardware_config.h": "c"
+        "hardware_config.h": "c",
+        "udp.h": "c",
+        "rl_net.h": "c"
     }
 }

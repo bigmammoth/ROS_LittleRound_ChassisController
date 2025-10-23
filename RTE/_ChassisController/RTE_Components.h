@@ -13,7 +13,7 @@
 #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
 #define RTE_CMSIS_RTOS2_RTX5            /* CMSIS-RTOS2 Keil RTX5 */
 #define RTE_CMSIS_RTOS2_RTX5_SOURCE     /* CMSIS-RTOS2 Keil RTX5 Source */
-/* Keil::CMSIS Driver:Ethernet MAC@3.1.0 */
+/* Keil::CMSIS Driver:Ethernet MAC@3.2.0 */
 #define RTE_Drivers_ETH_MAC0            /* Driver ETH_MAC0 */
 /* Keil::CMSIS Driver:Ethernet PHY:DP83848C@6.2.0 */
 #define RTE_Drivers_PHY_DP83848C        /* Driver PHY DP83848C */

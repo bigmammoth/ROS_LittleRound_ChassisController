@@ -68,8 +68,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define SPI2_CSS_Pin LL_GPIO_PIN_3
-#define SPI2_CSS_GPIO_Port GPIOE
+#define FLASH_CS_Pin LL_GPIO_PIN_3
+#define FLASH_CS_GPIO_Port GPIOE
 
 /* USER CODE BEGIN Private defines */
 

@@ -1,18 +1,41 @@
-#include <string.h>
-#include "ros_interface.h"
+/*
+ * UDP helper module
+ *
+ * Purpose:
+ *   - Register UDP listeners and dispatch received datagrams to user callbacks.
+ *   - Cache the last peer address per socket to enable convenient reply sends.
+ *   - Provide simple send helpers for reply (UDP_SendData) and explicit destination (UDP_SendDataTo).
+ *
+ * Key API:
+ *   int  UDP_RegisterListener(uint16_t port, UDP_Callback_t cb);
+ *   bool UDP_SendData(int socket, const uint8_t *buf, uint32_t len);
+ *   bool UDP_SendDataTo(int socket, const NET_ADDR *addr, const uint8_t *buf, uint32_t len);
+ *
+ * Operation:
+ *   - UdpCallback is attached to each socket; on receive it updates the cached NET_ADDR
+ *     and invokes the user-provided callback with the payload.
+ *   - Send helpers allocate a transmit buffer via netUDP_GetBuffer and send via netUDP_Send.
+ *
+ * Limits/Notes:
+ *   - Supports up to UDP_CALLBACK_NUMBER simultaneous listener/callback pairs.
+ *   - UDP_SendData requires a previously received packet to have populated the cached address.
+ *   - Not inherently thread-safe; serialize access if used from multiple contexts.
+ *   - On listener open failure, errors are returned as negative netStatus values.
+ */
+#include "main.h"
 #include "udp.h"
-#include "cmsis_os2.h"
+#include <string.h>
 
 /* --------------- Data type definitions ----------- */
 typedef struct
 {
     int socket;              // Socket number
     NET_ADDR receivedAddr;   // Address of the last received message
+    uint16_t port;           // Local port number
     UDP_Callback_t callback; // Callback function
 } UDP_CallbackEntry_t;
 
 /* --------------- Const value define ---------------*/
-#define MESSAGE_QUEUE_SIZE 32
 #define UDP_CALLBACK_NUMBER 8
 
 /* --------------------- Static variables ---------------- */
@@ -121,6 +144,8 @@ bool UDP_SendDataTo(int socket, const NET_ADDR *addr, const uint8_t *buff, uint3
  */
 int UDP_RegisterListener(uint16_t port, UDP_Callback_t callback)
 {
+    if (callback == NULL || port == 0)
+        return -netInvalidParameter;
     int socket = netUDP_GetSocket(UdpCallback);
     if (socket < 0)
         return socket;
@@ -135,10 +160,12 @@ int UDP_RegisterListener(uint16_t port, UDP_Callback_t callback)
         int i = 0;
         for (; i < UDP_CALLBACK_NUMBER; i++)
         {
-            if (callbackEntries[i].callback == NULL && callbackEntries[i].socket == 0)
+            if (callbackEntries[i].callback == NULL && callbackEntries[i].socket == 0
+                && callbackEntries[i].port == 0 && callbackEntries[i].port != port)
             {
                 callbackEntries[i].callback = callback;
                 callbackEntries[i].socket = socket;
+                callbackEntries[i].port = port;
                 break;
             }
         }
@@ -149,4 +176,45 @@ int UDP_RegisterListener(uint16_t port, UDP_Callback_t callback)
         }
         return socket;
     }
+}
+
+/**
+ * @brief Get the last received address for a socket.
+ * @param socket UDP socket number
+ * @param addr pointer to NET_ADDR structure to store the received address
+ * @return false - failed true - success
+ */
+bool UDP_GetReceivedAddress(int socket, NET_ADDR *addr)
+{
+    if (socket <= 0 || addr == NULL)
+        return false;
+
+    // Find the callback entry for the given socket
+    int i = 0;
+    for (; i < UDP_CALLBACK_NUMBER; i++)
+        if (callbackEntries[i].socket == socket)
+            break;
+    if (i >= UDP_CALLBACK_NUMBER)
+        // No callback entry found for the socket
+        return false;
+
+    // Check if there's a valid address to send data
+    if (callbackEntries[i].receivedAddr.port == 0)
+        return false; // No valid address to send data
+
+    memcpy(addr, &callbackEntries[i].receivedAddr, sizeof(NET_ADDR));
+    return true;
+}
+
+/**
+ * @brief Get the socket number for a registered listener by port.
+ * @param port UDP port number
+ * @return socket number if found, -1 if not found
+ */
+int UDP_GetListenerSocketByPort(uint16_t port)
+{
+    for (int i = 0; i < UDP_CALLBACK_NUMBER; i++)
+        if (callbackEntries[i].port == port)
+            return callbackEntries[i].socket;
+    return -1;
 }

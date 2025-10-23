@@ -1,8 +1,8 @@
 #include "cmsis_os2.h"
 #include "rc_receiver.h"
 #include "usart.h"
-#include "./Protocol/s_bus.h"
-#include "./Peripherals/usart.h"
+#include "s_bus.h"
+#include "usart.h"
 
 #define RECEIVER_NO_SIGNAL_TIMEOUT  100
 #define MESSSAGE_QUEUE_SIZE 8

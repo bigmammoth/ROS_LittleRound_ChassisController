@@ -18,7 +18,7 @@
 #include "dc_motor.h"
 #include "rc_receiver.h"
 #include "ros_interface.h"
-#include "hardware_config.h"
+#include "system_config.h"
 
 typedef struct motionMessage
 {
@@ -96,22 +96,6 @@ void MotionControl_Move(float velocity, float omega)
 {
     MotionMessage_t msg = {velocity, omega};
     osMessageQueuePut(messageQueue, &msg, 0, 0);
-}
-
-/**
- * @brief Initialize the system components
- * This function initializes the DC motor, RC receiver, ROS interface, and network interface.
- */
-static void InitSystem(void)
-{
-    osDelay(500);
-
-    // Initialize network interface
-    netStatus status = netInitialize();
-
-    DCMotor_Init();
-    RC_Receiver_Init();
-    ROS_Interface_Init();
 }
 
 /**

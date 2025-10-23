@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\Src;.\Src\Peripherals;.\Src\Devices;.\Src\MiddleWare;.\Src\Algorithm</IncludePath>
+              <IncludePath>.\Src\Peripherals;.\Src\Devices;.\Src\MiddleWare;.\Src\Algorithm;.\Src\MotionControl;.\Src\Protocol;.\Src\ROS_Interface;.\Src\System;.\Src\UnitTest;.\Src\DataStore</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -382,21 +382,6 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>Source</GroupName>
-          <Files>
-            <File>
-              <FileName>motion_control.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Src\motion_control.c</FilePath>
-            </File>
-            <File>
-              <FileName>ros_interface.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Src\ros_interface.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>Algorithm</GroupName>
           <Files>
             <File>
@@ -413,41 +398,6 @@
               <FileName>kalman_filter.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\Algorithm\kalman_filter.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Drivers</GroupName>
-          <Files>
-            <File>
-              <FileName>battery.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Src\Devices\battery.c</FilePath>
-            </File>
-            <File>
-              <FileName>dc_motor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Src\Devices\dc_motor.c</FilePath>
-            </File>
-            <File>
-              <FileName>w25qxx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Src\Devices\w25qxx.c</FilePath>
-            </File>
-            <File>
-              <FileName>rc_receiver.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Src\Devices\rc_receiver.c</FilePath>
-            </File>
-            <File>
-              <FileName>rc_receiver_ht8a.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Src\Devices\rc_receiver_ht8a.c</FilePath>
-            </File>
-            <File>
-              <FileName>rc_receiver_wfly.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Src\Devices\rc_receiver_wfly.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -647,6 +597,97 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>System</GroupName>
+          <Files>
+            <File>
+              <FileName>init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\System\init.c</FilePath>
+            </File>
+            <File>
+              <FileName>mem_pool.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\System\mem_pool.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>DataStore</GroupName>
+          <Files>
+            <File>
+              <FileName>data_store.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\DataStore\data_store.c</FilePath>
+            </File>
+            <File>
+              <FileName>store_file.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\DataStore\store_file.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>MotionControl</GroupName>
+        </Group>
+        <Group>
+          <GroupName>ROS_Interface</GroupName>
+          <Files>
+            <File>
+              <FileName>ros_interface.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\ROS_Interface\ros_interface.c</FilePath>
+            </File>
+            <File>
+              <FileName>ros_parameters.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\ROS_Interface\ros_parameters.c</FilePath>
+            </File>
+            <File>
+              <FileName>ros_publisher_odom.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\ROS_Interface\ros_publisher_odom.c</FilePath>
+            </File>
+            <File>
+              <FileName>ros_subscriber_cmd_vel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\ROS_Interface\ros_subscriber_cmd_vel.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Chip</GroupName>
+        </Group>
+        <Group>
+          <GroupName>Devices</GroupName>
+          <Files>
+            <File>
+              <FileName>dc_motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\Devices\dc_motor.c</FilePath>
+            </File>
+            <File>
+              <FileName>rc_receiver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\Devices\rc_receiver.c</FilePath>
+            </File>
+            <File>
+              <FileName>rc_receiver_ht8a.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\Devices\rc_receiver_ht8a.c</FilePath>
+            </File>
+            <File>
+              <FileName>rc_receiver_wfly.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\Devices\rc_receiver_wfly.c</FilePath>
+            </File>
+            <File>
+              <FileName>w25qxx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\Devices\w25qxx.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::CMSIS</GroupName>
         </Group>
         <Group>
@@ -715,8 +756,8 @@
           <targetInfo name="ChassisController"/>
         </targetInfos>
       </component>
-      <component Capiversion="2.2.0" Cclass="CMSIS Driver" Cgroup="Ethernet MAC" Cvendor="Keil" Cversion="3.1.0" condition="CMSIS Driver requirements">
-        <package name="CMSIS-Driver_STM32" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="1.2.0"/>
+      <component Capiversion="2.2.0" Cclass="CMSIS Driver" Cgroup="Ethernet MAC" Cvendor="Keil" Cversion="3.2.0" condition="CMSIS Driver requirements">
+        <package name="CMSIS-Driver_STM32" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="1.3.0"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>

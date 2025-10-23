@@ -1,0 +1,35 @@
+{
+  "configurations": [
+      {
+          "name": "ChassisController",
+          "includePath": [
+                "D:/Keil_v5/ARM/ARMCLANG/include/**",
+                "D:/Keil_v5/ARM/Packs/ARM/CMSIS-RTX/5.9.0/Include",
+                "D:/Keil_v5/ARM/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include",
+                "D:/Keil_v5/ARM/Packs/ARM/CMSIS/6.2.0/CMSIS/RTOS2/Include",
+                "D:/Keil_v5/ARM/Packs/Keil/MDK-Middleware/8.1.0/Components/Network/Include",
+                "${workspaceFolder}/STM32CubeMX/ChassisController/MX_Device",
+                "${workspaceFolder}/STM32CubeMX/ChassisController/STM32CubeMX/Drivers/CMSIS/Include",
+                "${workspaceFolder}/STM32CubeMX/ChassisController/STM32CubeMX/Drivers/CMSIS/Device/ST/STM32F4xx/Include",
+                "${workspaceFolder}/STM32CubeMX/ChassisController/STM32CubeMX/Drivers/STM32F4xx_HAL_Driver/Inc",
+                "${workspaceFolder}/STM32CubeMX/ChassisController/STM32CubeMX/Inc",
+                "${workspaceFolder}/Src/Algorithm",
+                "${workspaceFolder}/Src/Devices",
+                "${workspaceFolder}/Src/Peripherals",
+                "${workspaceFolder}/Src/Middleware",
+                "${workspaceFolder}/Src/Protocol",
+                "${workspaceFolder}/Src/DataStore",
+                "${workspaceFolder}/Src/System",
+                "${workspaceFolder}/Src/UnitTest",
+                "${workspaceFolder}/Src/ROS_Interface"
+          ],
+          "defines": [
+              "USE_HAL_DRIVER"
+          ],
+          "cStandard": "c11",
+          "cppStandard": "c++17",
+          "intelliSenseMode": "${default}"
+      }
+  ],
+  "version": 4
+}

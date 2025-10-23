@@ -2,7 +2,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include "./Protocol/s_bus.h"
+#include "s_bus.h"
 
 typedef struct receiver_values {
     float steering; //  -1 to 1

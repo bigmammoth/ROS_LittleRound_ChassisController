@@ -10,7 +10,7 @@ typedef struct pid
     double object;
     double sumError;
     double lastError;
-}PID_t;
+} PID_t;
 
 void PID_Init(PID_t* instancePID, float kP, float kI, float kD);
 float PID_Calc(PID_t* p, float measurement);

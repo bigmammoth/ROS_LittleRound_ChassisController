@@ -2,7 +2,7 @@
 #include "timer.h"
 #include "pid.h"
 #include "kalman_filter.h"
-#include "hardware_config.h"
+#include "system_config.h"
 
 /* ------------------ Definitions --------------------*/
 // PI
@@ -140,8 +140,6 @@ void Encoder0_OverflowCallback(void)
  * @brief Encoder counter overflow callback for motor 1.
  * If the count > 0x7FF, means it turns from 0 to 0xFFFF,
  * otherwise it means the counter turns from 0xFFFF to 0.
- * 
- * @param  
  */
 void Encoder1_OverflowCallback(void)
 {

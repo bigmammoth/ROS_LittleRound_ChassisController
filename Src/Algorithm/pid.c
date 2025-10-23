@@ -53,6 +53,7 @@ float PID_Calc(PID_t* pid, float measurement)
     float differentialError = error - pid->lastError;
     pid->sumError += error;
     if(pid->sumError > MAX_SUM_ERROR) pid->sumError = MAX_SUM_ERROR;
+    else if (pid->sumError < -MAX_SUM_ERROR) pid->sumError = -MAX_SUM_ERROR;
     pid->lastError = error;
     return (pid->kP*error + pid->kI*pid->sumError + pid->kD*differentialError);
 }
