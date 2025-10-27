@@ -70,6 +70,18 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define FLASH_CS_Pin LL_GPIO_PIN_3
 #define FLASH_CS_GPIO_Port GPIOE
+#define IN2_Pin LL_GPIO_PIN_13
+#define IN2_GPIO_Port GPIOC
+#define OUT2_Pin LL_GPIO_PIN_0
+#define OUT2_GPIO_Port GPIOC
+#define IN0_Pin LL_GPIO_PIN_14
+#define IN0_GPIO_Port GPIOD
+#define OUT1_Pin LL_GPIO_PIN_15
+#define OUT1_GPIO_Port GPIOD
+#define OUT0_Pin LL_GPIO_PIN_8
+#define OUT0_GPIO_Port GPIOA
+#define IN1_Pin LL_GPIO_PIN_4
+#define IN1_GPIO_Port GPIOD
 
 /* USER CODE BEGIN Private defines */
 

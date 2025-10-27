@@ -14,7 +14,7 @@
 #include "ros_publisher_odom.h"
 #include "ros_interface.h"
 #include "ros_messages.h"
-#include "chassis_odometry.h"
+#include "motion_control.h"
 
 /* ---------------- Static Variables -------------------- */
 static uint8_t odomBuffer[sizeof(OdometryMessage_t)] = {0};
@@ -43,7 +43,7 @@ void PrepareOdomMessage(const void **data, uint32_t *size)
 {
     OdometryMessage_t *msg = (OdometryMessage_t *)odomBuffer;
     msg->messageType = ROS_FEEDBACK_ODOMETRY;
-    if (!ChassisOdometry_GetOdometry(&msg->posX, &msg->posY, &msg->theta, &msg->velocity, &msg->omega))
+    if (!MotionControl_GetOdometry(&msg->posX, &msg->posY, &msg->theta, &msg->velocity, &msg->omega))
     {
         msg->posX = 0.0f;
         msg->posY = 0.0f;

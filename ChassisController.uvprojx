@@ -338,7 +338,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define></Define>
+              <Define>__FPU_PRESENT=1U,USE_FULL_ASSERT</Define>
               <Undefine></Undefine>
               <IncludePath>.\Src\Peripherals;.\Src\Devices;.\Src\MiddleWare;.\Src\Algorithm;.\Src\MotionControl;.\Src\Protocol;.\Src\ROS_Interface;.\Src\System;.\Src\UnitTest;.\Src\DataStore</IncludePath>
             </VariousControls>
@@ -423,6 +423,11 @@
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\Peripherals\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>io.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\Peripherals\io.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -628,6 +633,28 @@
         </Group>
         <Group>
           <GroupName>MotionControl</GroupName>
+          <Files>
+            <File>
+              <FileName>motion_control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\MotionControl\motion_control.c</FilePath>
+            </File>
+            <File>
+              <FileName>two_wheel_differential.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\MotionControl\two_wheel_differential.c</FilePath>
+            </File>
+            <File>
+              <FileName>two_wheel_kinematic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\MotionControl\two_wheel_kinematic.c</FilePath>
+            </File>
+            <File>
+              <FileName>two_wheel_odometry.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\MotionControl\two_wheel_odometry.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>ROS_Interface</GroupName>
@@ -651,6 +678,11 @@
               <FileName>ros_subscriber_cmd_vel.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\ROS_Interface\ros_subscriber_cmd_vel.c</FilePath>
+            </File>
+            <File>
+              <FileName>ros_service_io.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\ROS_Interface\ros_service_io.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -740,6 +772,12 @@
     <components>
       <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="6.1.1" condition="ARMv6_7_8-M Device">
         <package name="CMSIS" schemaVersion="1.7.40" url="https://www.keil.com/pack/" vendor="ARM" version="6.2.0"/>
+        <targetInfos>
+          <targetInfo name="ChassisController"/>
+        </targetInfos>
+      </component>
+      <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source" Cvendor="ARM" Cversion="1.16.2" condition="CMSISCORE">
+        <package name="CMSIS-DSP" schemaVersion="1.7.27" url="https://www.keil.com/pack/" vendor="ARM" version="1.16.2"/>
         <targetInfos>
           <targetInfo name="ChassisController"/>
         </targetInfos>

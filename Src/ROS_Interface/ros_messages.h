@@ -47,9 +47,6 @@ typedef enum MessageType : uint32_t
     ROS_HEART_BEAT
 } MessageType_t;
 
-#define MAX_OUTPUT_PINS 8
-#define MAX_INPUT_PINS 4
-
 /** @brief Heartbeat message structure */
 typedef struct HeartBeatMessage
 {
@@ -107,7 +104,7 @@ typedef struct SetIoMessage
     MessageType_t messageType;
     uint32_t messageID;
     uint32_t success;
-    uint32_t ioPin[MAX_OUTPUT_PINS];
+    uint32_t ioPinNo;
     uint32_t ioValue;
 } SetIoMessage_t;
 
@@ -117,7 +114,7 @@ typedef struct ReadIoMessage
     MessageType_t messageType;
     uint32_t messageID;
     uint32_t success;
-    uint32_t ioPin[MAX_INPUT_PINS];
+    uint32_t ioPinNo;
     uint32_t ioValue;
 } ReadIoMessage_t;
 

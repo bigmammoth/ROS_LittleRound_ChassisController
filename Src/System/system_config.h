@@ -5,22 +5,26 @@
 
 // PI
 #define PI 3.14159265358979323846
-#define MAX_ANGULAR_VELOCITY (3 * PI)   // rad/s
-#define MAX_VELOCITY 1.0                // m/s Determined by the rated speed of the motor MG513P30 293RPM and the wheel diameter of 64mm
-#define WHEELS_DISTANCE 0.16            // 180mm
-#define WHEEL_DIAMETER 0.064            // 64mm
-#define WHEEL_RADIUS (WHEEL_DIAMETER / 2)
-#define WHEEL_PERIMETER (WHEEL_DIAMETER * PI)
+
+/* ----------------------- System Default Configuration Definitions ------------------------- */
+#define DEFAULT_LOCAL_UDP_ADDRESS   "192.168.1.100"                 // Default IP address
+#define DEFAULT_LOCAL_UDP_PORT      12000                           // Default port
+#define DEFAULT_CHASSIS_TYPE        CHASSIS_TYPE_DIFF               // Default chassis type
+#define DEFAULT_WHEEL_DIAMETER      0.064                           // Default wheel diameter in meters
+#define DEFAULT_WHEEL_RADIUS        (DEFAULT_WHEEL_DIAMETER / 2)    // Default wheel radius in meters
+#define DEFAULT_WHEEL_PERIMETER     (DEFAULT_WHEEL_DIAMETER * PI)   // Default wheel perimeter in meters
+#define DEFAULT_TRACK_WIDTH         0.164                           // Default track width in meters
+#define DEFAULT_MAX_VELOCITY        1.0                             // Default maximum linear speed in m/s
+#define DEFAULT_MAX_OMEGA           (2.0 * PI)                      // Default maximum angular speed in rad/s
+#define DEFAULT_WHEEL_NUMBER        2                               // Default number of wheels
+#define DEFAULT_PULSE_PER_REVOL     10000.0f                        // Default pulses per revolution
 
 // Total motor number
 #define TOTAL_MOTOR_NUMBER  2
 
-// Network configuration
-#define UDP_ROS_LISTEN_PORT 12000   // Port for ROS interface
-
 // Receiver configuration
-//#define RECEIVER_TYPE_WFLY
-#define RECEIVER_TYPE_HT8A
+#define RECEIVER_TYPE_WFLY
+// #define RECEIVER_TYPE_HT8A
 
 /* ----------------------- External Flash Definition ------------------------- */
 typedef enum {

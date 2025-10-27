@@ -9,14 +9,80 @@ build-gen:
     endian: little
     fpu: sp
   add-path:
-    - E:/ROS_Little_Round/ChassisController/Src
     - E:/ROS_Little_Round/ChassisController/Src/Peripherals
     - E:/ROS_Little_Round/ChassisController/Src/Devices
     - E:/ROS_Little_Round/ChassisController/Src/MiddleWare
     - E:/ROS_Little_Round/ChassisController/Src/Algorithm
+    - E:/ROS_Little_Round/ChassisController/Src/MotionControl
+    - E:/ROS_Little_Round/ChassisController/Src/Protocol
+    - E:/ROS_Little_Round/ChassisController/Src/ROS_Interface
+    - E:/ROS_Little_Round/ChassisController/Src/System
+    - E:/ROS_Little_Round/ChassisController/Src/UnitTest
+    - E:/ROS_Little_Round/ChassisController/Src/DataStore
   components:
     - component: ARM::CMSIS:CORE@6.1.1
       from-pack: ARM::CMSIS@6.2.0
+    - component: ARM::CMSIS:DSP&Source@1.16.2
+      from-pack: ARM::CMSIS-DSP@1.16.2
+      files:
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/BasicMathFunctions/BasicMathFunctions.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/BasicMathFunctions/BasicMathFunctionsF16.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/BayesFunctions/BayesFunctions.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/BayesFunctions/BayesFunctionsF16.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/CommonTables/CommonTables.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/CommonTables/CommonTablesF16.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/ComplexMathFunctions/ComplexMathFunctions.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/ComplexMathFunctions/ComplexMathFunctionsF16.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/ControllerFunctions/ControllerFunctions.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/DistanceFunctions/DistanceFunctions.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/DistanceFunctions/DistanceFunctionsF16.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/FastMathFunctions/FastMathFunctions.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/FastMathFunctions/FastMathFunctionsF16.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/FilteringFunctions/FilteringFunctions.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/FilteringFunctions/FilteringFunctionsF16.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/InterpolationFunctions/InterpolationFunctions.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/InterpolationFunctions/InterpolationFunctionsF16.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/MatrixFunctions/MatrixFunctions.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/MatrixFunctions/MatrixFunctionsF16.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/QuaternionMathFunctions/QuaternionMathFunctions.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/SVMFunctions/SVMFunctions.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/SVMFunctions/SVMFunctionsF16.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/StatisticsFunctions/StatisticsFunctions.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/StatisticsFunctions/StatisticsFunctionsF16.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/SupportFunctions/SupportFunctions.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/SupportFunctions/SupportFunctionsF16.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/TransformFunctions/TransformFunctions.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/TransformFunctions/TransformFunctionsF16.c
+          category: sourceC
+        - file: D:/Keil_v5/ARM/Packs/ARM/CMSIS-DSP/1.16.2/Source/WindowFunctions/WindowFunctions.c
+          category: sourceC
     - component: ARM::CMSIS:OS Tick:SysTick@1.0.5
       from-pack: ARM::CMSIS@6.2.0
       files:
@@ -155,8 +221,6 @@ build-gen:
     - api: CMSIS:RTOS2(API)@2.3.0
       from-pack: ARM::CMSIS@6.2.0
   groups:
-    - group: Source
-      files: 
     - group: Algorithm
       files:
         - file: E:/ROS_Little_Round/ChassisController/Src/Algorithm/crc32.c
@@ -175,6 +239,8 @@ build-gen:
           category: sourceC
         - file: E:/ROS_Little_Round/ChassisController/Src/Peripherals/usart.c
           category: sourceC
+        - file: E:/ROS_Little_Round/ChassisController/Src/Peripherals/io.c
+          category: sourceC
     - group: Protocol
       files:
         - file: E:/ROS_Little_Round/ChassisController/Src/Protocol/s_bus.c
@@ -182,4 +248,52 @@ build-gen:
     - group: MiddleWare
       files:
         - file: E:/ROS_Little_Round/ChassisController/Src/MiddleWare/udp.c
+          category: sourceC
+    - group: System
+      files:
+        - file: E:/ROS_Little_Round/ChassisController/Src/System/init.c
+          category: sourceC
+        - file: E:/ROS_Little_Round/ChassisController/Src/System/mem_pool.c
+          category: sourceC
+    - group: DataStore
+      files:
+        - file: E:/ROS_Little_Round/ChassisController/Src/DataStore/data_store.c
+          category: sourceC
+        - file: E:/ROS_Little_Round/ChassisController/Src/DataStore/store_file.c
+          category: sourceC
+    - group: MotionControl
+      files:
+        - file: E:/ROS_Little_Round/ChassisController/Src/MotionControl/motion_control.c
+          category: sourceC
+        - file: E:/ROS_Little_Round/ChassisController/Src/MotionControl/two_wheel_differential.c
+          category: sourceC
+        - file: E:/ROS_Little_Round/ChassisController/Src/MotionControl/two_wheel_kinematic.c
+          category: sourceC
+        - file: E:/ROS_Little_Round/ChassisController/Src/MotionControl/two_wheel_odometry.c
+          category: sourceC
+    - group: ROS_Interface
+      files:
+        - file: E:/ROS_Little_Round/ChassisController/Src/ROS_Interface/ros_interface.c
+          category: sourceC
+        - file: E:/ROS_Little_Round/ChassisController/Src/ROS_Interface/ros_parameters.c
+          category: sourceC
+        - file: E:/ROS_Little_Round/ChassisController/Src/ROS_Interface/ros_publisher_odom.c
+          category: sourceC
+        - file: E:/ROS_Little_Round/ChassisController/Src/ROS_Interface/ros_subscriber_cmd_vel.c
+          category: sourceC
+        - file: E:/ROS_Little_Round/ChassisController/Src/ROS_Interface/ros_service_io.c
+          category: sourceC
+    - group: Chip
+      files: 
+    - group: Devices
+      files:
+        - file: E:/ROS_Little_Round/ChassisController/Src/Devices/dc_motor.c
+          category: sourceC
+        - file: E:/ROS_Little_Round/ChassisController/Src/Devices/rc_receiver.c
+          category: sourceC
+        - file: E:/ROS_Little_Round/ChassisController/Src/Devices/rc_receiver_ht8a.c
+          category: sourceC
+        - file: E:/ROS_Little_Round/ChassisController/Src/Devices/rc_receiver_wfly.c
+          category: sourceC
+        - file: E:/ROS_Little_Round/ChassisController/Src/Devices/w25qxx.c
           category: sourceC

@@ -11,14 +11,12 @@
  * 
  * @author Youmg.W <com.wang@hotmail.com>
  * @date 2025-08-20
- * @copyright (c) 2025 HintonBot. All rights reserved.
  * @version 1.0
  */
 #pragma once
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "system_config.h"
 
 /**
  * @brief Initialize the Data Store module.
@@ -46,6 +44,30 @@ float DataStore_GetMotorParamPulsePerRevolution(void);
  * This function retrieves the motor's gear ratio from the data store.
 */
 float DataStore_GetMotorParamGearRatio(void);
+
+/**
+ * @brief Get the maximum RPM of the motor.
+ * This function retrieves the motor's maximum revolutions per minute from the data store.
+ */
+float DataStore_GetMotorParamMaxRpm(void);
+
+/**
+ * @brief Set pulses per revolution of the motor.
+ * This function updates the motor's pulses per revolution in the data store.
+ */
+void DataStore_SetMotorParamPulsePerRevolution(float pulses);
+
+/**
+ * @brief Set gear ratio of the motor.
+ * This function updates the motor's gear ratio in the data store.
+ */
+void DataStore_SetMotorParamGearRatio(float ratio);
+
+/**
+ * @brief Set the maximum RPM of the motor.
+ * This function updates the motor's maximum revolutions per minute in the data store.
+ */
+void DataStore_SetMotorParamMaxRpm(float rpm);
 
 /**
  * @brief Get the local UDP IP address.
@@ -105,34 +127,28 @@ float DataStore_GetTrackWidth(void);
 void DataStore_SetTrackWidth(float width);
 
 /**
- * @brief Get the maximum linear velocity.
- * This function retrieves the current maximum linear velocity from the data store.
- * @param None
- * @return float The maximum linear velocity in meters per second.
+ * @brief Get the maximum linear velocity (canonical).
+ * This function retrieves the stored maximum velocity used across modules.
  */
-float DataStore_GetMaxLinearVelocity(void);
+float DataStore_GetMaxVelocity(void);
 
 /**
- * @brief Set the maximum linear velocity.
- * This function updates the maximum linear velocity in the data store.
- * @param velocity The new maximum linear velocity in meters per second.
+ * @brief Set the maximum linear velocity (canonical).
+ * This function stores the maximum velocity used across modules.
  */
-void DataStore_SetMaxLinearVelocity(float velocity);
+void DataStore_SetMaxVelocity(float velocity);
 
 /**
- * @brief Get the maximum angular velocity.
- * This function retrieves the current maximum angular velocity from the data store.
- * @param None
- * @return float The maximum angular velocity in radians per second.
+ * @brief Get the maximum angular velocity (canonical).
+ * This function retrieves the stored maximum angular velocity used across modules.
  */
-float DataStore_GetMaxAngularVelocity(void);
+float DataStore_GetMaxOmega(void);
 
 /**
- * @brief Set the maximum angular velocity.
- * This function updates the maximum angular velocity in the data store.
- * @param omega The new maximum angular velocity in radians per second.
+ * @brief Set the maximum angular velocity (canonical).
+ * This function stores the maximum angular velocity used across modules.
  */
-void DataStore_SetMaxAngularVelocity(float omega);
+void DataStore_SetMaxOmega(float omega);
 
 /**
  * @brief Get the maximum linear acceleration.

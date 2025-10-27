@@ -117,9 +117,9 @@ float DCMotor_GetAngularSpeed(uint32_t motorId)
  * @param motorId The ID of the motor
  * @return The encoder value in rounds
  */
-double DCMotor_GetEncoderValue(uint32_t motorId)
+inline float DCMotor_GetEncoderValue(uint32_t motorId)
 {
-    return (double)encoderPosition[motorId] / (double)EDGE_PER_ROUND; // Convert encoder counts to rounds
+    return (float)encoderPosition[motorId] / (float)EDGE_PER_ROUND; // Convert encoder counts to rounds
 }
 
 /**

@@ -9,6 +9,8 @@
         "motion_control.h": "c",
         "hardware_config.h": "c",
         "udp.h": "c",
-        "rl_net.h": "c"
+        "rl_net.h": "c",
+        "data_store.h": "c",
+        "stdint.h": "c"
     }
 }

@@ -21,6 +21,7 @@
 
 #include "main.h"
 #include "dc_motor.h"
+#include "motion_control.h"
 #include "data_store.h"
 #include "ros_interface.h"
 #include "rc_receiver.h"
@@ -37,7 +38,9 @@ static void ThreadSystemInit(void* arg);
 void System_Init(void)
 {
     osKernelInitialize(); // Initialize the OS kernel
-    assert_param(osThreadNew(ThreadSystemInit, NULL, NULL) != NULL); // Create the system initialization thread
+	osThreadId_t threadID;
+	threadID = osThreadNew(ThreadSystemInit, NULL, NULL);
+	assert_param(threadID);
     osKernelStart();      // Start the OS kernel
 }
 
@@ -48,6 +51,7 @@ void ThreadSystemInit(void* arg)
     DataStore_Init();           // Initialize the data store with default configuration
     RC_Receiver_Init();         // Initialize remote controller interface
     DCMotor_Init();             // Initialize motor control interface
+    MotionControl_Init();       // Initialize motion control subsystem
 	osDelay(500);
 	netStatus status = netInitialize();
 	assert_param(status == netOK);

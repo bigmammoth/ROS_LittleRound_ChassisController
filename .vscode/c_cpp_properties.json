@@ -13,6 +13,7 @@
                 "${workspaceFolder}/STM32CubeMX/ChassisController/STM32CubeMX/Drivers/CMSIS/Device/ST/STM32F4xx/Include",
                 "${workspaceFolder}/STM32CubeMX/ChassisController/STM32CubeMX/Drivers/STM32F4xx_HAL_Driver/Inc",
                 "${workspaceFolder}/STM32CubeMX/ChassisController/STM32CubeMX/Inc",
+                "${workspaceFolder}/Src/MotionControl",
                 "${workspaceFolder}/Src/Algorithm",
                 "${workspaceFolder}/Src/Devices",
                 "${workspaceFolder}/Src/Peripherals",

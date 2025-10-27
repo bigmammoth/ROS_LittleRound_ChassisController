@@ -48,8 +48,8 @@ void SetParametersCallback(const uint8_t *data, uint32_t size)
     // Process the parameters command
     DataStore_SetWheelRadius(msg->wheelRadius);
     DataStore_SetTrackWidth(msg->trackWidth);
-    DataStore_SetMaxLinearVelocity(msg->maxLinearVelocity);
-    DataStore_SetMaxAngularVelocity(msg->maxAngularVelocity);
+    DataStore_SetMaxVelocity(msg->maxLinearVelocity);
+    DataStore_SetMaxOmega(msg->maxAngularVelocity);
     DataStore_SetMaxLinearAcceleration(msg->maxLinearAcceleration);
     DataStore_SetMaxAngularAcceleration(msg->maxAngularAcceleration);
     // Save the modified parameters to persistent storage

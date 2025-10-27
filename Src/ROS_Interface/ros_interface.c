@@ -27,13 +27,9 @@
 #include "ros_interface.h"
 #include "ros_messages.h"
 #include "system_config.h"
-#include "ros_publisher_chassis_state.h"
 #include "ros_publisher_odom.h"
 #include "ros_subscriber_cmd_vel.h"
-#include "ros_heartbeat.h"
-#include "ros_service_motion_state.h"
-#include "ros_service_io.h"
-#include "ros_service_light.h"
+#include "data_store.h"
 
 /* -------------- Definitions ----------------------- */
 #define ROS_INTERFACE_Q_LEN 16
@@ -63,6 +59,7 @@ typedef struct {
 static osMessageQueueId_t appRosInterfaceMsgQueueId;
 static osThreadId_t incomingThreadID;
 static osThreadId_t feedbackThreadID;
+static uint16_t localUdpPort;
 
 static osThreadAttr_t incomingThreadAttr = {
     .priority = osPriorityNormal,
@@ -93,6 +90,7 @@ static void UDP_Callback(const uint8_t *data, uint32_t size);
  */
 void ROS_Interface_Init(void)
 {
+	localUdpPort = DataStore_GetLocalUdpPort();
     appRosInterfaceMsgQueueId = osMessageQueueNew(ROS_INTERFACE_Q_LEN, sizeof(ROS_Interface_CommandMessage_t), NULL);
     assert_param(appRosInterfaceMsgQueueId != NULL);
     incomingThreadID = osThreadNew(IncomingTask, NULL, &incomingThreadAttr);
@@ -101,19 +99,9 @@ void ROS_Interface_Init(void)
     assert_param(feedbackThreadID != NULL);
     rosInterfaceUdpSocket = UDP_RegisterListener(DEFAULT_LOCAL_UDP_PORT, UDP_Callback); // Register the UDP listener for ROS interface messages
 	assert_param(rosInterfaceUdpSocket >= 0);
-    bool result = ROS_Heartbeat_Init(); // Initialize the heartbeat monitor
-    assert_param(result);
-    result = ROS_PublisherChassisState_Init(); // Initialize the chassis state publisher
-    assert_param(result);
-    result = ROS_PublisherOdom_Init(); // Initialize the odometry publisher
+    bool result = ROS_PublisherOdom_Init(); // Initialize the odometry publisher
     assert_param(result);
     result = ROS_SubscriberCmdVel_Init(); // Initialize the velocity command subscriber
-    assert_param(result);
-    result = ROS_ServiceMotionState_Init(); // Initialize the motion state service
-    assert_param(result);
-    result = ROS_ServiceIO_Init(); // Initialize the IO service
-    assert_param(result);
-    result = ROS_ServiceLight_Init(); // Initialize the light service
     assert_param(result);
 }
 
@@ -265,7 +253,7 @@ void ROS_Interface_SendBackMessage(const uint8_t *data, uint32_t size)
         NET_ADDR addr;
         if (!UDP_GetReceivedAddress(rosInterfaceUdpSocket, &addr))
             return; // No valid address to send data
-        addr.port = DEFAULT_REMOTE_UDP_PORT; // Use the configured remote UDP port        
+        addr.port = localUdpPort; // Use the configured remote UDP port        
         UDP_SendDataTo(rosInterfaceUdpSocket, &addr, data, size);
     }
 }

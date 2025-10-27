@@ -51,8 +51,7 @@
  * @note The module requires system_config.h for default value definitions
  * @warning Always call DataStore_Init() before using any other functions
  * 
- * @author Young.R
- * @copyright Copyright (c) 2025 HintonBot
+ * @author Young.R <com.wang@hotmail.com>
  * @version 1.0
  * 
  * @see system_config.h for default value definitions
@@ -60,9 +59,13 @@
 
 #include "data_store.h"
 
+#include <stdint.h>
+#include "rl_net.h" // Keil.MDK-Plus::Network:CORE
+
 #include "main.h"
 #include "crc32.h"
 #include "store_file.h"
+#include "system_config.h"
 
 #define EVENT_FLAG_DATA_STORE_MODIFIED 0x01 // Event flag for data store modification
 
@@ -82,16 +85,12 @@ typedef struct {
 static struct {
     MotorParameters_t motorParams;  // Motor parameters
     ipAddress_t localUdpAddress;    // UDP server address
-    uint32_t stateFeedbackFrequency;
     float wheelRadius;
     float trackWidth;
     float maxLinearAcceleration;
     float maxAngularAcceleration;
-    float maxLinearVelocity;
-    float maxAngularVelocity;
-    float linearDeadzone;
-    float angularDeadzone;
-    float motorReductionGear;
+    float maxVelocity;
+    float maxOmega;
 } dataStore;
 
 static osMutexId_t dataStoreMutex;
@@ -132,19 +131,15 @@ void DataStore_Init(void)
     // Load existing parameters from the file, or initialize with defaults
     if (!ReadDataFromFile())
     {
-        // dataStore.localUdpAddress.ipv4 = DEFAULT_LOCAL_UDP_ADDRESS; // Default IP address, declared in system_config.h
-        // dataStore.localUdpAddress.port = DEFAULT_LOCAL_UDP_PORT;    // Default port, declared in system_config.h
-        // dataStore.motorType = DEFAULT_MOTOR_TYPE;                   // Default motor type, declared in system_config.h
-        // dataStore.batteryType = DEFAULT_BATTERY_TYPE;               // Default battery type, declared in system_config.h
-        // dataStore.wheelRadius = DEFAULT_WHEEL_DIAMETER/2;           // Default wheel radius in meters, declared in system_config.h
-        // dataStore.trackWidth = DEFAULT_TRACK_WIDTH;                 // Default track width in meters, declared in system_config.h
-        // dataStore.maxLinearVelocity = DEFAULT_MAX_VELOCITY;         // Default maximum linear speed in m/s
-        // dataStore.chassisType = DEFAULT_CHASSIS_TYPE;               // Default chassis type, declared in system_config.h
-        // dataStore.maxAngularVelocity = DEFAULT_MAX_OMEGA;           // Default maximum angular speed in rad/s
-        // dataStore.wheelNumber = DEFAULT_WHEEL_NUMBER;               // Default number of wheels, declared in system_config.h
-        // dataStore.motorParams.pulsePerRevolution = 10000.0f;        // Default pulses per revolution
-        // dataStore.motorParams.maxRpm = 3000.0f;                     // Default maximum RPM
-        // dataStore.motorParams.gearRatio = 9.0f;                     // Default gear ratio
+        uint32_t defaultIP;
+        netIP_aton(DEFAULT_LOCAL_UDP_ADDRESS, NET_ADDR_IP4, (uint8_t*)&defaultIP);
+        dataStore.localUdpAddress.ipv4 = defaultIP;                 // Default IP address, declared in system_config.h
+        dataStore.localUdpAddress.port = DEFAULT_LOCAL_UDP_PORT;    // Default port, declared in system_config.h
+        dataStore.wheelRadius = DEFAULT_WHEEL_DIAMETER/2;           // Default wheel radius in meters, declared in system_config.h
+        dataStore.trackWidth = DEFAULT_TRACK_WIDTH;                 // Default track width in meters, declared in system_config.h
+        dataStore.motorParams.pulsePerRevolution = DEFAULT_PULSE_PER_REVOL; // Default pulses per revolution, declared in system_config.h
+        dataStore.maxVelocity = DEFAULT_MAX_VELOCITY;               // Default maximum linear speed in m/s, declared in system_config.h
+        dataStore.maxOmega = DEFAULT_MAX_OMEGA;                     // Default maximum angular speed in rad/s, declared in system_config.h
     }
 }
 
@@ -226,7 +221,11 @@ void DataStore_SaveDataIfModified(void)
 */
 float DataStore_GetMotorParamPulsePerRevolution(void)
 {
-    return dataStore.motorParams.pulsePerRevolution;
+    float pulses;
+    osMutexAcquire(dataStoreMutex, osWaitForever);
+    pulses = dataStore.motorParams.pulsePerRevolution;
+    osMutexRelease(dataStoreMutex);
+    return pulses;
 }
 
 /**
@@ -235,7 +234,57 @@ float DataStore_GetMotorParamPulsePerRevolution(void)
 */
 float DataStore_GetMotorParamGearRatio(void)
 {
-    return dataStore.motorParams.gearRatio;
+    float ratio;
+    osMutexAcquire(dataStoreMutex, osWaitForever);
+    ratio = dataStore.motorParams.gearRatio;
+    osMutexRelease(dataStoreMutex);
+    return ratio;
+}
+
+/**
+ * @brief Get the maximum RPM of the motor.
+ * This function retrieves the motor's maximum revolutions per minute from the data store.
+ */
+float DataStore_GetMotorParamMaxRpm(void)
+{
+    float rpm;
+    osMutexAcquire(dataStoreMutex, osWaitForever);
+    rpm = dataStore.motorParams.maxRpm;
+    osMutexRelease(dataStoreMutex);
+    return rpm;
+}
+
+/**
+ * @brief Set pulses per revolution of the motor.
+ * This function updates the motor's pulses per revolution in the data store.
+ */
+void DataStore_SetMotorParamPulsePerRevolution(float pulses)
+{
+    osMutexAcquire(dataStoreMutex, osWaitForever);
+    dataStore.motorParams.pulsePerRevolution = pulses;
+    osMutexRelease(dataStoreMutex);
+}
+
+/**
+ * @brief Set gear ratio of the motor.
+ * This function updates the motor's gear ratio in the data store.
+ */
+void DataStore_SetMotorParamGearRatio(float ratio)
+{
+    osMutexAcquire(dataStoreMutex, osWaitForever);
+    dataStore.motorParams.gearRatio = ratio;
+    osMutexRelease(dataStoreMutex);
+}
+
+/**
+ * @brief Set the maximum RPM of the motor.
+ * This function updates the motor's maximum revolutions per minute in the data store.
+ */
+void DataStore_SetMotorParamMaxRpm(float rpm)
+{
+    osMutexAcquire(dataStoreMutex, osWaitForever);
+    dataStore.motorParams.maxRpm = rpm;
+    osMutexRelease(dataStoreMutex);
 }
 
 /**
@@ -345,56 +394,50 @@ void DataStore_SetTrackWidth(float width)
 }
 
 /**
- * @brief Get the maximum linear velocity.
- * This function retrieves the current maximum linear velocity from the data store.
- * @param None
- * @return float The maximum linear velocity in meters per second.
+ * @brief Get the maximum linear velocity (canonical).
+ * This function retrieves the stored maximum velocity used across modules.
  */
-float DataStore_GetMaxLinearVelocity(void)
+float DataStore_GetMaxVelocity(void)
 {
     float velocity;
     osMutexAcquire(dataStoreMutex, osWaitForever);
-    velocity = dataStore.maxLinearVelocity;
+    velocity = dataStore.maxVelocity;
     osMutexRelease(dataStoreMutex);
     return velocity;
 }
 
 /**
- * @brief Set the maximum linear velocity.
- * This function updates the maximum linear velocity in the data store.
- * @param velocity The new maximum linear velocity in meters per second.
+ * @brief Set the maximum linear velocity (canonical).
+ * This function stores the maximum velocity used across modules.
  */
-void DataStore_SetMaxLinearVelocity(float velocity)
+void DataStore_SetMaxVelocity(float velocity)
 {
     osMutexAcquire(dataStoreMutex, osWaitForever);
-    dataStore.maxLinearVelocity = velocity;
+    dataStore.maxVelocity = velocity;
     osMutexRelease(dataStoreMutex);
 }
 
 /**
- * @brief Get the maximum angular velocity.
- * This function retrieves the current maximum angular velocity from the data store.
- * @param None
- * @return float The maximum angular velocity in radians per second.
+ * @brief Get the maximum angular velocity (canonical).
+ * This function retrieves the stored maximum angular velocity used across modules.
  */
-float DataStore_GetMaxAngularVelocity(void)
+float DataStore_GetMaxOmega(void)
 {
     float omega;
     osMutexAcquire(dataStoreMutex, osWaitForever);
-    omega = dataStore.maxAngularVelocity;
+    omega = dataStore.maxOmega;
     osMutexRelease(dataStoreMutex);
     return omega;
 }
 
 /**
- * @brief Set the maximum angular velocity.
- * This function updates the maximum angular velocity in the data store.
- * @param omega The new maximum angular velocity in radians per second.
+ * @brief Set the maximum angular velocity (canonical).
+ * This function stores the maximum angular velocity used across modules.
  */
-void DataStore_SetMaxAngularVelocity(float omega)
+void DataStore_SetMaxOmega(float omega)
 {
     osMutexAcquire(dataStoreMutex, osWaitForever);
-    dataStore.maxAngularVelocity = omega;
+    dataStore.maxOmega = omega;
     osMutexRelease(dataStoreMutex);
 }
 
