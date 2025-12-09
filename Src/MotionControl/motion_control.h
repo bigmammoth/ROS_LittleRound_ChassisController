@@ -15,6 +15,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include "ros_messages.h"
+
 /**
  * @brief Initialize the Motion Control System
  * This function initializes the motion control system by creating a message queue,
@@ -55,3 +57,15 @@ bool MotionControl_IsAutoPilotMode(void);
  * @return true if odometry retrieval is successful, false otherwise.
  */
 bool MotionControl_GetOdometry(float* pX, float* pY, float* pTheta, float* pVelocity, float* pOmega);
+
+/**
+ * @brief Get current gear mode
+ * This function retrieves the current gear mode of the robot.
+ */
+GearMode_t MotionControl_GetGearMode(void);
+
+/**
+ * @brief Set current gear mode
+ * This function sets the current gear mode of the robot.
+ */
+void MotionControl_SetGearMode(GearMode_t gearMode);

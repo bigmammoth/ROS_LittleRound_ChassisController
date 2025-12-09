@@ -48,6 +48,8 @@ static float wheelRadius;
 static float velocity, omega; // Current velocity and angular velocity
 static float remoteVelocity, remoteOmega; // Receiver velocity and angular velocity
 
+static GearMode_t currentGearMode = GEAR_MODE_DRIVE; // Current gear mode
+
 /* --------------- Static functions ---------------- */
 static void ReceiverCallback(ReceiverValues_t* receiverValue);
 static void UpdateOdometry(void);
@@ -216,12 +218,19 @@ bool MotionControl_IsAutoPilotMode(void)
 }
 
 /**
- * @brief Get the running status of a motor
- * This function retrieves the running status of a motor.
- * @param motorID The ID of the motor
- * @return The running status of the motor
+ * @brief Get current gear mode
+ * This function retrieves the current gear mode of the robot.
  */
-uint32_t MotionControl_GetMotorRunningStatus(uint32_t motorID)
+GearMode_t MotionControl_GetGearMode(void)
 {
-    return 0;
+    return currentGearMode;
+}
+
+/**
+ * @brief Set current gear mode
+ * This function sets the current gear mode of the robot.
+ */
+void MotionControl_SetGearMode(GearMode_t gearMode)
+{
+    currentGearMode = gearMode;
 }

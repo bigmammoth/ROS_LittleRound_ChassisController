@@ -5,16 +5,19 @@
  *  - Registers a periodic feedback callback with ROS_Interface (50 ms).
  *  - Fills an OdometryMessage_t using ChassisOdometry and returns its buffer.
  *  - Used by ROS_Interface to transmit ROS_FEEDBACK_ODOMETRY frames.
- * @author young <com.wang@hotmail.com>
+ * @author Young <com.wang@hotmail.com>
  * @date 2025-08-25
+ *      Modified on 2025-12-9 to use MotionControl_GetOdometry()
+ * @version 1.0
  * @ingroup ros_interface
- * @copyright (c) 2025 HintonBot. All rights reserved.
+ * @copyright Young
  */
-
 #include "ros_publisher_odom.h"
 #include "ros_interface.h"
 #include "ros_messages.h"
 #include "motion_control.h"
+
+#include <stdlib.h>
 
 /* ---------------- Static Variables -------------------- */
 static uint8_t odomBuffer[sizeof(OdometryMessage_t)] = {0};
@@ -28,8 +31,8 @@ void PrepareOdomMessage(const void **data, uint32_t *size);
  */
 bool ROS_PublisherOdom_Init(void)
 {
-    // Register callback for odometry messages every 50ms
-    const uint32_t PUBLISH_INTERVAL = 50;
+    // Register callback for odometry messages every 20ms
+    const uint32_t PUBLISH_INTERVAL = 20;
     return ROS_Interface_RegisterFeedbackCallback(PUBLISH_INTERVAL, PrepareOdomMessage);
 }
 
@@ -41,15 +44,14 @@ bool ROS_PublisherOdom_Init(void)
  */
 void PrepareOdomMessage(const void **data, uint32_t *size)
 {
+    if (data == NULL || size == NULL) return;
     OdometryMessage_t *msg = (OdometryMessage_t *)odomBuffer;
     msg->messageType = ROS_FEEDBACK_ODOMETRY;
     if (!MotionControl_GetOdometry(&msg->posX, &msg->posY, &msg->theta, &msg->velocity, &msg->omega))
     {
-        msg->posX = 0.0f;
-        msg->posY = 0.0f;
-        msg->theta = 0.0f;
-        msg->velocity = 0.0f;
-        msg->omega = 0.0f;
+        *data = NULL;
+        *size = 0;
+        return;
     }
     *data = odomBuffer;
     *size = sizeof(OdometryMessage_t);

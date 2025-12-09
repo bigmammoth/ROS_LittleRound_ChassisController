@@ -59,13 +59,12 @@
 
 #include "data_store.h"
 
-#include <stdint.h>
-#include "rl_net.h" // Keil.MDK-Plus::Network:CORE
-
 #include "main.h"
 #include "crc32.h"
 #include "store_file.h"
 #include "system_config.h"
+
+#include "rl_net.h" // For netIP_aton
 
 #define EVENT_FLAG_DATA_STORE_MODIFIED 0x01 // Event flag for data store modification
 
@@ -87,6 +86,8 @@ static struct {
     ipAddress_t localUdpAddress;    // UDP server address
     float wheelRadius;
     float trackWidth;
+    float stateFeedbackFrequency;
+    float odometryFeedbackFrequency;
     float maxLinearAcceleration;
     float maxAngularAcceleration;
     float maxVelocity;
@@ -96,7 +97,7 @@ static struct {
 static osMutexId_t dataStoreMutex;
 static osEventFlagsId_t dataStoreEventFlags;
 static osThreadId_t threadIdDataStore;
-static osThreadAttr_t threadAttrDataStore = {
+static const osThreadAttr_t threadAttrDataStore = {
     .name = "ThreadDataStore",
     .stack_size = 1024,
     .priority = osPriorityBelowNormal,
@@ -157,7 +158,7 @@ void DataStoreThread(void* arg)
         osEventFlagsWait(dataStoreEventFlags, EVENT_FLAG_DATA_STORE_MODIFIED, osFlagsWaitAny, osWaitForever);
         uint32_t paramCRC, fileCRC;
         osMutexAcquire(dataStoreMutex, osWaitForever);
-        paramCRC = Crc32(0xFFFF, &dataStore, sizeof(dataStore));
+        paramCRC = Crc32(CRC32_INITIAL_VALUE, &dataStore, sizeof(dataStore));
         osMutexRelease(dataStoreMutex);
         fileCRC = paramFile.CalculateCRC(&paramFile);
         if (paramCRC != fileCRC) SaveDataToFile();
@@ -198,7 +199,7 @@ bool ReadDataFromFile(void)
         return false;
     }
 
-    uint32_t crc = Crc32(0xFFFF, &dataStore, sizeof(dataStore));
+    uint32_t crc = Crc32(CRC32_INITIAL_VALUE, &dataStore, sizeof(dataStore));
     osMutexRelease(dataStoreMutex);
     uint32_t fileCrc = paramFile.ReadCRC(&paramFile);
     paramFile.SetReadPos(&paramFile, 0);
@@ -213,6 +214,58 @@ bool ReadDataFromFile(void)
 void DataStore_SaveDataIfModified(void)
 {
     osEventFlagsSet(dataStoreEventFlags, EVENT_FLAG_DATA_STORE_MODIFIED);
+}
+
+/**
+ * @brief Get state feedback frequency.
+ * This function retrieves the state feedback frequency from the data store.
+ * @return float The state feedback frequency.
+ */
+float DataStore_GetStateFeedbackFrequency(void)
+{
+    float freq;
+    osMutexAcquire(dataStoreMutex, osWaitForever);
+    freq = dataStore.stateFeedbackFrequency;
+    osMutexRelease(dataStoreMutex);
+    return freq;
+}
+
+/**
+ * @brief Set state feedback frequency.
+ * This function updates the state feedback frequency in the data store.
+ * @param frequency The new state feedback frequency.
+ */
+void DataStore_SetStateFeedbackFrequency(float frequency)
+{
+    osMutexAcquire(dataStoreMutex, osWaitForever);
+    dataStore.stateFeedbackFrequency = frequency;
+    osMutexRelease(dataStoreMutex);
+}
+
+/**
+ * @brief Set odometry feedback frequency.
+ * This function updates the odometry feedback frequency in the data store.
+ * @param frequency The new odometry feedback frequency.
+ */
+void DataStore_SetOdometryFeedbackFrequency(float frequency)
+{
+    osMutexAcquire(dataStoreMutex, osWaitForever);
+    dataStore.odometryFeedbackFrequency = frequency;
+    osMutexRelease(dataStoreMutex);
+}
+
+/**
+ * @brief Get odometry feedback frequency.
+ * This function retrieves the odometry feedback frequency from the data store.
+ * @return float The odometry feedback frequency.
+ */
+float DataStore_GetOdometryFeedbackFrequency(void)
+{
+    float freq;
+    osMutexAcquire(dataStoreMutex, osWaitForever);
+    freq = dataStore.odometryFeedbackFrequency;
+    osMutexRelease(dataStoreMutex);
+    return freq;
 }
 
 /**

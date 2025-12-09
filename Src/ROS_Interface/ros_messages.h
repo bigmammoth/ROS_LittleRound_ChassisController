@@ -25,8 +25,10 @@
  *      ros_service_io, ros_service_light, ros_parameters,
  *      motion_state, chassis_odometry
  * @date 2025-08-25
+ *       Modified on 2025-12-09 to add ParametersMessage_t and FeedbackParametersMessage_t
  * @author Young.W <com.wang@hotmail.com>
- * @copyright (c) 2025 HintonBot. All rights reserved.
+ * @copyright Young
+ * @version 1.0
  */
 #pragma once
 
@@ -38,14 +40,25 @@ typedef enum MessageType : uint32_t
     ROS_MESSAGE_UNKNOWN = 0,
     ROS_CMD_VELOCITY = 1001,
     ROS_CMD_MOTION,
+    ROS_CMD_LIGHT,
     ROS_CMD_SET_IO,
     ROS_CMD_READ_IO,
     ROS_CMD_PARAMETERS,
+    ROS_FEEDBACK_PARAMETERS,
     ROS_FEEDBACK_STATE,
     ROS_FEEDBACK_ODOMETRY,
     ROS_FEEDBACK_BATTERY,
     ROS_HEART_BEAT
 } MessageType_t;
+
+/** @brief Enumeration of gear modes */
+typedef enum GearMode : uint32_t
+{
+    GEAR_MODE_NEUTRAL = 0,
+    GEAR_MODE_PARKING = 1,
+    GEAR_MODE_ESTOP = 2,
+    GEAR_MODE_DRIVE = 3,
+} GearMode_t;
 
 /** @brief Heartbeat message structure */
 typedef struct HeartBeatMessage
@@ -53,6 +66,8 @@ typedef struct HeartBeatMessage
     MessageType_t messageType;
     uint32_t messageID;
     uint32_t success;
+
+    uint32_t reset; // 1 to request a reset, 0 otherwise
 } HeartBeatMessage_t;
 
 /** @brief Motion message structure */
@@ -61,6 +76,8 @@ typedef struct MotionMessage
     MessageType_t messageType;
     uint32_t messageID;
     uint32_t success;
+    
+    GearMode_t gearMode;
     uint32_t autoMode;
 } MotionMessage_t;
 
@@ -78,6 +95,7 @@ typedef struct VelocityMessage_t
 typedef struct OdometryMessage
 {
     enum MessageType messageType;
+
     float posX;
     float posY;
     float theta;
@@ -89,6 +107,7 @@ typedef struct OdometryMessage
 typedef struct BatteryMessage
 {
     MessageType_t messageType;
+
     float voltage;
     float current;
     float temperature;
@@ -98,14 +117,30 @@ typedef struct BatteryMessage
     uint32_t batteryIsCharging;
 } BatteryMessage_t;
 
+/** @brief Light message structure */
+typedef struct LightMessage
+{
+    MessageType_t messageType;
+    uint32_t messageID;
+    uint32_t success;
+
+    uint32_t color;
+    uint32_t mode;
+    uint32_t brightness;
+    uint32_t frequency;
+} LightMessage_t;
+
+#define MAX_IO_PINS 16
+
 /** @brief Set IO message structure */
 typedef struct SetIoMessage
 {
     MessageType_t messageType;
     uint32_t messageID;
     uint32_t success;
-    uint32_t ioPinNo;
-    uint32_t ioValue;
+
+    uint32_t pinCount;
+    uint8_t pins[MAX_IO_PINS];
 } SetIoMessage_t;
 
 /** @brief Read IO message structure */
@@ -114,14 +149,16 @@ typedef struct ReadIoMessage
     MessageType_t messageType;
     uint32_t messageID;
     uint32_t success;
-    uint32_t ioPinNo;
-    uint32_t ioValue;
+
+    uint32_t pinCount;
+    uint8_t pins[MAX_IO_PINS];
 } ReadIoMessage_t;
 
 /** @brief Chassis State message structure */
 typedef struct ChassisStateMessage
 {
     MessageType_t messageType;
+
     MotionMessage_t motion;
     ReadIoMessage_t io;
     BatteryMessage_t battery;
@@ -134,17 +171,24 @@ typedef struct ParametersMessage
     MessageType_t messageType;
     uint32_t messageID;
     uint32_t success;
+
     uint32_t stateFeedbackFrequency;
-    float wheelRadius;
+    uint32_t odometryFeedbackFrequency;
+    uint32_t batteryFeedbackFrequency;
+    float wheelDiameter;
     float trackWidth;
     float maxLinearAcceleration;
     float maxAngularAcceleration;
     float maxLinearVelocity;
     float maxAngularVelocity;
-    float linearDeadzone;
-    float angularDeadzone;
-    float motorReductionGear;
 } ParametersMessage_t;
+
+/** @brief Feedback Parameters message structure */
+typedef struct FeedbackParametersMessage {
+    MessageType_t messageType;
+    uint32_t messageID;
+    uint32_t success;
+} FeedbackParametersMessage_t;
 
 /** @brief Unknown message structure for unrecognized messages */
 typedef struct UnknownMessage
@@ -162,7 +206,10 @@ typedef struct UnknownMessage
 #define ROS_MAX_CMD_MESSAGE_SIZE                                      \
     _MAX(sizeof(MotionMessage_t),                                     \
     _MAX(sizeof(VelocityMessage_t),                                   \
-    _MAX(sizeof(SetIoMessage_t), sizeof(ReadIoMessage_t))))
+    _MAX(sizeof(LightMessage_t),                                      \
+    _MAX(sizeof(SetIoMessage_t), sizeof(ReadIoMessage_t)))))
 #define ROS_MAX_FEEDBACK_MESSAGE_SIZE                                 \
     _MAX(sizeof(OdometryMessage_t),                                   \
-    _MAX(sizeof(BatteryMessage_t), sizeof(ChassisStateMessage_t)))
+    _MAX(sizeof(BatteryMessage_t),                                    \
+    _MAX(sizeof(FeedbackParametersMessage_t),                         \
+    _MAX(sizeof(LightMessage_t), sizeof(ChassisStateMessage_t)))))

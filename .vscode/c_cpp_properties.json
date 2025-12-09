@@ -3,7 +3,7 @@
       {
           "name": "ChassisController",
           "includePath": [
-                "D:/Keil_v5/ARM/ARMCLANG/include/**",
+                "D:/Keil_v5/ARM/ARMCLANG/include",
                 "D:/Keil_v5/ARM/Packs/ARM/CMSIS-RTX/5.9.0/Include",
                 "D:/Keil_v5/ARM/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include",
                 "D:/Keil_v5/ARM/Packs/ARM/CMSIS/6.2.0/CMSIS/RTOS2/Include",
@@ -29,7 +29,7 @@
           ],
           "cStandard": "c11",
           "cppStandard": "c++17",
-          "intelliSenseMode": "${default}"
+          "intelliSenseMode": "clang-arm"
       }
   ],
   "version": 4

@@ -24,9 +24,9 @@ static void SetParametersCallback(const uint8_t *data, uint32_t size);
  * @brief Initialize the Parameters service
  * This function registers the callback for handling parameter messages.
  */
-void ROS_ServiceParameters_Init(void)
+bool ROS_ServiceParameters_Init(void)
 {
-    ROS_Interface_RegisterIncomingCallback(ROS_CMD_PARAMETERS, SetParametersCallback);
+    return ROS_Interface_RegisterIncomingCallback(ROS_CMD_PARAMETERS, SetParametersCallback);
 }
 
 /**
@@ -46,12 +46,21 @@ void SetParametersCallback(const uint8_t *data, uint32_t size)
         return;
 
     // Process the parameters command
-    DataStore_SetWheelRadius(msg->wheelRadius);
+    DataStore_SetStateFeedbackFrequency(msg->stateFeedbackFrequency);
+    DataStore_SetOdometryFeedbackFrequency(msg->odometryFeedbackFrequency);
+    DataStore_SetWheelRadius(msg->wheelDiameter/2.0f);
     DataStore_SetTrackWidth(msg->trackWidth);
     DataStore_SetMaxVelocity(msg->maxLinearVelocity);
     DataStore_SetMaxOmega(msg->maxAngularVelocity);
     DataStore_SetMaxLinearAcceleration(msg->maxLinearAcceleration);
     DataStore_SetMaxAngularAcceleration(msg->maxAngularAcceleration);
+
+    // Send acknowledgment
+    FeedbackParametersMessage_t feedback;
+    feedback.messageType = ROS_FEEDBACK_PARAMETERS;
+    feedback.messageID = msg->messageID;
+    feedback.success = 1; // Indicate success
+    ROS_Interface_SendBackMessage((const uint8_t *)&feedback, sizeof(feedback));
     // Save the modified parameters to persistent storage
     DataStore_SaveDataIfModified();
 }

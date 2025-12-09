@@ -50,7 +50,10 @@ void SetIoCallback(const uint8_t *data, uint32_t size)
     memcpy(&msg, data, sizeof(SetIoMessage_t));
     if (msg.messageType != ROS_CMD_SET_IO) return;
 
-    IO_Write((uint16_t)(msg.ioPinNo), (bool)(msg.ioValue));
+    for (uint32_t i = 0; i < msg.pinCount; i++)
+    {
+        IO_Write(i, (bool)(msg.pins[i]));
+    }
     msg.success = true;
 
     ROS_Interface_SendBackMessage((uint8_t *)&msg, sizeof(SetIoMessage_t));
@@ -71,7 +74,10 @@ void ReadIoCallback(const uint8_t *data, uint32_t size)
     memcpy(&msg, data, sizeof(ReadIoMessage_t));
     if (msg.messageType != ROS_CMD_READ_IO) return;
 
-    msg.ioValue = (uint32_t)(IO_Read((uint16_t)(msg.ioPinNo)));
+    for (uint32_t i = 0; i < msg.pinCount; i++)
+    {
+        msg.pins[i] = (uint8_t)IO_Read(i);
+    }
     msg.success = true;
 
     ROS_Interface_SendBackMessage((uint8_t *)&msg, sizeof(ReadIoMessage_t));

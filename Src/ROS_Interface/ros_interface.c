@@ -27,7 +27,11 @@
 #include "ros_interface.h"
 #include "ros_messages.h"
 #include "system_config.h"
+#include "ros_heartbeat.h"
+#include "ros_service_io.h"
+#include "ros_parameters.h"
 #include "ros_publisher_odom.h"
+#include "ros_publisher_chassis_state.h"
 #include "ros_subscriber_cmd_vel.h"
 #include "data_store.h"
 
@@ -37,8 +41,8 @@
 /* -------------- Data type definitions ------------- */
 #define MAX_INCOMING_CALLBACKS 8
 #define MAX_FEEDBACK_CALLBACKS 8
-#define CHECK_FEEDBACK_PERIOD  10 // ms, check if some feedbacks should be sent every 10ms
-
+#define CHECK_FEEDBACK_PERIOD  5 // ms, check if some feedbacks should be sent every 10ms
+    
 typedef struct {
     uint32_t msgType;
     ROS_Interface_IncomingCallback_t callback;
@@ -61,12 +65,12 @@ static osThreadId_t incomingThreadID;
 static osThreadId_t feedbackThreadID;
 static uint16_t localUdpPort;
 
-static osThreadAttr_t incomingThreadAttr = {
+static const osThreadAttr_t incomingThreadAttr = {
     .priority = osPriorityNormal,
     .stack_size = 1024
 };
 
-static osThreadAttr_t feedbackThreadAttr = {
+static const osThreadAttr_t feedbackThreadAttr = {
     .priority = osPriorityNormal,
     .stack_size = 1024
 };
@@ -99,7 +103,15 @@ void ROS_Interface_Init(void)
     assert_param(feedbackThreadID != NULL);
     rosInterfaceUdpSocket = UDP_RegisterListener(DEFAULT_LOCAL_UDP_PORT, UDP_Callback); // Register the UDP listener for ROS interface messages
 	assert_param(rosInterfaceUdpSocket >= 0);
-    bool result = ROS_PublisherOdom_Init(); // Initialize the odometry publisher
+    bool result = ROS_Heartbeat_Init();
+    assert_param(result);
+    result = ROS_ServiceIO_Init(); // Initialize the IO service
+    assert_param(result);
+    result = ROS_ServiceParameters_Init(); // Initialize the Parameters service
+    assert_param(result);
+    result = ROS_PublisherOdom_Init(); // Initialize the odometry publisher
+    assert_param(result);
+    result = ROS_PublisherChassisState_Init(); // Initialize the chassis state publisher
     assert_param(result);
     result = ROS_SubscriberCmdVel_Init(); // Initialize the velocity command subscriber
     assert_param(result);

@@ -179,3 +179,31 @@ float DataStore_GetMaxAngularAcceleration(void);
  * @param acceleration The new maximum angular acceleration in radians per second squared.
  */
 void DataStore_SetMaxAngularAcceleration(float acceleration);
+
+/**
+ * @brief Get state feedback frequency.
+ * This function retrieves the state feedback frequency from the data store.
+ * @return float The state feedback frequency.
+ */
+float DataStore_GetStateFeedbackFrequency(void);
+
+/**
+ * @brief Set state feedback frequency.
+ * This function updates the state feedback frequency in the data store.
+ * @param frequency The new state feedback frequency.
+ */
+void DataStore_SetStateFeedbackFrequency(float frequency);
+
+/**
+ * @brief Set odometry feedback frequency.
+ * This function updates the odometry feedback frequency in the data store.
+ * @param frequency The new odometry feedback frequency.
+ */
+void DataStore_SetOdometryFeedbackFrequency(float frequency);
+
+/**
+ * @brief Get odometry feedback frequency.
+ * This function retrieves the odometry feedback frequency from the data store.
+ * @return float The odometry feedback frequency.
+ */
+float DataStore_GetOdometryFeedbackFrequency(void);

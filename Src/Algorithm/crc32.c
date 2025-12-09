@@ -76,7 +76,7 @@ uint32_t ByteReverse(uint32_t input)
  * @param len Data length in 8bits.
  * @return CRC value.
  */
-uint32_t Crc32(uint32_t crc, void* input, uint32_t len)
+uint32_t Crc32(uint32_t crc, const void* input, uint32_t len)
 {
 	uint32_t* pData = (uint32_t*)input;
 	uint32_t len4 = len / 4;

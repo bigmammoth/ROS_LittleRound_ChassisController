@@ -7,8 +7,10 @@
  */
 #pragma once
 
+#include <stdbool.h>
+
 /**
  * @brief Initialize the Parameters service
  * This function registers the callback for handling parameter messages.
  */
-void ROS_ServiceParameters_Init(void);
+bool ROS_ServiceParameters_Init(void);

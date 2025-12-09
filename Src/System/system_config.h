@@ -7,7 +7,7 @@
 #define PI 3.14159265358979323846
 
 /* ----------------------- System Default Configuration Definitions ------------------------- */
-#define DEFAULT_LOCAL_UDP_ADDRESS   "192.168.1.100"                 // Default IP address
+#define DEFAULT_LOCAL_UDP_ADDRESS   "192.168.55.100"                // Default IP address
 #define DEFAULT_LOCAL_UDP_PORT      12000                           // Default port
 #define DEFAULT_CHASSIS_TYPE        CHASSIS_TYPE_DIFF               // Default chassis type
 #define DEFAULT_WHEEL_DIAMETER      0.064                           // Default wheel diameter in meters
@@ -18,6 +18,8 @@
 #define DEFAULT_MAX_OMEGA           (2.0 * PI)                      // Default maximum angular speed in rad/s
 #define DEFAULT_WHEEL_NUMBER        2                               // Default number of wheels
 #define DEFAULT_PULSE_PER_REVOL     10000.0f                        // Default pulses per revolution
+#define DEFAULT_STATE_FREQUENCY     10.0f                           // Default state feedback frequency in Hz
+#define DEFAULT_ODOMETRY_FREQUENCY  20.0f                           // Default odometry feedback frequency in Hz
 
 // Total motor number
 #define TOTAL_MOTOR_NUMBER  2
@@ -37,11 +39,11 @@ typedef enum {
 } ExtFlashType_t;
 
 #define EXT_FLASH_OTA_FILE_ADDRESS          0x00000000U
-#define EXT_FLASH_OTA_FILE_SIZE             0x00800000U // 8MB OTA file
-#define EXT_FLASH_PARAMETER_FILE_ADDRESS    0x00800000U
+#define EXT_FLASH_OTA_FILE_SIZE             0x00400000U // 4MB OTA file
+#define EXT_FLASH_PARAMETER_FILE_ADDRESS    0x00400000U
 #define EXT_FLASH_PARAMETER_FILE_SIZE       0x00100000U // 1MB parameter
-#define EXT_FLASH_LOG_FILE_ADDRESS          0x00900000U
-#define EXT_FLASH_LOG_FILE_SIZE             0x00700000U // 7MB log file
-#define EXT_FLASH_TOTAL_SIZE                0x01000000U // 16MB total size
+#define EXT_FLASH_LOG_FILE_ADDRESS          0x00500000U
+#define EXT_FLASH_LOG_FILE_SIZE             0x00300000U // 3MB log file
+#define EXT_FLASH_TOTAL_SIZE                0x00800000U // 8MB total size
 #define EXT_FLASH_SECTOR_SIZE               0x00001000U // 4KB sector size
 #define EXT_FLASH_PAGE_SIZE                 0x00000100U // 256B page size
