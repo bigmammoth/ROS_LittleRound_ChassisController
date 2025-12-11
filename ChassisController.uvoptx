@@ -120,7 +120,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name>€</Name>
+          <Name>?</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -130,7 +130,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGTARM</Key>
-          <Name>(1010=2232,912,2682,1469,0)(1007=1540,944,1727,1219,0)(1008=-1,-1,-1,-1,0)(1009=1902,629,2160,1217,0)(1012=1095,966,1572,1281,0)</Name>
+          <Name>(1010=2110,912,2560,1469,0)(1007=1540,944,1727,1219,0)(1008=-1,-1,-1,-1,0)(1009=1902,629,2160,1217,0)(1012=1095,966,1572,1281,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -731,7 +731,7 @@
 
   <Group>
     <GroupName>MiddleWare</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -815,7 +815,7 @@
 
   <Group>
     <GroupName>MotionControl</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

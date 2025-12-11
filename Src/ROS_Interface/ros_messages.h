@@ -207,7 +207,8 @@ typedef struct UnknownMessage
     _MAX(sizeof(MotionMessage_t),                                     \
     _MAX(sizeof(VelocityMessage_t),                                   \
     _MAX(sizeof(LightMessage_t),                                      \
-    _MAX(sizeof(SetIoMessage_t), sizeof(ReadIoMessage_t)))))
+    _MAX(sizeof(ParametersMessage_t),                                 \
+    _MAX(sizeof(SetIoMessage_t), sizeof(ReadIoMessage_t))))))
 #define ROS_MAX_FEEDBACK_MESSAGE_SIZE                                 \
     _MAX(sizeof(OdometryMessage_t),                                   \
     _MAX(sizeof(BatteryMessage_t),                                    \
