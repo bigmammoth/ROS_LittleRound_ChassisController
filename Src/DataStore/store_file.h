@@ -16,7 +16,6 @@
  *
  * @date 2025-09-27
  * @author Young.W <com.wang@hotmail.com>
- * @copyright All right reserved. Hinton Robotics
  * @version 1.0
  */
 

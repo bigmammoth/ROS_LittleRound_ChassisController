@@ -25,7 +25,6 @@
  * @dependencies w25qxx.h, spi.h, main.h, CMSIS-RTOS (for osDelay)
  * @author Young.W <com.wang@hotmail.com>
  * @date 2025-09-25
- * @copyright Copyright (c) 2025 Hinton Robotics
  * @version 1.0
  */
 #include "w25qxx.h"

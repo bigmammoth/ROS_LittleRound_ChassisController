@@ -5,7 +5,6 @@
  *          in the ROS interface.
  * @author Young.W <com.wang@hotmail.com>
  * @date 2025-09-02
- * @copyright (c) 2025 HintonBot. All rights reserved.
  */
 
 #include "ros_parameters.h"
