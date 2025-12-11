@@ -14,7 +14,6 @@
  * @dependencies ros_interface.h, ros_messages.h
  * @date 2025-09-02
  * @author Young.W <com.wang@hotmail.com>
- * @copyright (c) 2025 HintonBot. All rights reserved.
  */
 
 #include <stdlib.h>

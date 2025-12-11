@@ -105,7 +105,6 @@
  * @dependencies store_file.h, w25qxx.h, crc32.h, mem_pool.h, system_config.h
  * @date 2025-09-27
  * @author Young.W <com.wang@hotmail.com>
- * @copyright All right reserved. Hinton Robotics
  * @version 1.0
  */
 

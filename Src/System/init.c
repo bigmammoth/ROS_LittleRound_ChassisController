@@ -15,7 +15,6 @@
  *
  * @author Young.W <com.wang@hotmail.com>
  * @date 2025-07-22
- * @copyright All right reserved. Hinton Robotics
  */
 #include "init.h"
 
