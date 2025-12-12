@@ -12,6 +12,7 @@
 #include "ros_interface.h"
 #include "ros_messages.h"
 #include "data_store.h"
+#include "motion_control.h"
 
 #include <stdint.h>
 #include <string.h>
@@ -43,6 +44,9 @@ void SetParametersCallback(const uint8_t *data, uint32_t size)
     const ParametersMessage_t *msg = (const ParametersMessage_t *)data;
     if (msg->messageType != ROS_CMD_PARAMETERS)
         return;
+
+    // Reset odometry and encoders
+    MotionControl_ResetOdometry();
 
     // Process the parameters command
     DataStore_SetStateFeedbackFrequency(msg->stateFeedbackFrequency);

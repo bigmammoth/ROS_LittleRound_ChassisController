@@ -69,3 +69,9 @@ GearMode_t MotionControl_GetGearMode(void);
  * This function sets the current gear mode of the robot.
  */
 void MotionControl_SetGearMode(GearMode_t gearMode);
+
+/**
+ * @brief Reset odometry and motor encoder counters to zero.
+ * This function resets the odometry state and motor encoder values.
+ */
+void MotionControl_ResetOdometry(void);

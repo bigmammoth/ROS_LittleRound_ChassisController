@@ -17,8 +17,6 @@
 /* ------------------------- Static Variables ------------------------- */
 // Total number of wheels for two-wheel differential chassis
 #define TOTAL_WHEEL_NUMBER 2
-// Maximum velocity and angular velocity
-static float maxVelocity, maxOmega;
 
 /**
  * @brief Initialize the Two Wheel Differential Chassis
@@ -26,8 +24,6 @@ static float maxVelocity, maxOmega;
  */
 void ChassisTwoWheelDifferential_Init(void)
 {
-    maxVelocity = DataStore_GetMaxVelocity();
-    maxOmega = DataStore_GetMaxOmega();
 }
 
 /**
@@ -39,9 +35,19 @@ void ChassisTwoWheelDifferential_Init(void)
  */
 void ChassisTwoWheelDifferential_SetMotion(float velocity, float omega)
 {
+    // Clamp velocity and omega to maximum limits
+    float maxVelocity = DataStore_GetMaxVelocity();
+    float maxOmega = DataStore_GetMaxOmega();
+    if (velocity > maxVelocity) velocity = maxVelocity;
+    else if (velocity < -maxVelocity) velocity = -maxVelocity;
+    if (omega > maxOmega) omega = maxOmega;
+    else if (omega < -maxOmega) omega = -maxOmega;
+
+    // Calculate wheel angular speeds using inverse kinematics
     float wheelAngularSpeed[TOTAL_WHEEL_NUMBER];
     TwoWheelDifferentialKinematic_Inverse(velocity, omega, wheelAngularSpeed);
 
+    // Set the angular speed for each wheel
     for (uint32_t i = 0; i < TOTAL_WHEEL_NUMBER; i++)
     {
         DCMotor_SetAngularSpeed(i, wheelAngularSpeed[i]);

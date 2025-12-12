@@ -37,12 +37,12 @@
 
 /* -------------- Definitions ----------------------- */
 #define ROS_INTERFACE_Q_LEN 16
-
-/* -------------- Data type definitions ------------- */
 #define MAX_INCOMING_CALLBACKS 8
 #define MAX_FEEDBACK_CALLBACKS 8
 #define CHECK_FEEDBACK_PERIOD  5 // ms, check if some feedbacks should be sent every 10ms
-    
+#define FEEDBACK_TICK_FLAG 0x01U
+
+/* -------------- Data type definitions ------------- */
 typedef struct {
     uint32_t msgType;
     ROS_Interface_IncomingCallback_t callback;
@@ -63,6 +63,7 @@ typedef struct {
 static osMessageQueueId_t appRosInterfaceMsgQueueId;
 static osThreadId_t incomingThreadID;
 static osThreadId_t feedbackThreadID;
+static osTimerId_t feedbackTimerId;
 static uint16_t localUdpPort;
 
 static const osThreadAttr_t incomingThreadAttr = {
@@ -84,6 +85,7 @@ static int rosInterfaceUdpSocket = -1; // UDP socket for ROS interface
 static void IncomingTask(void *);
 static void FeedbackTask(void *);
 static void UDP_Callback(const uint8_t *data, uint32_t size);
+static void FeedbackTimerCallback(void *arg);
 
 /** 
  * @brief Initialize the ROS Interface
@@ -97,10 +99,14 @@ void ROS_Interface_Init(void)
 	localUdpPort = DataStore_GetLocalUdpPort();
     appRosInterfaceMsgQueueId = osMessageQueueNew(ROS_INTERFACE_Q_LEN, sizeof(ROS_Interface_CommandMessage_t), NULL);
     assert_param(appRosInterfaceMsgQueueId != NULL);
+    feedbackTimerId = osTimerNew(FeedbackTimerCallback, osTimerPeriodic, NULL, NULL);
+    assert_param(feedbackTimerId != NULL);
     incomingThreadID = osThreadNew(IncomingTask, NULL, &incomingThreadAttr);
     assert_param(incomingThreadID != NULL);
     feedbackThreadID = osThreadNew(FeedbackTask, NULL, &feedbackThreadAttr);
     assert_param(feedbackThreadID != NULL);
+    osStatus_t timerStatus = osTimerStart(feedbackTimerId, CHECK_FEEDBACK_PERIOD);
+    assert_param(timerStatus == osOK);
     rosInterfaceUdpSocket = UDP_RegisterListener(DEFAULT_LOCAL_UDP_PORT, UDP_Callback); // Register the UDP listener for ROS interface messages
 	assert_param(rosInterfaceUdpSocket >= 0);
     bool result = ROS_Heartbeat_Init();
@@ -158,7 +164,8 @@ void FeedbackTask(void *arg)
     (void)arg;
     while (true)
     {
-        osDelay(CHECK_FEEDBACK_PERIOD);
+        osThreadFlagsWait(FEEDBACK_TICK_FLAG, osFlagsWaitAll, osWaitForever);
+        if (!isUpperMachineAlive) continue; // Skip sending feedback if the upper machine is not alive
         for (int i = 0; i < MAX_FEEDBACK_CALLBACKS; i++)
         {
             // Decrease the remaining time for each feedback entry
@@ -197,6 +204,16 @@ void UDP_Callback(const uint8_t *data, uint32_t size)
     msg.size = size;
     memcpy(msg.data, data, size);
     osMessageQueuePut(appRosInterfaceMsgQueueId, (void *)&msg, 0, 0);
+}
+
+/**
+ * @brief Timer callback to tick feedback scheduling.
+ * @param arg unused
+ */
+void FeedbackTimerCallback(void *arg)
+{
+    (void)arg;
+    osThreadFlagsSet(feedbackThreadID, FEEDBACK_TICK_FLAG);
 }
 
 /**

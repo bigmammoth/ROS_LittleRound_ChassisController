@@ -7,3 +7,4 @@ int64_t DCMotor_ReadEncoder(uint32_t motorId);
 void DCMotor_SetAngularSpeed(uint32_t motorId, float angularSpeed);
 float DCMotor_GetAngularSpeed(uint32_t motorId);
 float DCMotor_GetEncoderValue(uint32_t motorId);
+void DCMotor_ResetEncoders(void);

@@ -28,8 +28,8 @@
 
 /* ------------------ Definitions --------------------*/
 #define MESSAGE_QUEUE_SIZE 16
-#define UPDATE_ODOMETRY_INTERVAL 20 // 20ms
 #define MOTION_CONTROL_INTERVAL 20 // 20ms
+#define MIN_UPDATE_ODOMETRY_INTERVAL 5 // Minimum 5ms interval
 
 /**
  * @brief Motion Control Flags
@@ -49,6 +49,8 @@ static float velocity, omega; // Current velocity and angular velocity
 static float remoteVelocity, remoteOmega; // Receiver velocity and angular velocity
 
 static GearMode_t currentGearMode = GEAR_MODE_DRIVE; // Current gear mode
+
+static uint32_t updateOdometryInterval = 20; // Interval for updating odometry in ms
 
 /* --------------- Static functions ---------------- */
 static void ReceiverCallback(ReceiverValues_t* receiverValue);
@@ -75,10 +77,16 @@ void MotionControl_Init(void)
 
     threadId = osThreadNew(MotionControl_Process, NULL, NULL);
     assert_param(threadId != NULL);
-    
+
+    // Set up periodic timer to update odometry
     osTimerId_t updateOdometryTimer = osTimerNew(UpdateOdometryTimerCallback, osTimerPeriodic, NULL, NULL);
     assert_param(updateOdometryTimer != NULL);
-    osTimerStart(updateOdometryTimer, UPDATE_ODOMETRY_INTERVAL);
+    updateOdometryInterval = (uint32_t)(1000.0f / DataStore_GetOdometryFeedbackFrequency());
+    if (updateOdometryInterval < MIN_UPDATE_ODOMETRY_INTERVAL)
+        updateOdometryInterval = MIN_UPDATE_ODOMETRY_INTERVAL; // Minimum 5ms interval
+    osTimerStart(updateOdometryTimer, updateOdometryInterval);
+
+    // Set up periodic timer to read receiver values
     osTimerId_t motionControlTimer = osTimerNew(MotionControlTimerCallback, osTimerPeriodic, NULL, NULL);
     assert_param(motionControlTimer != NULL);
     osTimerStart(motionControlTimer, MOTION_CONTROL_INTERVAL);
@@ -153,6 +161,16 @@ void MotionControl_Move(float velocity, float omega)
 }
 
 /**
+ * @brief Reset odometry and motor encoder counters to zero.
+ * This function resets the odometry state and motor encoder values.
+ */
+void MotionControl_ResetOdometry(void)
+{
+    DCMotor_ResetEncoders();
+    TwoWheelOdometry_Reset();
+}
+
+/**
  * @brief Receiver Callback
  * This function is called when new receiver values are available.
  * It updates the remote velocity and omega based on the receiver input.
@@ -178,7 +196,7 @@ void UpdateOdometry(void)
     {
         wheelPositionArray[i] = DCMotor_GetEncoderValue(i) * (2*PI);
     }
-    TwoWheelOdometry_Update(wheelPositionArray, (float)UPDATE_ODOMETRY_INTERVAL / 1000.0f);
+    TwoWheelOdometry_Update(wheelPositionArray, (float)updateOdometryInterval / 1000.0f);
 }
 
 /**

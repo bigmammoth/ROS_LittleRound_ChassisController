@@ -16,6 +16,7 @@
 #include "ros_interface.h"
 #include "ros_messages.h"
 #include "motion_control.h"
+#include "data_store.h"
 
 #include <stdlib.h>
 
@@ -32,8 +33,8 @@ void PrepareOdomMessage(const void **data, uint32_t *size);
 bool ROS_PublisherOdom_Init(void)
 {
     // Register callback for odometry messages every 20ms
-    const uint32_t PUBLISH_INTERVAL = 20;
-    return ROS_Interface_RegisterFeedbackCallback(PUBLISH_INTERVAL, PrepareOdomMessage);
+    uint32_t publishInterval = (uint32_t)(1000.0f / DataStore_GetOdometryFeedbackFrequency());
+    return ROS_Interface_RegisterFeedbackCallback(publishInterval, PrepareOdomMessage);
 }
 
 /**

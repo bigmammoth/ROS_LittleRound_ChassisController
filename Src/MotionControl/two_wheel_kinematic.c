@@ -13,14 +13,8 @@
 #include "arm_math.h"
 #include <stdlib.h>
 
-static float trackWidth;
-static float wheelRadius;
-
 void TwoWheelDifferentialKinematic_Init(void)
 {
-    // Initialization code for the Two Wheel Differential kinematic model
-    trackWidth = DataStore_GetTrackWidth();
-    wheelRadius = DataStore_GetWheelRadius();
 }
 
 /**
@@ -34,12 +28,18 @@ void TwoWheelDifferentialKinematic_Init(void)
  */
 void TwoWheelDifferentialKinematic_Forward(float* wheelVelocityInRadS, float* velocity, float* omega)
 {
+    
     if (wheelVelocityInRadS == NULL || velocity == NULL || omega == NULL)
-        return;
+    return;
+    
+    float wheelRadius = DataStore_GetWheelRadius();
+    float trackWidth = DataStore_GetTrackWidth();
 
+    // Calculate linear velocities of each wheel
     float linearL = wheelVelocityInRadS[0] * wheelRadius; // Left wheel linear speed
     float linearR = wheelVelocityInRadS[1] * wheelRadius; // Right wheel linear speed
 
+    // Calculate robot linear and angular velocities
     *velocity = (linearL + linearR) / 2.0f;
     *omega = (linearR - linearL) / trackWidth;
 }
@@ -56,6 +56,9 @@ void TwoWheelDifferentialKinematic_Forward(float* wheelVelocityInRadS, float* ve
 void TwoWheelDifferentialKinematic_Inverse(float velocity, float omega, float* wheelAngularSpeed)
 {
     if (wheelAngularSpeed == NULL) return;
+
+    float wheelRadius = DataStore_GetWheelRadius();
+    float trackWidth = DataStore_GetTrackWidth();
 
     // Calculate the left and right wheel linear speeds based on the desired velocity and omega
     float leftWheelSpeed = velocity - (trackWidth / 2.0f) * omega;

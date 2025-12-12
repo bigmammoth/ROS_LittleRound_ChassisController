@@ -123,6 +123,21 @@ inline float DCMotor_GetEncoderValue(uint32_t motorId)
 }
 
 /**
+ * @brief Reset all motor encoders to zero
+ * This function resets the encoder positions and overflow counters for all motors.
+ */
+void DCMotor_ResetEncoders(void)
+{
+    for (uint32_t i = 0; i < TOTAL_MOTOR_NUMBER; ++i)
+    {
+        encoderOverflowCounter[i] = 0;
+        encoderPosition[i] = 0;
+        measuredAngularSpeed[i] = 0.0f;
+        KalmanFilter_Init(&filter[i], KALMAN_ESTIMATE_VARIANCE, KALMAN_MEASURE_VARIANCE, KALMAN_PROCESS_VARIANCE);
+    }
+}
+
+/**
  * @brief Encoder counter overflow callback for motor 0.
  * If the count > 0x7FF, means it turns from 0 to 0xFFFF,
  * otherwise it means the counter turns from 0xFFFF to 0.

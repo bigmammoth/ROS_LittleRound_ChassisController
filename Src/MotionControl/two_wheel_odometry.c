@@ -23,8 +23,6 @@ static float y = 0.0f;      // Y position in meters
 static float theta = 0.0f;  // Orientation in radians
 static float velocity = 0.0f; // Linear velocity in m/s
 static float omega = 0.0f; // Angular velocity in rad/s
-static float trackWidth;
-static float wheelRadius;
 
 /**
  * @brief Initialize the Two Wheel Odometry System
@@ -32,9 +30,6 @@ static float wheelRadius;
  */
 void TwoWheelOdometry_Init(void)
 {
-    // Initialization code for two-wheel odometry
-    trackWidth = DataStore_GetTrackWidth();
-    wheelRadius = DataStore_GetWheelRadius();
 }
 
 /**
@@ -67,6 +62,9 @@ bool TwoWheelOdometry_GetOdometry(float* pX, float* pY, float* pTheta, float* pV
  */
 bool TwoWheelOdometry_Update(float* wheelPosArray, float dt)
 {
+    float wheelRadius = DataStore_GetWheelRadius();
+    float trackWidth = DataStore_GetTrackWidth();
+    
     float positionL = wheelPosArray[0] * wheelRadius;
     float positionR = wheelPosArray[1] * wheelRadius;
 
